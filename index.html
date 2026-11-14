@@ -30,8 +30,8 @@
 <link rel="apple-touch-icon" href="./assets/omoji-icon-192.png">
 <link rel="manifest" href="./manifest.webmanifest">
 <link rel="preload" as="image" href="./assets/reel-hero.webp">
-<link rel="stylesheet" href="./assets/game.css?v=crown-release-1">
-<script type="module" src="./assets/game.js?v=crown-release-1"></script>
+<link rel="stylesheet" href="./assets/game.css?v=rolls-operator-1">
+<script type="module" src="./assets/game.js?v=rolls-operator-1"></script>
 </head>
 <body class="simple-menu theme-midnight theme-reel">
 <a class="skip" href="#setup">レース設定へ</a>
@@ -42,7 +42,7 @@
     <div class="header-actions"><span class="gp-header-title" id="gp-header-title" data-ui-icon="trophy" hidden><bdi id="gp-header-driver"></bdi><bdi id="gp-header-title-text"></bdi></span><div class="wallet-badge"><span data-ui-icon="wallet">所持Z</span><strong data-wallet-total>— Z</strong></div></div>
   </div>
   <aside id="announcements" class="announcements" aria-label="お知らせ">
-    <div class="header-inner announcement-inner"><strong data-ui-icon="radio">お知らせ</strong><div class="announcement-window"><p id="announcement-copy">グランプリの順位集計と再開を修正。オリジナル車「omoji Z」と塗装屋を追加しました。</p></div><button type="button" id="announcement-toggle" class="quiet" hidden><span data-announcement-toggle-label>停止</span></button></div>
+    <div class="header-inner announcement-inner"><strong data-ui-icon="radio">お知らせ</strong><div class="announcement-window"><p id="announcement-copy">運営車両にロールスロイスを追加しました。ガレージの「運営車両」から選べます。</p></div><button type="button" id="announcement-toggle" class="quiet" hidden><span data-announcement-toggle-label>停止</span></button></div>
   </aside>
 </header>
 <main id="top">
@@ -65,7 +65,7 @@
           </div>
         </div>
       </div>
-      <div class="apex-hero-counts"><a href="./cars.html"><strong id="car-count">513</strong><span>車両</span></a><a href="./courses.html"><strong id="track-count">256</strong><span>コース</span></a><a href="#audio"><strong id="music-count">128</strong><span>BGM</span></a></div>
+      <div class="apex-hero-counts"><a href="./cars.html"><strong id="car-count">514</strong><span>車両</span></a><a href="./courses.html"><strong id="track-count">256</strong><span>コース</span></a><a href="#audio"><strong id="music-count">128</strong><span>BGM</span></a></div>
       <nav class="reel-shortcuts" aria-label="プレイメニュー">
         <a class="reel-tile gp-quick-link" href="#grand-prix">
           <img src="./assets/reel-routes.webp" alt="" width="960" height="540" loading="lazy" decoding="async" draggable="false">
@@ -166,7 +166,7 @@
       <div class="garage-grid">
         <div class="car-stage">
           <canvas id="car-canvas" aria-label="選択中の車の3Dモデル" aria-describedby="garage-rotation-hint"></canvas>
-          <div id="garage-error" class="garage-error" hidden>このブラウザで車両の描画を開始できませんでした。</div>
+          <p id="rolls-model-status" class="rolls-model-status" role="status" hidden></p><div id="garage-error" class="garage-error" hidden>このブラウザで車両の描画を開始できませんでした。</div>
           <div class="garage-hint" id="garage-rotation-hint" data-ui-icon="reset">ドラッグで回転</div>
         </div>
         <div id="car-info" class="car-info"></div>
@@ -266,6 +266,14 @@
           <button type="submit" class="ghost" data-ui-icon="garage">車両を解放</button>
         </form>
         <p id="operator-status" class="panel-note" role="status"></p>
+        <figure class="operator-studio">
+          <img src="./assets/rolls-royce-studio.webp" alt="黒いロールスロイスを描いたスタジオイラスト" width="1240" height="698" loading="lazy" decoding="async" draggable="false">
+          <figcaption><strong>ロールスロイス</strong><small>運営車両</small></figcaption>
+        </figure>
+        <div id="operator-choices" class="operator-choices" aria-label="運営車両を選ぶ" hidden>
+          <button class="ghost" type="button" data-car="maybach-classic" data-ui-icon="car">マイバッハ</button>
+          <button class="ghost" type="button" data-car="rolls-royce-operator" data-ui-icon="car">ロールスロイス</button>
+        </div>
       </details>
     </section>
     <section id="paint-shop" class="content-section" data-menu-view hidden aria-labelledby="paint-shop-title">

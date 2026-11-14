@@ -1724,3 +1724,70 @@ body.theme-reel {
     background-position: center, 67% 60%;
   }
 }
+
+.theme-reel #operator-garage .operator-choices:not([hidden]) {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 145px), 1fr));
+  gap: 8px;
+  margin: 5px clamp(12px, 2.1vw, 26px) 16px;
+}
+.theme-reel #operator-garage .operator-choices button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 10px;
+  min-block-size: 44px;
+  border: 1px solid #846247;
+  border-radius: 3px;
+  color: var(--theme-ivory);
+  background: linear-gradient(135deg, #30251b, #191715);
+}
+.theme-reel #operator-garage .operator-choices button[aria-pressed="true"] {
+  color: var(--theme-gold);
+  border-color: var(--theme-gold);
+}
+.theme-reel #operator-garage .operator-studio {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  display: grid;
+  align-items: end;
+  margin: 8px clamp(12px, 2.1vw, 26px) 14px;
+  min-block-size: clamp(130px, 25vw, 282px);
+  padding: 13px clamp(12px, 2.1vw, 24px);
+  border: 1px solid #846247;
+  border-radius: 3px;
+  background: #191715;
+}
+.operator-studio::before,
+.operator-studio img {
+  position: absolute;
+  inset: 0;
+  inline-size: 100%;
+  block-size: 100%;
+}
+.operator-studio::before {
+  content: '';
+  z-index: -1;
+  background: linear-gradient(90deg,#16110ddc,transparent 61%), linear-gradient(0deg,#16110dab,transparent 42%);
+}
+.operator-studio img {z-index: -2;object-fit: cover;object-position: center 53%;}
+.operator-studio figcaption {display: grid;gap: 4px;max-width: 56%;}
+.operator-studio strong {font-size: clamp(18px, 4vw, 42px);color: var(--theme-ivory);}
+.operator-studio small {color: var(--theme-gold);font-weight: 750;}
+.rolls-model-status {
+  position: absolute;
+  z-index: 5;
+  inset: 12px 12px auto;
+  max-inline-size: fit-content;
+  margin: 0;
+  padding: 8px 12px;
+  border: 1px solid #896949;
+  border-radius: 3px;
+  background: #1c1712ee;
+  color: var(--theme-ivory);
+  font-size: 12px;
+  overflow-wrap: anywhere;
+  pointer-events: none;
+}
