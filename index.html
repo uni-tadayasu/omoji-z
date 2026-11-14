@@ -30,8 +30,8 @@
 <link rel="apple-touch-icon" href="./assets/omoji-icon-192.png">
 <link rel="manifest" href="./manifest.webmanifest">
 <link rel="preload" as="image" href="./assets/hero.webp">
-<link rel="stylesheet" href="./assets/game.css?v=parapara-128-2">
-<script type="module" src="./assets/game.js?v=parapara-128-2"></script>
+<link rel="stylesheet" href="./assets/game.css?v=economy-balance-1">
+<script type="module" src="./assets/game.js?v=economy-balance-1"></script>
 </head>
 <body class="simple-menu">
 <a class="skip" href="#setup">レース設定へ</a>
@@ -42,7 +42,7 @@
     <div class="header-actions"><div class="wallet-badge"><span data-ui-icon="wallet">所持Z</span><strong data-wallet-total>— Z</strong></div></div>
   </div>
   <aside id="announcements" class="announcements" aria-label="お知らせ">
-    <div class="header-inner announcement-inner"><strong data-ui-icon="radio">お知らせ</strong><div class="announcement-window"><p id="announcement-copy">百里耐久ハイウェイは100 km完走で100万 Z。</p></div><button type="button" id="announcement-toggle" class="quiet" hidden><span data-announcement-toggle-label>停止</span></button></div>
+    <div class="header-inner announcement-inner"><strong data-ui-icon="radio">お知らせ</strong><div class="announcement-window"><p id="announcement-copy">完走報酬をコースの距離・レースの結果に合わせて調整しました。</p></div><button type="button" id="announcement-toggle" class="quiet" hidden><span data-announcement-toggle-label>停止</span></button></div>
   </aside>
 </header>
 <main id="top">
@@ -90,7 +90,7 @@
             <button type="button" id="show-xp-tracks" class="quiet" data-ui-icon="flag" aria-controls="track-list">経験値コースを選ぶ</button>
           </div>
           <div class="bonus-guide">
-            <div><strong data-ui-icon="wallet">ボーナスステージ <span id="bonus-count"></span></strong><p>コースごとの追加Zを完走時に獲得できます。</p></div>
+            <div><strong data-ui-icon="wallet">ボーナスステージ <span id="bonus-count"></span></strong><p>コースごとの追加Zを完走時に獲得できます。 <a href="./guide.html#reward-guide">報酬のしくみ</a></p></div>
             <button type="button" id="show-bonus-tracks" class="quiet" data-ui-icon="flag" aria-controls="track-list">絞り込む</button>
           </div>
           <div class="bonus-guide endurance-guide">
