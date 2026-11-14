@@ -1,0 +1,270 @@
+/* A warm circuit palette with a distinct accent for each menu. */
+:root {
+  --theme-ink: #0b101a;
+  --theme-ivory: #f4f1ef;
+  --theme-gold: #f4cb82;
+  --theme-gold-dark: #241706;
+  --theme-muted: #bac5d5;
+  --grid-gold: #f4cb82;
+  --grid-rose: #ffa8a0;
+  --grid-blue: #a5ccfe;
+  --grid-mint: #90e3c0;
+  --grid-violet: #dbb8ff;
+}
+.theme-pit {
+  --apex-accent: var(--grid-gold);
+  --apex-signal: #e9d7b3;
+  --apex-border: #3d4963;
+  --apex-deep: #141a27;
+  --apex-raised: #23283a;
+  --theme-aqua: #afdbe3;
+  background: radial-gradient(ellipse at 13% 8%,#42315065,transparent 37rem),
+    radial-gradient(ellipse at 98% 29%,#244a657a,transparent 45rem),
+    linear-gradient(145deg,#0b101a,#111525 58%,#0c1019);
+  background-attachment: fixed;
+}
+.theme-pit .site-header {
+  background: linear-gradient(108deg,#141a2bf8,#100f1df5 60%,#252033f7);
+  border-color: #8293b154;
+}
+.theme-pit .site-header .simple-nav a:is(:hover,[aria-current]) {
+  background: linear-gradient(140deg,#69423164,#35263f9b);
+  border-color: #e3b77d83;
+  color: #ffe5b7;
+  box-shadow: inset 0 1px #ffdfa125;
+}
+.theme-pit .brand-z,.theme-pit .site-header .wallet-badge strong { color: var(--grid-gold); }
+.theme-pit .site-header :is(.wallet-badge,.gp-header-title) {
+  border-color: #78604c;
+  background: linear-gradient(132deg,#312c38,#292232);
+  box-shadow: inset 0 1px #f3dcac2b;
+}
+.theme-pit .announcements { background: linear-gradient(90deg,#211e30,#161a2a 48%,#1c2636); }
+.theme-pit .announcement-inner strong { color: #ffd3a3; }
+.theme-pit .announcement-inner #announcement-copy { color: #ebdfd0; }
+.theme-pit #setup .apex-hero {
+  border-color: #7b6559;
+  box-shadow: 0 24px 56px -29px #01040dd9,inset 0 1px #fff3cf3b;
+  background: #182235;
+}
+.theme-pit .apex-hero-art img { object-position: center 59%; }
+.theme-pit #setup .apex-hero::after {
+  background: linear-gradient(90deg,#0b101af5,#111522df 19%,#171a284b 48%,transparent 72%),
+    linear-gradient(0deg,#0b101a8a,transparent 34%);
+}
+.theme-pit .apex-wordmark h1 { text-shadow: 0 3px 23px #090b16; }
+.theme-pit .apex-wordmark h1 span { color: #ffdb91; }
+.theme-pit .theme-hero-copy { color: #e1e0e6; }
+.theme-pit #setup .apex-hero .selection-summary {
+  padding: 8px 13px;
+  border-color: #efa97e;
+  background: linear-gradient(120deg,#231d2cee,#171b2a94);
+  border-radius: 0 8px 8px 0;
+}
+.theme-pit #setup .apex-hero .launch,
+.theme-pit :is(.modal,.race-panel) .primary {
+  border-color: #ffe2a8;
+  background: linear-gradient(145deg,#fff0c9,#ecc280 55%,#c89962);
+  color: #251808;
+  box-shadow: inset 0 1px #fffff0,0 5px 16px #150d267c;
+}
+.theme-pit #setup .apex-hero .launch:hover,
+.theme-pit :is(.modal,.race-panel) .primary:hover { background: #ffe4af; border-color: #fff2cd; }
+.theme-pit #setup .apex-hero-options {
+  background: linear-gradient(134deg,#27334af5,#151b2ced);
+  border-color: #8797ad92;
+  box-shadow: inset 0 1px #ccd9fb29;
+}
+.theme-pit .apex-hero-counts {
+  background: linear-gradient(100deg,#282238,#19253a 54%,#1d2338);
+  border-color: #636078;
+  box-shadow: inset 0 1px #dfe5ff23,0 12px 20px -15px #02070f;
+}
+.theme-pit .apex-hero-counts a:nth-child(2) strong { color: var(--grid-blue); }
+.theme-pit .apex-hero-counts a:nth-child(3) strong { color: var(--grid-violet); }
+.theme-pit .apex-hero-counts a:hover { background: #fbf6ff12; }
+.theme-pit .content > [data-menu-view] { --grid-accent: var(--grid-gold); --grid-glow: #d39e6559; }
+.theme-pit #grand-prix,[data-grid-accent=rose] { --grid-accent: var(--grid-rose); --grid-glow: #ca6b7565; }
+.theme-pit #garage,[data-grid-accent=blue] { --grid-accent: var(--grid-blue); --grid-glow: #76a3df63; }
+.theme-pit #shop { --grid-accent: var(--grid-gold); --grid-glow: #d39e6559; }
+.theme-pit #paint-shop { --grid-accent: var(--grid-violet); --grid-glow: #9767bc6c; }
+.theme-pit #community,[data-grid-accent=mint] { --grid-accent: var(--grid-mint); --grid-glow: #559e8b62; }
+.theme-pit #preferences { --grid-accent: #b4d7f6; --grid-glow: #759dbb56; }
+.theme-pit #garage { --section-art: url("./grid-workshop.webp"); }
+.theme-pit #shop { --section-art: url("./crown-omoji.webp"); }
+.theme-pit #paint-shop { --section-art: url("./grid-workshop.webp"); }
+.theme-pit .content > [data-menu-view]:not(#setup) > .section-heading {
+  min-block-size: clamp(160px,17vw,235px);
+  border-color: var(--grid-glow);
+  background: linear-gradient(95deg,#101625fa,#191a30d9 31%,#191b3249 74%),
+    radial-gradient(ellipse at 14% 9%,var(--grid-glow),transparent 69%),
+    var(--section-art) center 58%/cover no-repeat;
+  box-shadow: inset 0 1px #faf0ff37, 0 16px 34px -24px #000;
+}
+.theme-pit .content > [data-menu-view]:not(#setup) > .section-heading::before {
+  background: linear-gradient(90deg,var(--grid-accent),transparent);
+}
+.theme-pit .section-heading h2 { text-shadow: 0 2px 16px #0008; }
+.theme-pit .section-heading h2 .ui-icon,
+.theme-pit :is(.simple-panel,#operator-garage) > summary .ui-icon,
+.theme-pit .reel-tile-text .ui-icon,
+.theme-pit .reel-arrow { color: var(--grid-accent); }
+.theme-pit .section-heading .quiet,
+.theme-pit .pit-garage-links a {
+  background: linear-gradient(134deg,#3a3d54f0,#191d30f2);
+  border-color: #737c965e;
+  box-shadow: inset 0 1px #edf5ff25,0 4px 10px #0506103b;
+}
+.theme-pit .section-heading .quiet:hover,
+.theme-pit .pit-garage-links a:hover { color: var(--grid-accent); border-color: var(--grid-accent); }
+.theme-pit .reel-tile {
+  border-color: var(--grid-glow);
+  box-shadow: inset 0 1px #fff7f341,0 16px 20px -16px #000;
+}
+.theme-pit .reel-tile:hover { border-color: var(--grid-accent); }
+.theme-pit .reel-tile::before {
+  background: linear-gradient(0deg,#0b0e18f7,#171927ae 41%,transparent 90%),
+    radial-gradient(ellipse at bottom left,var(--grid-glow),transparent 80%);
+}
+.theme-pit .reel-arrow { background: #1e2234e7; }
+.theme-pit :is(#garage,#shop,#community,#preferences) .simple-panel,
+.theme-pit :is(#race-options,#mission-panel,.bonus-guide,#gp-detail),
+.theme-pit #shop :is(.shop-panel,.shop-car),
+.theme-pit #community :is(.save-sync-panel,.p2p-room-surface,.link-rank),
+.theme-pit #audio .menu-theme {
+  background: linear-gradient(128deg,#262a3e,#161d2b 64%);
+  border-color: #57607894;
+  box-shadow: inset 0 1px #f5f0ff1e,0 10px 24px -22px #000;
+}
+.theme-pit .content .primary {
+  background: linear-gradient(145deg,#f9d995,#d8ab6c);
+  color: #241707;
+  border-color: #efca89;
+}
+.theme-pit .content .primary:hover { background: #ffe5b3; }
+.theme-pit :is(.simple-panel,#race-options,#operator-garage)[open] > summary { color: var(--grid-accent); }
+.theme-pit #grand-prix { --gp-accent: var(--grid-rose); }
+.theme-pit #grand-prix .gp-toolbar { background: linear-gradient(115deg,#382636,#22243b); border-color: #97707e86; }
+.theme-pit #grand-prix :is(.gp-status,.pit-list-heading .ui-icon,.gp-card-index) { color: var(--grid-rose); }
+.theme-pit #grand-prix #gp-list .gp-card { border-color: #9c7a9364; box-shadow: 0 12px 19px -16px #000; }
+.theme-pit #grand-prix #gp-list .gp-card:is(:hover,[aria-expanded=true],[data-earned]) { border-color: var(--grid-rose); }
+.theme-pit #garage .garage-grid {
+  background: linear-gradient(120deg,#313957,#101929);
+  border-color: #8390b097;
+  box-shadow: 0 20px 30px -28px #000,inset 0 1px #f2ecff25;
+}
+.theme-pit #garage .car-stage,
+.theme-pit .workshop-preview > .car-stage {
+  background: radial-gradient(ellipse at 57% 47%,#4e5e94,#2b3d62 41%,#161c30 80%);
+}
+.theme-pit #garage .car-info { background: linear-gradient(125deg,#31364b,#20293a); }
+.theme-pit .workshop-console { background: linear-gradient(134deg,#382f50,#242138 68%); border-color: #816e9b87; }
+.theme-pit .workshop-swatches .workshop-swatch { background: linear-gradient(125deg,#39324c,#2a2a40); border-color: #75658d; }
+.theme-pit .workshop-swatches .workshop-swatch:is(:hover,[aria-pressed=true]) {
+  background: #4a3c64; border-color: var(--grid-violet); color: #f6e4ff;
+}
+.theme-pit footer { background: linear-gradient(100deg,#221f33,#131c2b 58%,#242030); border-color: #71658183; }
+.theme-pit :is(.modal[data-overlay]:not(#race),#settings),
+.theme-pit #race :is(.race-panel,.race-loading-card) {
+  background: linear-gradient(140deg,#2b2b44,#181e30 60%);
+  border-color: #706b89;
+  border-block-start-color: var(--grid-gold);
+}
+.theme-pit #race :is(.race-timing,.race-map,.instrument,.race-buttons button) {
+  background: linear-gradient(145deg,#151d2bef,#211b30ef);
+  border-color: #7191ab96;
+  box-shadow: inset 0 1px #e8efff23,0 6px 16px #060c1a5c;
+}
+.theme-pit #race :is(.rpm i,.progress i,.nitro-meter i) { background: linear-gradient(90deg,#a79af0,#fbd391); }
+.theme-pit #race .touch-controls button[data-action=accelerate] {
+  color: #eafff7; background: #174437eb; border-color: #86caba;
+}
+.theme-pit #race .touch-controls button[data-action=brake] {
+  color: #fff2f1; background: #532b3aeb; border-color: #dd9da3;
+}
+
+.theme-pit .cpu-field {
+  display: grid;
+  gap: 5px;
+  min-inline-size: 0;
+  padding: 10px;
+  background: linear-gradient(140deg,#3e3045,#23283b);
+  border: 1px solid #94787283;
+  border-radius: 8px;
+}
+.theme-pit .cpu-field span { font-weight: 800; color: #ffe0af; }
+.theme-pit .cpu-field select { min-block-size: 44px; width: 100%; }
+.theme-pit .cpu-field small { color: #ded4e7; }
+.theme-pit .operator-max-panel {
+  margin: 8px clamp(12px,2.1vw,26px) 14px;
+  padding: clamp(10px,1.8vw,20px);
+  display: grid;
+  gap: 5px;
+  border: 1px solid #be946c97;
+  border-radius: 10px;
+  background: linear-gradient(112deg,#403043,#27233b 66%);
+}
+.theme-pit .operator-max-panel label {
+  display: flex;
+  align-items: center;
+  min-block-size: 42px;
+  width: fit-content;
+  gap: 9px;
+  color: #ffe4b0;
+  font-weight: 850;
+  cursor: pointer;
+}
+.theme-pit .operator-max-panel input { width: 20px; height: 20px; accent-color: var(--grid-gold); }
+.theme-pit .operator-max-panel p { color: #f2deca; font-size: clamp(12px,1.4vw,14px); overflow-wrap: anywhere; }
+.theme-pit .operator-max-panel p:empty { display: none; }
+.theme-pit #race .operator-max-badge {
+  margin-block-start: 4px;
+  width: fit-content;
+  padding: 2px 6px;
+  background: #47302eee;
+  border: 1px solid #dcae83;
+  border-radius: 4px;
+  color: #ffe2aa;
+  font-size: 10px;
+}
+@media(max-width:700px) {
+  .theme-pit .apex-hero-art img { object-position: 67% 35%; }
+  .theme-pit #setup .apex-hero::after {
+    background: linear-gradient(0deg,#0c101aff,#14192beb 27%,#1a203564 57%,transparent 81%);
+  }
+  .theme-pit .content > [data-menu-view]:not(#setup) > .section-heading {
+    min-block-size: 142px;
+    background: linear-gradient(90deg,#121727f5,#1c1e35c9 46%,#161d2e5c),
+      var(--section-art) center 59%/cover no-repeat;
+  }
+}
+@media(forced-colors:active) {
+  .theme-pit :is(.operator-max-panel,.cpu-field) { border: 1px solid ButtonText; }
+}
+
+.theme-pit .apex-hero-counts a .grid-count-icon {
+  display: inline-grid;
+  place-items: center;
+  padding: 4px;
+  border-radius: 5px;
+  background: #f2df9215;
+  color: var(--grid-gold);
+}
+.theme-pit .apex-hero-counts a .grid-count-icon .ui-icon { width: 19px; height: 19px; margin: 0; }
+.theme-pit .apex-hero-counts a:nth-child(2) .grid-count-icon { color: var(--grid-blue); }
+.theme-pit .apex-hero-counts a:nth-child(3) .grid-count-icon { color: var(--grid-violet); }
+@media(max-width:420px) {
+  .theme-pit .apex-hero-counts a .grid-count-icon { padding: 1px; }
+  .theme-pit .apex-hero-counts a .grid-count-icon .ui-icon { width: 14px; height: 14px; }
+  .theme-pit .apex-hero-counts a { gap: 3px; }
+}
+
+.theme-pit #grand-prix .gp-card-kicker .ui-icon {
+  width: 1.06em;
+  height: 1.06em;
+  margin-inline-end: 4px;
+  vertical-align: -.14em;
+  color: var(--grid-rose);
+}
+.theme-pit #grand-prix .gp-actions :is(a,button) .ui-icon { margin-inline-end: 5px; }
+.theme-pit .operator-max-spec { color: #ffe1ab; font-weight: 750; }
