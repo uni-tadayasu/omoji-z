@@ -3,27 +3,33 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>尾文字Z | 峠を走る旧車3Dレース</title>
-<meta name="description" content="尾文字Zは、架空の旧車207台で、峠、海岸、最高速試験路など全25コースを走る3Dレーシングゲーム。ボーナスステージやチューニングも楽しめます。">
+<title>尾文字Z｜旧車で駆ける3Dブラウザレース</title>
+<meta name="description" content="旧車207台で、夜の峠から高速直線まで全121コースへ。AT・MTを選び、完走で稼いだZで愛車を強化。オリジナルのユーロビートとともに、PC・スマホで走ろう。">
+<link rel="canonical" href="https://uni-tadayasu.github.io/omoji-z/">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:site_name" content="尾文字Z">
+<meta property="og:title" content="尾文字Z｜旧車で駆ける3Dブラウザレース">
+<meta property="og:description" content="旧車207台で、夜の峠から高速直線まで全121コースへ。AT・MTを選び、完走で稼いだZで愛車を強化。オリジナルのユーロビートとともに、PC・スマホで走ろう。">
+<meta property="og:url" content="https://uni-tadayasu.github.io/omoji-z/">
+<meta property="og:image" content="https://uni-tadayasu.github.io/omoji-z/assets/ogp-share.jpg">
+<meta property="og:image:secure_url" content="https://uni-tadayasu.github.io/omoji-z/assets/ogp-share.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="雨の峠を走る銀色の旧車と尾文字Zのロゴ。">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="尾文字Z｜旧車で駆ける3Dブラウザレース">
+<meta name="twitter:description" content="旧車207台で、夜の峠から高速直線まで全121コースへ。AT・MTを選び、完走で稼いだZで愛車を強化。オリジナルのユーロビートとともに、PC・スマホで走ろう。">
+<meta name="twitter:image" content="https://uni-tadayasu.github.io/omoji-z/assets/ogp-share.jpg">
+<meta name="twitter:image:alt" content="雨の峠を走る銀色の旧車と尾文字Zのロゴ。">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"VideoGame","name":"尾文字Z","alternateName":"OMOJI Z","image":"https://uni-tadayasu.github.io/omoji-z/assets/ogp-share.jpg","description":"旧車207台で、夜の峠から高速直線まで全121コースへ。AT・MTを選び、完走で稼いだZで愛車を強化。オリジナルのユーロビートとともに、PC・スマホで走ろう。","genre":"Racing","inLanguage":"ja","gamePlatform":"Web Browser","playMode":"SinglePlayer","isAccessibleForFree":true,"url":"https://uni-tadayasu.github.io/omoji-z/"}</script>
 <meta name="theme-color" content="#151717">
 <link rel="icon" href="./assets/omoji-favicon.ico" sizes="any">
 <link rel="icon" href="./assets/omoji-icon-192.png" type="image/png" sizes="192x192">
 <link rel="apple-touch-icon" href="./assets/omoji-icon-192.png">
 <link rel="manifest" href="./manifest.webmanifest">
-<meta property="og:type" content="website">
-<meta property="og:locale" content="ja_JP">
-<meta property="og:site_name" content="尾文字Z">
-<meta property="og:title" content="尾文字Z | 峠を走る旧車3Dレース">
-<meta property="og:description" content="雨・夜・雪の峠を、クラシックカーとユーロビートで駆ける3Dブラウザゲーム。">
-<meta property="og:image" content="./assets/ogp.jpg">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="深夜の濡れた峠を走る銀色のクラシックカーと尾文字Zのロゴ">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="尾文字Z | 峠を走る旧車3Dレース">
-<meta name="twitter:description" content="クラシックカーで峠、海岸、雪山を走る3Dレース。旧車のチューニングと4つのソロモードに対応。">
-<meta name="twitter:image" content="./assets/ogp.jpg">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"VideoGame","name":"尾文字Z","alternateName":"OMOJI Z","image":"./assets/ogp.jpg","description":"日欧米のクラシックカーで雨・夜・雪の峠を走る3Dブラウザレーシングゲーム。","genre":"Racing","inLanguage":"ja","gamePlatform":"Web Browser","playMode":"SinglePlayer","isAccessibleForFree":true}</script>
+
 <link rel="preload" as="image" href="./assets/hero.webp">
 <link rel="stylesheet" href="./assets/game.css">
 <script type="module" src="./assets/game.js"></script>
@@ -66,12 +72,13 @@
         <div>
           <h3 data-ui-icon="road">コースを選ぶ</h3>
           <div class="bonus-guide">
-            <div><strong data-ui-icon="wallet">ボーナスステージ</strong><p>完走すると、通常報酬にZが加算されます。</p></div>
+            <div><strong data-ui-icon="wallet">ボーナスステージ <span id="bonus-count"></span></strong><p>コースごとの追加Zを完走時に獲得できます。</p></div>
             <button type="button" id="show-bonus-tracks" class="quiet" data-ui-icon="flag" aria-controls="track-list">コースを表示</button>
           </div>
-          <div class="catalog-tools">
+          <div class="catalog-tools track-catalog-tools">
             <label for="track-search"><span class="catalog-label" data-ui-icon="search">コース検索</span><input type="search" id="track-search" placeholder="コース名・天候など" autocomplete="off" aria-controls="track-list"></label>
             <label for="track-filter"><span class="catalog-label" data-ui-icon="filter">地形</span><select id="track-filter" aria-controls="track-list"><option value="">すべて</option></select></label>
+            <label for="track-type"><span class="catalog-label" data-ui-icon="flag">コース種別</span><select id="track-type" aria-controls="track-list"><option value="">すべて</option></select></label>
           </div>
           <div class="catalog-status"><p id="track-matches" role="status"></p><button type="button" class="catalog-current" id="track-current" aria-controls="track-list"></button></div>
           <div class="track-list" id="track-list" role="group" aria-label="コース">
@@ -85,6 +92,9 @@
           </div>
           <label class="select-label" id="difficulty-field" for="difficulty"><span data-ui-icon="duel">ライバルの強さ</span>
             <select id="difficulty"><option value="easy">初級</option><option value="normal" selected>中級</option><option value="hard">上級</option></select>
+          </label>
+          <label class="select-label" for="transmission"><span data-ui-icon="tuning">トランスミッション</span>
+            <select id="transmission"><option value="at">AT（自動変速）</option><option value="mt">MT（手動変速）</option></select>
           </label>
           <button type="button" class="primary launch" data-start>この設定でスタート <span data-ui-icon="play" data-ui-replace aria-hidden="true">↗</span></button>
         </div>
@@ -149,6 +159,7 @@
     <label for="volume-sfx"><span><b data-ui-icon="volume">効果音 音量</b> <output id="volume-sfx-value">85%</output></span><input id="volume-sfx" type="range" min="0" max="100" value="85"></label>
     <label class="select-label" for="song-picker"><span data-ui-icon="radio">レースBGM</span><select id="song-picker"><option value="auto">コースに合わせて選ぶ</option></select></label>
     <label class="select-label" for="quality"><span data-ui-icon="display">描画品質</span><select id="quality"><option value="auto">自動</option><option value="low">低</option><option value="medium">中</option><option value="high">高</option></select></label>
+    <label class="select-label" for="settings-transmission"><span data-ui-icon="tuning">トランスミッション</span><select id="settings-transmission"><option value="at">AT（自動変速）</option><option value="mt">MT（手動変速）</option></select></label>
     <label class="check-label" for="assist"><input id="assist" type="checkbox"><span><b data-ui-icon="wheel">運転アシスト</b><small>アクセル操作中に、進路とコーナー手前の減速を補助します。アシスト走行は記録対象外です。</small></span></label>
     <div id="gamepad-settings"></div>
   </div>
@@ -156,7 +167,10 @@
 <div id="controls" class="modal" aria-labelledby="controls-title" data-overlay role="dialog" aria-modal="true" tabindex="-1" hidden>
   <div class="modal-head"><h2 id="controls-title" data-ui-icon="controller">操作方法</h2><button type="button" class="cross" data-ui-icon="close" data-ui-replace data-close aria-label="閉じる">×</button></div>
   <dl class="key-list"><div><dt data-ui-icon="pedal">アクセル</dt><dd><kbd>W</kbd> <kbd>↑</kbd></dd></div><div><dt data-ui-icon="brakes">ブレーキ・後退</dt><dd><kbd>S</kbd> <kbd>↓</kbd></dd></div><div><dt data-ui-icon="wheel">ステアリング</dt><dd><kbd>A</kbd> <kbd>D</kbd> <kbd>←</kbd> <kbd>→</kbd></dd></div><div><dt data-ui-icon="drift">ハンドブレーキ</dt><dd><kbd>Space</kbd></dd></div><div><dt data-ui-icon="camera">カメラ切替</dt><dd><kbd>C</kbd></dd></div><div><dt data-ui-icon="reset">コースへ復帰</dt><dd><kbd>R</kbd></dd></div><div><dt data-ui-icon="pause">一時停止</dt><dd><kbd>Esc</kbd></dd></div></dl>
-  <p class="panel-note">スマートフォンは画面下のボタンで操作できます。コントローラーの割り当ては設定から変更できます。</p>
+  <dl class="key-list"><div><dt data-ui-icon="down">MT シフトダウン</dt><dd><kbd>Q</kbd> / L1・LB</dd></div><div><dt data-ui-icon="up">MT シフトアップ</dt><dd><kbd>E</kbd> / R1・RB</dd></div></dl>
+  <dl class="key-list"><div><dt data-ui-icon="bolt">ニトロ</dt><dd><kbd>Shift</kbd> / 右フェイスボタン</dd></div></dl>
+  <p class="panel-note">アクセルを踏みながらニトロを長押しすると加速します。スマートフォンでは画面の「NITRO」を長押しします。残量はレースごとに補充されます。</p>
+  <p class="panel-note">スマートフォンでは画面の「−」「＋」で変速します。コントローラーの割り当ては設定から変更できます。</p>
 </div>
 
 <div id="race" class="race" aria-label="3Dレース" data-overlay role="dialog" aria-modal="true" tabindex="-1" hidden>
@@ -168,11 +182,31 @@
   </div>
   <div class="race-side"><strong id="race-position"></strong><small id="race-context"></small></div>
   <div class="countdown" id="countdown" hidden></div>
-  <p class="race-tip" id="race-tip" hidden><kbd>W A S D</kbd> または矢印キーで走行 <kbd>Space</kbd> でドリフト</p>
-  <div class="instrument"><div class="rpm"><i id="race-rpm"></i></div><div><strong id="race-speed">0</strong><span data-ui-icon="speed">KM/H</span><b id="race-gear">N</b></div></div>
+  <p class="race-tip" id="race-tip" hidden><kbd>W A S D</kbd> または矢印キーで走行 <kbd>Space</kbd> でドリフト <span id="nitro-tip"><kbd>Shift</kbd> でニトロ</span></p>
+  <div class="instrument">
+    <div class="rpm"><i id="race-rpm"></i></div><div><strong id="race-speed">0</strong><span data-ui-icon="speed">KM/H</span><b id="race-gear" aria-label="ギア">N</b></div>
+    <div class="transmission-hud"><span id="race-transmission">AT</span><span id="race-rev-count" aria-label="エンジン回転数"></span><span id="race-shift-tip" hidden></span></div>
+    <div class="nitro-hud" id="nitro-hud" hidden>
+      <span data-ui-icon="bolt">NITRO</span><span id="race-nitro-label" aria-hidden="true">100%</span>
+      <div class="nitro-meter" id="race-nitro-meter" role="meter" aria-label="ニトロ残量" aria-valuemin="0" aria-valuemax="100" aria-valuenow="100"><i id="race-nitro-bar"></i></div>
+    </div>
+  </div>
   <div class="touch-controls" aria-label="タッチ操作">
-    <div><button type="button" data-action="left" data-ui-icon="left" data-ui-replace aria-label="左へ">◀</button><button type="button" data-action="right" data-ui-icon="right" data-ui-replace aria-label="右へ">▶</button></div>
+    <div><button type="button" data-action="left" data-ui-icon="left" data-ui-replace aria-label="左へ">◀</button><button type="button" data-action="right" data-ui-icon="right" data-ui-replace aria-label="右へ">▶</button><button type="button" id="touch-nitro" data-action="nitro" aria-label="ニトロを長押し" hidden><span data-ui-icon="bolt" data-ui-replace aria-hidden="true"></span><span class="touch-label" aria-hidden="true">NITRO</span></button></div>
     <div><button type="button" data-action="handbrake" aria-label="ハンドブレーキ"><span data-ui-icon="drift" data-ui-replace aria-hidden="true"></span><span class="touch-label" aria-hidden="true">DRIFT</span></button><button type="button" data-action="brake" aria-label="ブレーキ"><span data-ui-icon="brakes" data-ui-replace aria-hidden="true"></span><span class="touch-label" aria-hidden="true">BRAKE</span></button><button type="button" data-action="accelerate" aria-label="アクセル"><span data-ui-icon="pedal" data-ui-replace aria-hidden="true"></span><span class="touch-label" aria-hidden="true">GAS</span></button></div>
+  </div>
+  <div class="touch-controls touch-shifts" id="touch-shifts" role="group" aria-label="MT変速" hidden>
+    <button type="button" data-action="gearDown" aria-label="シフトダウン">−</button>
+    <button type="button" data-action="gearUp" aria-label="シフトアップ">＋</button>
+  </div>
+  <div class="race-loading" id="race-loading" hidden>
+    <div class="race-loading-card">
+      <p class="kicker" data-ui-icon="flag">レース準備</p>
+      <h2 id="race-loading-track"></h2>
+      <p id="race-loading-car"></p>
+      <progress id="race-loading-bar" class="race-load-bar" max="1" aria-label="レースの読み込み"></progress>
+      <p id="race-loading-state" role="status" aria-live="polite"></p>
+    </div>
   </div>
   <div class="race-overlay" id="pause-layer" hidden>
     <div class="race-panel">
