@@ -740,3 +740,404 @@ body.simple-menu {
 .theme-long-courses a:hover { border-color: var(--theme-gold); }
 .theme-long-courses small { grid-column: 2; color: var(--theme-gold); font-size: .77rem; }
 .theme-long-courses .ui-icon { color: var(--theme-aqua); }
+
+/* Grand Prix menu, championship progress, and results */
+.simple-menu .site-header .header-inner:not(.announcement-inner) {
+  grid-template-columns: max-content minmax(0, 1fr) minmax(0, max-content);
+  column-gap: clamp(8px, 1.2vw, 18px);
+}
+.simple-menu .site-header .simple-nav {
+  align-self: stretch;
+  justify-self: center;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  width: min(100%, 660px);
+}
+.simple-menu .site-header .simple-nav a {
+  padding-inline: max(3px, .6vw);
+}
+.simple-menu .header-actions {
+  gap: 5px;
+  min-width: 0;
+}
+.simple-menu .site-header .wallet-badge strong { white-space: normal; }
+.gp-header-title, .gp-driver-title {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: .15em .4em;
+  min-width: 0;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  color: var(--theme-gold);
+}
+.gp-header-title {
+  max-width: min(210px, 21vw);
+  align-content: center;
+  padding: 6px 9px;
+  border: 1px solid #a586555f;
+  border-radius: 7px;
+  background: linear-gradient(125deg, #32291fcc, #141d28e8);
+  font-size: .75rem;
+  font-weight: 760;
+  line-height: 1.35;
+}
+#gp-header-driver {
+  color: var(--theme-ivory);
+}
+#gp-header-driver:empty, #gp-header-title-text:empty, #gp-race-round:empty, #gp-race-title:empty {
+  display: none;
+}
+.simple-menu .apex-quick-links {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+.simple-menu .apex-quick-links a.gp-quick-link {
+  --quick-art: url('./enkan-circuit.webp');
+  border-color: #9776499f;
+}
+.simple-menu .apex-quick-links a.gp-quick-link .ui-icon {
+  color: var(--theme-gold);
+}
+.simple-menu #grand-prix {
+  --section-art: url('./enkan-circuit.webp');
+  --gp-accent: #c69558;
+}
+.simple-menu #grand-prix .section-heading {
+  min-block-size: clamp(155px, 20vw, 248px);
+  align-items: end;
+  flex-wrap: wrap;
+}
+#grand-prix .section-heading > div,
+#grand-prix .section-heading h2 {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+#grand-prix .section-heading .quiet {
+  min-block-size: 44px;
+}
+.gp-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px 20px;
+  margin-block-end: 14px;
+}
+.gp-status {
+  margin: 0;
+  color: var(--theme-aqua);
+  font-size: .91rem;
+  font-weight: 740;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+#gp-titles {
+  display: flex;
+  align-items: end;
+  flex-wrap: wrap;
+  gap: 8px 12px;
+  min-inline-size: 0;
+  max-inline-size: 100%;
+}
+#gp-titles form {
+  display: flex;
+  align-items: end;
+  flex-wrap: wrap;
+  gap: 6px;
+  min-inline-size: 0;
+  max-inline-size: 100%;
+}
+#gp-titles label, .gp-title-select {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+  color: var(--theme-muted);
+  font-size: .82rem;
+  font-weight: 710;
+}
+#gp-titles :is(select, input) {
+  min-block-size: 42px;
+  min-width: 0;
+  box-sizing: border-box;
+  width: min(11rem, 100%);
+  max-width: 100%;
+  padding: 7px 10px;
+  border: 1px solid #65808b;
+  border-radius: 7px;
+  background-color: #0c1a27;
+  color: var(--theme-ivory);
+  font-size: .9rem;
+}
+#gp-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit,minmax(min(100%, 242px),1fr));
+  gap: clamp(7px, 1.7vw, 16px);
+}
+#gp-list .gp-card {
+  position: relative;
+  display: grid;
+  isolation: isolate;
+  overflow: hidden;
+  align-items: end;
+  min-width: 0;
+  min-block-size: clamp(132px, 15vw, 176px);
+  max-width: 100%;
+  padding: 0;
+  text-align: start;
+  color: var(--theme-ivory);
+  background-color: var(--theme-panel);
+  border: 1px solid #536674;
+  border-radius: 10px;
+  box-shadow: 0 6px 16px #02070d8a;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+#gp-list .gp-card:hover,
+#gp-list .gp-card[aria-pressed='true'],
+#gp-list .gp-card[aria-expanded='true'] {
+  border-color: var(--theme-aqua);
+}
+#gp-list .gp-card:focus-visible {
+  outline-offset: -3px;
+}
+#gp-list .gp-card[data-earned]:not([data-earned='false']) {
+  border-color: var(--gp-accent);
+}
+.gp-card::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  background: linear-gradient(0deg, #09131efb 1%, #09131ef2 34%, #101c2b91 70%, #101c2b27);
+  pointer-events: none;
+}
+.gp-card-image {
+  position: absolute;
+  z-index: -2;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 51%;
+}
+.gp-card-content {
+  display: grid;
+  gap: 4px;
+  align-content: end;
+  min-width: 0;
+  padding: clamp(11px, 1.5vw, 19px);
+}
+.gp-card :is(h3,strong,b) {
+  margin: 0;
+  color: inherit;
+  font-weight: 830;
+  font-size: clamp(.93rem, 2vw, 1.15rem);
+  line-height: 1.38;
+}
+.gp-card :is(p,small), .gp-card-content > span:last-child {
+  margin: 0;
+  color: var(--theme-muted);
+  font-size: .77rem;
+  line-height: 1.45;
+}
+.gp-card .gp-card-kicker {
+  color: var(--theme-gold);
+  font-size: .73rem;
+  letter-spacing: .08em;
+  font-weight: 760;
+}
+#gp-detail {
+  display: grid;
+  gap: 14px;
+  padding: clamp(13px, 2.3vw, 25px);
+  margin-block-end: 17px;
+  border: 1px solid #597286;
+  border-radius: 10px;
+  background: linear-gradient(145deg, #1b2938, #101b28 82%);
+  box-shadow: 0 7px 23px #02070c82;
+  overflow-wrap: anywhere;
+}
+#gp-detail:focus-visible { outline: 2px solid var(--theme-gold); }
+.gp-detail-head {
+  display: grid;
+  gap: 4px;
+  color: var(--theme-muted);
+  font-size: .9rem;
+}
+.gp-detail-head :is(h3,p), #gp-detail h4 {
+  margin: 0;
+}
+.gp-detail-head h3 {
+  color: var(--theme-ivory);
+  font-size: clamp(1.16rem, 2.5vw, 1.55rem);
+  line-height: 1.35;
+  scroll-margin-block-start: 64px;
+}
+.gp-rounds {
+  display: grid;
+  grid-template-columns: repeat(auto-fit,minmax(min(100%, 192px),1fr));
+  gap: 6px 10px;
+  margin: 0;
+  padding: 0;
+  list-style-position: inside;
+  color: var(--theme-ivory);
+  font-size: .85rem;
+  line-height: 1.5;
+}
+.gp-rounds li {
+  min-width: 0;
+  padding: 7px 9px;
+  border: 1px solid #3b5365;
+  border-radius: 6px;
+  background: #0b1723;
+}
+.gp-rounds li small {
+  display: block;
+  color: var(--theme-aqua);
+}
+.gp-rounds li::marker { color: var(--theme-muted); }
+.gp-rounds li[aria-current] {
+  border-color: var(--theme-gold);
+  color: var(--theme-gold);
+}
+.gp-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.gp-actions button {
+  min-block-size: 44px;
+  max-width: 100%;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+.gp-table-wrap {
+  min-width: 0;
+  max-width: 100%;
+  overflow-x: auto;
+  scrollbar-color: #5c8191 #101a25;
+}
+.gp-table {
+  width: 100%;
+  margin-block: 6px 0;
+  border-collapse: collapse;
+  color: var(--theme-ivory);
+  font-size: clamp(.72rem, 1.4vw, .87rem);
+  text-align: start;
+  font-variant-numeric: tabular-nums;
+}
+.gp-table caption {
+  caption-side: top;
+  padding-block-end: 6px;
+  color: var(--theme-aqua);
+  font-weight: 850;
+  text-align: start;
+}
+.gp-table :is(td,th) {
+  padding: 6px 8px;
+  border-block-end: 1px solid #3a5263;
+  text-align: start;
+  line-height: 1.4;
+}
+.gp-table thead th {
+  background: #161f2d;
+  color: var(--theme-muted);
+  white-space: nowrap;
+}
+.gp-table .gp-self {
+  background: #66472a38;
+  color: #ffdfad;
+  font-weight: 740;
+}
+.gp-driver-you {
+  margin-inline-start: .55em;
+  color: var(--theme-muted);
+  font-size: .72em;
+}
+.gp-driver-title {
+  margin-inline-start: .35em;
+  font-size: .88em;
+  font-weight: 720;
+  color: #ffd697;
+}
+#race .race-car-label {
+  flex-wrap: wrap;
+  overflow: visible;
+}
+#race .race-car-label > bdi {
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+#race p.gp-race-status {
+  max-width: 100%;
+  margin: 0;
+  color: var(--theme-aqua);
+  font-size: clamp(9px, 1vw, 11px);
+  font-weight: 800;
+  line-height: 1.24;
+  overflow-wrap: anywhere;
+}
+#gp-result {
+  margin-block: 8px 12px;
+  padding-block-start: 7px;
+  border-block-start: 1px solid #62768a;
+  overflow-wrap: anywhere;
+}
+#gp-result :is(h3,h4,p) { margin-block: 3px 6px; }
+#gp-result h3 { color: var(--theme-gold); }
+#gp-result-action { white-space: normal; }
+#gp-result-action[aria-disabled='true'] { opacity: .65; cursor: wait; }
+
+@media (max-width: 955px) {
+  .simple-menu .site-header .header-inner:not(.announcement-inner) {
+    grid-template-columns: max-content minmax(0, 1fr);
+    grid-template-areas: 'brand actions' 'navigation navigation';
+    grid-template-rows: auto auto;
+    padding-block-start: 3px;
+  }
+  .simple-menu .site-header .simple-nav a { min-block-size: 42px; }
+  .gp-header-title { max-width: min(205px, 29vw); }
+}
+@media (max-width: 620px) {
+  .simple-menu .apex-quick-links { grid-template-columns: repeat(2,minmax(0,1fr)); }
+  #gp-list { grid-template-columns: repeat(2,minmax(0,1fr)); }
+  #gp-list .gp-card { min-block-size: 136px; }
+  .gp-table :is(td,th) { padding: 5px; }
+}
+@media (max-width: 420px) {
+  .simple-menu .site-header .header-inner:not(.announcement-inner) { column-gap: 5px; }
+  .simple-menu .site-header .simple-nav a {
+    gap: 2px;
+    padding-inline: 1px;
+    font-size: clamp(8px, 2.55vw, 11px);
+  }
+  .gp-header-title {
+    max-width: 30vw;
+    padding: 4px 5px;
+    font-size: .64rem;
+    line-height: 1.24;
+  }
+  .gp-card-content { padding: 8px; }
+}
+@media (max-width: 310px) {
+  .simple-menu .site-header .simple-nav a { overflow-wrap: anywhere; }
+  .simple-menu .header-actions .gp-header-title { max-width: 28vw; }
+  #gp-list { grid-template-columns: minmax(0,1fr); }
+}
+@media (forced-colors: active) {
+  #gp-list .gp-card, .gp-header-title, #gp-detail, .gp-rounds li {
+    border: 1px solid ButtonText;
+    background: Canvas;
+  }
+  .gp-card::before, .gp-card-image { display: none; }
+  #gp-list .gp-card:is(:hover,[data-earned]), .gp-rounds li[aria-current] { border-color: Highlight; }
+}
+
+.simple-menu #garage #nitro-level-panel{--apex-row-art:var(--art-tuning)}
+.simple-menu #garage #nitro-level-panel>summary{column-gap:8px}
+.simple-menu #garage #nitro-level-panel>summary:after{margin-inline-start:0}
+#nitro-level-panel [data-nitro-level=quote]{color:#ffd491}
+#race #race-nitro-level:not([hidden]){
+  grid-column:1/-1;justify-self:center;color:#abf3e8;
+  font-size:clamp(8px,1.55vw,12px);font-weight:800;white-space:nowrap
+}

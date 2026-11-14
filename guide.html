@@ -44,7 +44,7 @@
        <img class="catalog-hero-image" src="./assets/theme-settings.webp" alt="夜のピット内にある走行設定コンソール" fetchpriority="high" draggable="false">
        </div><nav aria-label="操作ガイドの目次"><ul class="jumps">
     <li><a href="#first"><svg class="catalog-icon" aria-hidden="true" focusable="false"><use href="#catalog-icon-run"></use></svg>初めて走る</a></li><li><a href="#controls"><svg class="catalog-icon" aria-hidden="true" focusable="false"><use href="#catalog-icon-controller"></use></svg>走行操作</a></li>
-    <li><a href="#modes"><svg class="catalog-icon" aria-hidden="true" focusable="false"><use href="#catalog-icon-trophy"></use></svg>モードと報酬</a></li><li><a href="#garage-help"><svg class="catalog-icon" aria-hidden="true" focusable="false"><use href="#catalog-icon-garage"></use></svg>車とチューニング</a></li>
+    <li><a href="#grand-prix-help"><svg class="catalog-icon" aria-hidden="true" focusable="false"><use href="#catalog-icon-trophy"></use></svg>グランプリ</a></li><li><a href="#modes"><svg class="catalog-icon" aria-hidden="true" focusable="false"><use href="#catalog-icon-trophy"></use></svg>モードと報酬</a></li><li><a href="#garage-help"><svg class="catalog-icon" aria-hidden="true" focusable="false"><use href="#catalog-icon-garage"></use></svg>車とチューニング</a></li>
     <li><a href="#online-help"><svg class="catalog-icon" aria-hidden="true" focusable="false"><use href="#catalog-icon-link"></use></svg>対戦とセーブ</a></li>
   </ul></nav>
   <section id="first" class="guide-section"><h2 class="catalog-section-heading"><svg class="catalog-icon" aria-hidden="true" focusable="false"><use href="#catalog-icon-run"></use></svg>初めて走る</h2>
@@ -86,12 +86,24 @@
       <li><strong>部品の強化費</strong> Lv.1への強化費を据え置き、上のレベルほど増える費用を緩やかにしました。64部品をLv.0からLv.32にする費用は合計5,122,050 Zです。車両ステージの解放費は別途必要です。</li>
       <li><strong>ミッション・100 km耐久</strong> ミッションは達成時に提示されたZとXPを受け取れます。百里耐久ハイウェイの完走は固定100万Zと基礎950 XPです。</li>
     </ul></section>
+  <section id="grand-prix-help" class="guide-section" style="--section-art:url('./assets/enkan-circuit.webp')">
+    <h2 class="catalog-section-heading"><svg class="catalog-icon" aria-hidden="true" focusable="false"><use href="#catalog-icon-trophy"></use></svg>グランプリ</h2>
+    <p><a href="./#grand-prix">グランプリを開く</a>と、全16大会のコース順と優勝称号を確認できます。愛車とCPU7台で、大会ごとに異なる8ステージを順番に走ります。</p>
+    <ol>
+      <li>各戦の順位でポイントを加算します。1位 25点、2位 18点、3位 15点、4位 12点、5位 10点、6位 8点、7位 6点、8位 4点。</li>
+      <li>プレイヤーがゴールした時点で各戦の順位を確定します。その時点で走行中のCPUは、走行距離の長い順に記録します。</li>
+      <li>8戦の合計ポイントが最も多いドライバーが優勝です。同点の場合は1位の回数、2位の回数のように上位から比較し、すべて同じなら最終戦の順位で決まります。</li>
+      <li>優勝すると大会ごとの称号を獲得します。全16大会で優勝すると、全大会制覇の特別称号が加わります。獲得済みの称号はグランプリ画面で選び、メニューヘッダー・走行画面・総合順位でプレイヤー名の横に表示できます。</li>
+      <li>表示する名前と完走したラウンドを、このブラウザーに自動保存します。大会画面から次のラウンドに進めます。</li>
+    </ol>
+  </section>
   <section id="garage-help" class="guide-section"><h2 class="catalog-section-heading"><svg class="catalog-icon" aria-hidden="true" focusable="false"><use href="#catalog-icon-garage"></use></svg>車とチューニング</h2>
     <p>壁やガードレール、対戦車に当たると、へこみ・こすり傷・ガラスやライトのひび・足回りの傷みが愛車に残ります。ガレージの「メンテナンス」から、板金修理、塗装・磨き、ガラス・ライト交換、ホイール・足回り整備を個別に行えます。</p>
     <p><a href="./#garage">ガレージ</a>で所有車・ボディカラー・ニックネームを選べます。直線や長距離なら加速と最高速、峠やドリフトでは曲がりやすさと駆動方式を見て選ぶと違いをつかみやすくなります。</p>
     <p><a href="./#shop">ショップ</a>の「外観と性能を見る」で、購入前に標準色の3D車体を8方向から確認できます。エンジン、変速機、タイヤ、足回り、ブレーキ、ニトロはZで強化できます。</p>
     <p>ガレージの「タービン強化」で、所有車ごとにZを使ってLv.0からLv.24へ強化できます。プレイヤーレベル・車両レベルとは別に進み、1 Lvごとに最高速度が20 km/h、加速ポイントが30増加します。Lv.24での加算は最高速度+480 km/h、加速+720ポイントです。</p>
     <p>Lv.1への強化は1,000 Z。費用はレベルに応じて上がり、Lv.24までの総額は1,097,640 Zです。性能はソロ・フリールームの走行に反映されます。</p>
+    <p>ガレージの「ニトロレベル」は所有車ごとにLv.15まで強化できます。ソロ・グランプリ・フリールームで、ニトロ噴射中の最高速度が1 Lvにつき25 km/h上がります。最大で+375 km/h。噴射が止まると加算は減衰します。Lv.1は1,000 Z、Lv.15までの合計は219,750 Zです。</p>
     <p>車の強化や速度に応じて、高速域の操舵・制動・変速を補正します。ATとMTで同じ車両調整を適用し、MTは手動で変速できます。</p>
   </section>
   <section id="online-help" class="guide-section"><h2 class="catalog-section-heading"><svg class="catalog-icon" aria-hidden="true" focusable="false"><use href="#catalog-icon-link"></use></svg>対戦とセーブ</h2>
