@@ -1530,3 +1530,197 @@ body.theme-reel {
 @media(prefers-reduced-motion:reduce){
   .theme-reel .reel-tile {transition:none;}
 }
+/* Paint workshop shares the garage model and the current save's vehicle colors. */
+.theme-reel .site-header .simple-nav {
+  grid-template-columns: repeat(7,minmax(0,1fr));
+  width:min(100%,730px);
+}
+.theme-reel .site-header .simple-nav a {
+  padding-inline:clamp(1px,.54vw,9px);
+  white-space:normal;
+  text-align:center;
+  min-inline-size:0;
+}
+.workshop-header-actions {
+  display:flex;
+  flex-wrap:wrap;
+  gap:7px;
+}
+.theme-reel #paint-shop {
+  --section-art:var(--art-garage);
+}
+.workshop-grid {
+  display:grid;
+  grid-template-columns:minmax(0,1fr) minmax(315px,.82fr);
+  gap:clamp(10px,2.2vw,30px);
+  align-items:stretch;
+}
+.workshop-preview {
+  min-block-size:clamp(270px,39vw,540px);
+  display:grid;
+  border:1px solid #9672547d;
+  border-radius:4px;
+  overflow:hidden;
+  background:radial-gradient(ellipse at 54% 42%,#55493d,#191713 69%);
+}
+.workshop-preview>.car-stage {
+  min-block-size:inherit;
+  width:100%;
+  background:radial-gradient(ellipse at 52% 33%,#51473c95,transparent 64%),#181612;
+}
+.workshop-preview #car-canvas {
+  width:100%;
+  height:100%;
+  min-height:0;
+  touch-action:pan-y;
+}
+.workshop-console {
+  display:grid;
+  gap:10px;
+  min-inline-size:0;
+  margin:0;
+  padding:clamp(13px,2.2vw,29px);
+  color:var(--theme-ivory);
+  background:linear-gradient(135deg,#2c241c,#191613 70%);
+  border:1px solid #8a6b5073;
+  border-radius:4px;
+}
+.workshop-console :is(input,select) {
+  min-width:0;
+  width:100%;
+  min-height:43px;
+  color:var(--theme-ivory);
+  border:1px solid #ae896678;
+  border-radius:2px;
+  background:#181512;
+  padding:7px 9px;
+}
+.workshop-console :is(input,select):focus-visible {
+  outline:2px solid var(--theme-gold);
+}
+.workshop-console input[type="color"] {padding:4px;}
+.workshop-console input[aria-invalid="true"] {border-color:#e09884;}
+.workshop-label,
+.workshop-palette h3 {
+  color:var(--theme-muted);
+  font-size:.87rem;
+  margin:0;
+}
+.workshop-palette h3 {margin-block-end:7px;}
+.workshop-swatches {
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(min(100%,95px),1fr));
+  gap:5px;
+}
+.workshop-swatches .workshop-swatch {
+  display:flex;
+  align-items:center;
+  justify-content:flex-start;
+  gap:6px;
+  font:inherit;
+  font-size:clamp(.67rem,1.2vw,.79rem);
+  line-height:1.2;
+  text-align:start;
+  overflow-wrap:anywhere;
+  white-space:normal;
+  color:var(--theme-ivory);
+  border:1px solid #a7836660;
+  border-radius:3px;
+  background:#211a15;
+  min-width:0;
+  min-height:42px;
+  padding:4px 5px;
+}
+.workshop-swatch::before,.workshop-sample::before {
+  content:"";
+  display:inline-block;
+  flex:0 0 auto;
+  width:17px;
+  height:17px;
+  border-radius:2px;
+  border:1px solid #d1b597a8;
+  background:var(--workshop-color);
+}
+.workshop-swatches .workshop-swatch[aria-pressed="true"] {
+  color:var(--theme-gold);
+  border-color:var(--theme-gold);
+  box-shadow:inset 0 0 0 1px #e7ad803d;
+}
+.workshop-custom {
+  display:grid;
+  grid-template-columns:minmax(0,.72fr) minmax(0,1fr);
+  gap:9px;
+}
+.workshop-custom>div { min-width:0; display:grid; gap:3px; }
+.workshop-sample {
+  display:flex;
+  align-items:center;
+  gap:8px;
+  min-height:20px;
+  font-size:.83rem;
+}
+.workshop-actions {
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+}
+.workshop-actions :is(button,a) {
+  min-height:42px;
+  white-space:normal;
+  padding-inline:11px;
+}
+.workshop-message {
+  min-height:1.5em;
+  margin:0;
+  color:var(--theme-gold);
+}
+@media(max-width:810px) {
+  .workshop-grid {grid-template-columns:minmax(0,1fr);}
+  .workshop-preview {min-block-size:clamp(220px,54vw,360px);}
+}
+@media(max-width:410px) {
+  .theme-reel .site-header .simple-nav a {font-size:clamp(8px,2.5vw,10px);}
+  .theme-reel .site-header .simple-nav a .ui-icon {width:12px;height:12px;}
+}
+@media(max-width:340px) {
+  .theme-reel .site-header .simple-nav {grid-template-columns:repeat(4,minmax(0,1fr));}
+  .theme-reel .site-header .simple-nav a {font-size:10px;min-block-size:35px;}
+}
+
+
+.theme-reel #shop .crown-shop {
+  border-color: #c18f67a1;
+  background: #1c1814;
+}
+.theme-reel #shop .crown-shop-heading {
+  display: flex;
+  position: relative;
+  z-index: 0;
+  isolation: isolate;
+  align-items: end;
+  flex-wrap: wrap;
+  min-block-size: clamp(190px,29vw,360px);
+  padding: clamp(16px,4vw,48px);
+  margin: 0 0 16px;
+  border: 1px solid #a6805b85;
+  border-radius: 3px;
+  background: linear-gradient(90deg,#17130fef,#17130fa8 30%,transparent 76%), linear-gradient(0deg,#17130f9d,transparent 55%), url("./crown-omoji.webp") right 54% / cover no-repeat #181612;
+}
+.theme-reel #shop .crown-shop-heading h3 {
+  color: var(--theme-ivory);
+  font-size: clamp(26px,4.8vw,64px);
+  line-height: 1.15;
+  font-weight: 900;
+  letter-spacing: -.05em;
+}
+.theme-reel #shop .crown-shop-heading p {color: #ded1c1;}
+.theme-reel #shop .crown-shop :is(.shop-car-price,.shop-car-title) {color: var(--theme-gold);}
+#omoji-z-original a {color: #e7ad80;}
+@media(max-width:610px) {
+  .theme-reel #shop .crown-shop-heading {
+    min-block-size: 220px;
+    background-position: center, center, 69% 50%;
+    background-image: linear-gradient(0deg,#17130ff5,#17130f9e 28%,transparent 72%), url("./crown-omoji.webp");
+    background-position: center, 67% 60%;
+  }
+}

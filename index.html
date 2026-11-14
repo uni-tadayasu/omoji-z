@@ -30,19 +30,19 @@
 <link rel="apple-touch-icon" href="./assets/omoji-icon-192.png">
 <link rel="manifest" href="./manifest.webmanifest">
 <link rel="preload" as="image" href="./assets/reel-hero.webp">
-<link rel="stylesheet" href="./assets/game.css?v=reel-edition-1">
-<script type="module" src="./assets/game.js?v=reel-edition-1"></script>
+<link rel="stylesheet" href="./assets/game.css?v=crown-release-1">
+<script type="module" src="./assets/game.js?v=crown-release-1"></script>
 </head>
 <body class="simple-menu theme-midnight theme-reel">
 <a class="skip" href="#setup">レース設定へ</a>
 <header class="site-header">
   <div class="header-inner">
     <a class="brand" href="#top" aria-label="尾文字Z トップ"><img src="./assets/omoji-icon-192.png" alt="" width="38" height="38" draggable="false"><span>尾文字<span class="brand-z">Z</span><small>OMOJI Z</small></span></a>
-    <nav class="simple-nav" aria-label="メインナビゲーション"><a href="#setup" data-ui-icon="flag">レース</a><a href="#grand-prix" data-ui-icon="trophy">グランプリ</a><a href="#garage" data-ui-icon="garage">ガレージ</a><a href="#shop" data-ui-icon="shop">ショップ</a><a href="#community" data-ui-icon="records">記録・対戦</a><a href="#preferences" data-ui-icon="settings">設定</a></nav>
+    <nav class="simple-nav" aria-label="メインナビゲーション"><a href="#setup" data-ui-icon="flag">レース</a><a href="#grand-prix" data-ui-icon="trophy">グランプリ</a><a href="#garage" data-ui-icon="garage">ガレージ</a><a href="#shop" data-ui-icon="shop">ショップ</a><a href="#paint-shop" data-ui-icon="paint">塗装屋</a><a href="#community" data-ui-icon="records">記録・対戦</a><a href="#preferences" data-ui-icon="settings">設定</a></nav>
     <div class="header-actions"><span class="gp-header-title" id="gp-header-title" data-ui-icon="trophy" hidden><bdi id="gp-header-driver"></bdi><bdi id="gp-header-title-text"></bdi></span><div class="wallet-badge"><span data-ui-icon="wallet">所持Z</span><strong data-wallet-total>— Z</strong></div></div>
   </div>
   <aside id="announcements" class="announcements" aria-label="お知らせ">
-    <div class="header-inner announcement-inner"><strong data-ui-icon="radio">お知らせ</strong><div class="announcement-window"><p id="announcement-copy">車体・コースの描画とステアリングを改良。メニューとBGMも刷新しました。</p></div><button type="button" id="announcement-toggle" class="quiet" hidden><span data-announcement-toggle-label>停止</span></button></div>
+    <div class="header-inner announcement-inner"><strong data-ui-icon="radio">お知らせ</strong><div class="announcement-window"><p id="announcement-copy">グランプリの順位集計と再開を修正。オリジナル車「omoji Z」と塗装屋を追加しました。</p></div><button type="button" id="announcement-toggle" class="quiet" hidden><span data-announcement-toggle-label>停止</span></button></div>
   </aside>
 </header>
 <main id="top">
@@ -65,7 +65,7 @@
           </div>
         </div>
       </div>
-      <div class="apex-hero-counts"><a href="./cars.html"><strong id="car-count">512</strong><span>車両</span></a><a href="./courses.html"><strong id="track-count">256</strong><span>コース</span></a><a href="#audio"><strong id="music-count">128</strong><span>BGM</span></a></div>
+      <div class="apex-hero-counts"><a href="./cars.html"><strong id="car-count">513</strong><span>車両</span></a><a href="./courses.html"><strong id="track-count">256</strong><span>コース</span></a><a href="#audio"><strong id="music-count">128</strong><span>BGM</span></a></div>
       <nav class="reel-shortcuts" aria-label="プレイメニュー">
         <a class="reel-tile gp-quick-link" href="#grand-prix">
           <img src="./assets/reel-routes.webp" alt="" width="960" height="540" loading="lazy" decoding="async" draggable="false">
@@ -83,7 +83,7 @@
           <span class="reel-arrow" aria-hidden="true">↗</span>
         </a>
       </nav>
-      <div class="reel-utility"><a href="#race-options" data-open-tuning-courses data-ui-icon="road">試験コースを走る</a><a href="./guide.html" data-ui-icon="book">操作ガイド</a></div>
+      <div class="reel-utility"><a href="#paint-shop" data-ui-icon="paint">塗装屋</a><a href="#race-options" data-open-tuning-courses data-ui-icon="road">試験コースを走る</a><a href="./guide.html" data-ui-icon="book">操作ガイド</a></div>
       <section class="bonus-guide technique-guide" aria-labelledby="technique-course-title">
         <div><strong id="technique-course-title" data-ui-icon="wheel">無限テクニックサーキット</strong><p>ドリフト・コーナリング・高速走行で、走りながらZを獲得。制限時間なし。</p></div>
         <button type="button" class="quiet" data-open-technique-course data-ui-icon="flag">このコースを選ぶ</button>
@@ -162,7 +162,7 @@
     </section>
 
     <section id="garage" class="content-section" data-menu-view hidden aria-labelledby="garage-title">
-      <div class="section-heading"><div><h2 id="garage-title" data-ui-icon="garage">ガレージ</h2><p class="theme-intro">所有車の選択、カラー変更、整備、強化。</p></div><a class="quiet garage-shop-link" href="#shop" data-ui-icon="wallet">ショップへ</a></div>
+      <div class="section-heading"><div><h2 id="garage-title" data-ui-icon="garage">ガレージ</h2><p class="theme-intro">所有車の選択、カラー変更、整備、強化。</p></div><div class="workshop-header-actions"><a class="quiet" href="#paint-shop" data-ui-icon="paint">塗装屋へ</a><a class="quiet garage-shop-link" href="#shop" data-ui-icon="wallet">ショップへ</a></div></div>
       <div class="garage-grid">
         <div class="car-stage">
           <canvas id="car-canvas" aria-label="選択中の車の3Dモデル" aria-describedby="garage-rotation-hint"></canvas>
@@ -268,9 +268,41 @@
         <p id="operator-status" class="panel-note" role="status"></p>
       </details>
     </section>
+    <section id="paint-shop" class="content-section" data-menu-view hidden aria-labelledby="paint-shop-title">
+      <div class="section-heading">
+        <div><h2 id="paint-shop-title" data-ui-icon="paint">塗装屋</h2>
+        <p class="theme-intro">所有車の色を選び、3Dで確認してから保存できます。</p></div>
+        <a class="quiet" href="#garage" data-ui-icon="garage">ガレージへ</a>
+      </div>
+      <div class="workshop-grid">
+        <div class="workshop-preview" data-paint-workshop="mount"></div>
+        <form class="workshop-console" data-paint-workshop="form" novalidate>
+          <label class="workshop-label" for="workshop-vehicle">塗装する車</label>
+          <select id="workshop-vehicle" data-paint-workshop="car"></select>
+          <div class="workshop-palette">
+            <h3 id="workshop-swatches-heading">色見本</h3>
+            <div class="workshop-swatches" data-paint-workshop="swatches" role="group" aria-labelledby="workshop-swatches-heading"></div>
+          </div>
+          <div class="workshop-custom">
+            <div><label class="workshop-label" for="workshop-picker">カスタム色</label>
+            <input id="workshop-picker" data-paint-workshop="picker" type="color" value="#25252b" aria-label="カスタム色を選ぶ"></div>
+            <div><label class="workshop-label" for="workshop-hex">カラーコード</label>
+            <input id="workshop-hex" data-paint-workshop="hex" type="text" maxlength="7" placeholder="#25252B" spellcheck="false" autocapitalize="characters" autocomplete="off"></div>
+          </div>
+          <output class="workshop-sample" data-paint-workshop="sample" aria-label="プレビュー色"></output>
+          <div class="workshop-actions">
+            <button class="primary" type="submit" data-paint-workshop="apply" data-ui-icon="paint" disabled>塗装を保存</button>
+            <button class="quiet" type="button" data-paint-workshop="undo" disabled>変更を取り消す</button>
+            <button class="quiet" type="button" data-paint-workshop="reset" data-ui-icon="reset" disabled>標準色に戻す</button>
+          </div>
+          <p class="panel-note workshop-message" data-paint-workshop="status" role="status"></p>
+        </form>
+      </div>
+    </section>
+
     <section id="shop" class="content-section" data-menu-view hidden aria-labelledby="shop-title">
       <div class="section-heading"><div><h2 id="shop-title" data-ui-icon="shop">ショップ</h2><p class="theme-intro">購入前に3Dプレビューと性能を確認できます。</p></div>
-        <nav class="shop-shortcuts" aria-label="ショップ内の移動"><a class="quiet" href="#shop-cars-heading" data-ui-icon="car">車両</a><a class="quiet" href="#shop-parts-heading" data-ui-icon="tuning">部品</a></nav>
+        <nav class="shop-shortcuts" aria-label="ショップ内の移動"><a class="quiet" href="#original-shop" data-ui-icon="medals">オリジナル車</a><a class="quiet" href="#shop-cars-heading" data-ui-icon="car">車両</a><a class="quiet" href="#shop-parts-heading" data-ui-icon="tuning">部品</a></nav>
       </div>
       <div id="shop-inventory"></div><p class="theme-section-foot"><a class="quiet" data-ui-icon="book" href="./cars.html">車両図鑑を開く</a></p>
     </section>
@@ -316,7 +348,7 @@
         <div class="guide-intro">
           <h3 data-ui-icon="flag">レースを始める</h3>
           <ol>
-            <li><a href="#garage">ガレージ</a>で車を選びます。色とニックネームは車ごとに設定できます。</li>
+            <li><a href="#garage">ガレージ</a>で車を選びます。<a href="#paint-shop">塗装屋</a>では車ごとにボディカラーを変更できます。</li>
             <li><a href="#setup">レース設定</a>でコース・モード・変速方式を選び、「レース開始」を押します。峠バトルのCPUは5段階から選べます。</li>
             <li>完走するとZと経験値（XP）を獲得できます。Zは<a href="#shop">ショップ</a>で車や部品の購入に使えます。</li>
           </ol>
