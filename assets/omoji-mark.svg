@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="omoji-mark-title">
+  <title id="omoji-mark-title">尾文字Z</title>
+  <rect width="64" height="64" rx="14" fill="#09111a"/>
+  <path d="M16.6 6.5h37.8l3.3 11.3L44 57.5H9.6L6.3 46.2Z" fill="#142731" stroke="#31505a" stroke-width="1.4"/>
+  <path d="M16.6 6.5h37.8l3.3 11.3M6.3 46.2l3.3 11.3H44" fill="none" stroke="#64f2d3" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M21.4 17.8h27l-3.1 7.1-19.2 14.2h13.2l-3 7.2H14.5l3.1-7.4 19-13.9H18.5Z" fill="#eff9f8"/>
+  <path d="M39.3 39.1h7.3l-3 7.2h-7.3Z" fill="#ff9b7a"/>
+</svg>

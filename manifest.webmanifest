@@ -6,8 +6,8 @@
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
-  "theme_color": "#141412",
-  "background_color": "#111110",
+  "theme_color": "#091119",
+  "background_color": "#091119",
   "icons": [
     {
       "src": "./assets/omoji-icon-192.png",

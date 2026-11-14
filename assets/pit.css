@@ -1,0 +1,566 @@
+/* Shared surfaces for the Omoji Z main menu and racing overlays. */
+:root {
+  --bg: #091119;
+  --panel: #101c27;
+  --paper: #eaf2f5;
+  --sub: #a1b4c3;
+  --yellow: #64f2d3;
+  --line: #2b3e4d;
+  --theme-ink: #091119;
+  --theme-panel: #101b26;
+  --theme-raised: #162534;
+  --theme-border: #304656;
+  --theme-muted: #b0c1cc;
+  --theme-ivory: #eaf2f5;
+  --theme-gold: #64f2d3;
+  --theme-gold-dark: #0a201c;
+  --theme-aqua: #85e1d0;
+  --theme-faint: #8ebcd118;
+  --apex-accent: #64f2d3;
+  --apex-signal: #9cf4e5;
+  --apex-light: #eaf2f5;
+  --apex-muted: #acbfcb;
+  --apex-raised: #162534;
+  --apex-deep: #0d1721;
+  --apex-border: #304656;
+  --pit-coral: #ff9b7a;
+  --pit-radius: 13px;
+  --pit-offset: 104px;
+}
+html { scroll-padding-top: var(--pit-offset); }
+.theme-pit {
+  --page-gutter: clamp(14px,4vw,74px);
+  background: radial-gradient(ellipse at 84% 9%,#13354983,transparent 42rem),var(--theme-ink);
+  color: var(--theme-ivory);
+  min-width: 280px;
+}
+.theme-pit :is(.wrap,.site-header .header-inner) { width: min(1440px,calc(100% - 2 * var(--page-gutter))); }
+.theme-pit :is(button,a,input,select,textarea,summary):focus-visible {
+  outline: 2px solid var(--theme-gold);
+  outline-offset: 3px;
+}
+.theme-pit ::selection { color: #091119; background: var(--theme-gold); }
+.theme-pit .site-header {
+  background: #0a121bf7;
+  border-color: #293d4a;
+  box-shadow: 0 5px 24px #0004;
+}
+.theme-pit .site-header .header-inner:not(.announcement-inner) {
+  display: grid;
+  grid-template-columns: auto minmax(0,1fr) auto;
+  gap: 10px clamp(10px,2vw,32px);
+  height: auto;
+  min-block-size: 68px;
+}
+.theme-pit .site-header .brand {
+  grid-area: auto;
+  gap: 10px;
+  max-inline-size: 100%;
+  color: var(--theme-ivory);
+  font-size: clamp(16px,1.55vw,22px);
+  white-space: nowrap;
+}
+.theme-pit .site-header .brand img { width: 40px; height: 40px; border: 0; border-radius: 8px; }
+.theme-pit .brand-z { color: var(--theme-gold); }
+.theme-pit .brand small { margin-block-start: 4px; color: #a9bdc8; }
+.theme-pit .site-header .simple-nav {
+  grid-area: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  width: auto;
+  height: auto;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  min-width: 0;
+}
+.theme-pit .site-header .simple-nav a {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+  min-block-size: 44px;
+  padding: 0 clamp(6px,.75vw,12px);
+  border: 1px solid transparent;
+  border-radius: 8px;
+  color: #aebfcb;
+  font-size: clamp(11px,1.02vw,15px);
+  font-weight: 750;
+  line-height: 1.05;
+  white-space: nowrap;
+  overflow-wrap: normal;
+  word-break: keep-all;
+}
+.theme-pit .site-header .simple-nav a .ui-icon { width: 18px; height: 18px; }
+.theme-pit .site-header .simple-nav a:hover { background: #172827; color: #ebfffa; }
+.theme-pit .site-header .simple-nav a[aria-current] {
+  color: var(--theme-gold);
+  background: #142b2c;
+  border-color: #467b72;
+  box-shadow: none;
+}
+.theme-pit .site-header .simple-nav a:focus-visible { outline-offset: 0; }
+.theme-pit .nav-short { display: none; }
+.theme-pit .site-header .header-actions { grid-area: auto; justify-content: end; gap: 6px; min-width: 0; }
+.theme-pit .site-header :is(.wallet-badge,.gp-header-title) {
+  padding: 6px 10px;
+  min-block-size: 33px;
+  background: #14232e;
+  border: 1px solid #344b5b;
+  border-radius: 8px;
+  color: var(--theme-ivory);
+}
+.theme-pit .site-header .wallet-badge span { color: #b6c9d4; }
+.theme-pit .site-header .wallet-badge strong {
+  color: var(--theme-gold);
+  font-variant-numeric: tabular-nums;
+  font-size: clamp(13px,1.35vw,18px);
+}
+.theme-pit .site-header .gp-header-title { max-inline-size: min(12vw,165px); }
+.theme-pit .announcements { background: #101d27; border-color: #293d4a; }
+.theme-pit .announcements .announcement-inner {
+  min-block-size: 32px;
+  column-gap: 10px;
+  font-size: 11px;
+}
+.theme-pit .announcement-inner strong { color: var(--theme-aqua); white-space: nowrap; font-size: inherit; }
+.theme-pit #announcement-toggle { min-block-size: 28px; padding: 0 5px; color: #a9c0cd; border: 0; font-size: inherit; }
+.theme-pit .content { padding-block: clamp(16px,2.7vw,38px) clamp(32px,4vw,64px); }
+.theme-pit .content :is([id],summary) { scroll-margin-top: 8px; }
+.theme-pit #setup .apex-hero {
+  align-content: center;
+  min-block-size: clamp(390px,37vw,560px);
+  padding: clamp(24px,5vw,70px);
+  overflow: hidden;
+  border: 1px solid #314958;
+  border-radius: var(--pit-radius);
+  background: #132631;
+}
+.theme-pit .apex-hero-art img { object-position: center 51%; }
+.theme-pit #setup .apex-hero::after {
+  background: linear-gradient(90deg,#08111afc 0%,#08111ad9 24%,#08111a45 52%,transparent 75%),
+              linear-gradient(0deg,#0911199c,transparent 29%);
+}
+.theme-pit .apex-wordmark { margin-block-end: clamp(19px,2.5vw,30px); }
+.theme-pit .apex-wordmark .hero-brand-en {
+  color: var(--theme-gold);
+  font: 700 14px/1.2 var(--en);
+  letter-spacing: .28em;
+}
+.theme-pit .apex-wordmark h1 {
+  margin-block: 9px 0;
+  font-size: clamp(58px,7.8vw,112px);
+  letter-spacing: -.07em;
+  color: #f1f7fa;
+  line-height: 1.05;
+  text-shadow: 0 3px 24px #03080e9a;
+}
+.theme-pit .apex-wordmark h1 span { color: var(--theme-gold); font-size: 1.23em; }
+.theme-pit .theme-hero-copy { color: #c3d1db; line-height: 1.55; }
+.theme-pit #setup .apex-hero .selection-summary {
+  padding-block: 5px;
+  padding-inline-start: 13px;
+  border-color: var(--pit-coral);
+}
+.theme-pit #setup .apex-hero .selection-summary > span { color: #c7d4de; }
+.theme-pit #setup .apex-hero .selection-summary strong { color: #eff8fd; }
+.theme-pit #setup .apex-hero .selection-summary p { color: #aebfc9; }
+.theme-pit :is(.primary,.simple-race-actions .launch),
+.theme-pit #setup .apex-hero .launch {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  min-block-size: 44px;
+  border: 1px solid var(--theme-gold);
+  border-radius: 8px;
+  background: var(--theme-gold);
+  color: #071e1b;
+  font-weight: 850;
+  text-shadow: none;
+  box-shadow: none;
+}
+.theme-pit :is(.primary,.simple-race-actions .launch):hover,
+.theme-pit #setup .apex-hero .launch:hover { background: #a7ffe9; border-color: #a7ffe9; }
+.theme-pit :is(.ghost,.quiet),
+.theme-pit #setup .apex-hero-options {
+  border-color: #385465;
+  border-radius: 8px;
+  background: #13232ef0;
+  color: #e6f0f6;
+}
+.theme-pit :is(.ghost,.quiet):hover,
+.theme-pit #setup .apex-hero-options:hover { background: #203545; border-color: #80b7c2; color: #f3fffe; }
+.theme-pit #setup :is(.apex-hero .launch,.apex-hero-options) {
+  padding: 11px 18px;
+  min-block-size: 48px;
+  font-size: 14px;
+}
+.theme-pit .simple-race-actions { gap: 8px; }
+.theme-pit .apex-hero-counts {
+  width: 100%;
+  margin: 12px 0 26px;
+  border: 1px solid #2b4352;
+  border-radius: 9px;
+  background: #111e29;
+}
+.theme-pit .apex-hero-counts a { min-block-size: 46px; color: var(--theme-ivory); }
+.theme-pit .apex-hero-counts a+a { border-color: #2b4352; }
+.theme-pit .apex-hero-counts strong { color: var(--theme-gold); }
+.theme-pit .apex-hero-counts span { color: #bacbd4; }
+.theme-pit .apex-hero-counts a:hover { background: #1a2f38; text-decoration: underline; }
+.theme-pit .reel-shortcuts { grid-template-columns: repeat(3,minmax(0,1fr)); }
+.theme-pit .reel-tile {
+  min-block-size: clamp(122px,13vw,205px);
+  border-color: #355262;
+  border-radius: var(--pit-radius);
+  color: #eff7fa;
+  background: #132532;
+}
+.theme-pit .reel-tile:hover { border-color: var(--theme-gold); }
+.theme-pit .reel-tile::before { background: linear-gradient(0deg,#071018f9,#0b1720c9 37%,#12263313 90%); }
+.theme-pit .reel-tile-text strong { font-size: clamp(15px,1.75vw,24px); }
+.theme-pit .reel-tile-text small { color: #c0d0da; }
+.theme-pit .reel-arrow { display: grid; place-items: center; width: 29px; height: 29px; padding: 0; border-radius: 50%; background: #10242de8; }
+.theme-pit .reel-utility { margin-block: 12px 21px; gap: 5px 8px; }
+.theme-pit .reel-utility a { padding: 0 10px; border: 1px solid #2d4656; border-radius: 7px; color: #c2d3de; }
+.theme-pit .reel-utility a:hover { color: var(--theme-gold); background: #132933; }
+.theme-pit .content > [data-menu-view]:not(#setup) > .section-heading {
+  align-items: end;
+  min-block-size: clamp(151px,16vw,215px);
+  padding: clamp(18px,3.2vw,43px);
+  border-color: #355160;
+  border-radius: var(--pit-radius);
+  background: linear-gradient(90deg,#0a1520fa,#0a1520dc 34%,#11222e45 79%),
+              var(--section-art) center 55%/cover no-repeat;
+}
+.theme-pit .content > [data-menu-view]:not(#setup) > .section-heading::before {
+  block-size: 2px;
+  background: linear-gradient(90deg,var(--theme-gold),transparent);
+}
+.theme-pit .content > [data-menu-view]:not(#setup) > .section-heading h2 {
+  font-size: clamp(28px,4.25vw,54px);
+  line-height: 1.18;
+  letter-spacing: -.045em;
+  color: #f1f7fb;
+}
+.theme-pit .section-heading h2 .ui-icon { color: var(--theme-gold); width: .93em; height: .93em; }
+.theme-pit .theme-intro { margin-block-start: 8px; max-inline-size: 56ch; color: #c1d3de; line-height: 1.56; }
+.theme-pit :is(.section-heading,.reel-tile) :is(.quiet,.ghost) { min-block-size: 42px; }
+.theme-pit #grand-prix { --gp-accent: var(--theme-gold); }
+.theme-pit :is(#race-options,#mission-panel,.simple-panel,#operator-garage,.bonus-guide,#gp-detail,.shop-panel,.shop-car,.save-sync-panel,.p2p-room-surface,.link-rank,.menu-theme,.workshop-console) {
+  border-color: #304858;
+  border-radius: var(--pit-radius);
+  background-color: #111d28;
+}
+.theme-pit :is(#garage,#shop,#community,#preferences) .simple-panel,
+.theme-pit :is(#race-options,#mission-panel,.bonus-guide,#gp-detail),
+.theme-pit #shop :is(.shop-panel,.shop-car),
+.theme-pit #community :is(.save-sync-panel,.p2p-room-surface,.link-rank),
+.theme-pit #audio .menu-theme {
+  border-color: #304858;
+  border-radius: var(--pit-radius);
+  background: linear-gradient(115deg,#152532,#101b26 72%);
+}
+.theme-pit :is(.simple-panel,#race-options,#operator-garage) > summary {
+  min-block-size: 51px;
+  color: #e4f0f5;
+}
+.theme-pit :is(.simple-panel,#race-options,#operator-garage) > summary .ui-icon { color: var(--theme-gold); }
+.theme-pit :is(.simple-panel,#race-options,#operator-garage) > summary::before { opacity: .22; }
+.theme-pit :is(.simple-panel,#race-options,#operator-garage)[open] > summary { color: var(--theme-gold); }
+.theme-pit :is(input,select,textarea):not([type=color],[type=range],[type=checkbox],[type=radio]),
+.theme-pit #gp-titles :is(input,select) {
+  min-inline-size: 0;
+  border: 1px solid #385466;
+  border-radius: 7px;
+  background: #0e1a25;
+  color: #eff7fc;
+}
+.theme-pit :is(input,select,textarea):not([type=color],[type=range],[type=checkbox],[type=radio])::placeholder { color: #9aafbf; }
+.theme-pit :is(.catalog-label,.gp-status,.panel-note) { color: #b6c8d4; }
+.theme-pit :is(.setup-grid,.garage-grid,.workshop-grid,.gp-toolbar,.gp-detail,.p2p-fields,.setting-rows) > * { min-width: 0; }
+.theme-pit #setup .theme-long-courses > a {
+  border-color: #3b5969;
+  border-radius: 8px;
+  background: linear-gradient(113deg,#17323f,#12232e);
+}
+.theme-pit #setup .mode-card[aria-pressed=true] { border-color: #65d8c9; background: #142f35; color: #effffa; }
+.theme-pit #setup .track-card::after { background: linear-gradient(0deg,#09151ff9,#0b1826a6 38%,transparent 86%); }
+.theme-pit #setup :is(.track-card,.mode-card) { border-radius: 8px; }
+.theme-pit #setup :is(.track-card,.mode-card):hover { border-color: #67cebe; }
+.theme-pit #grand-prix .gp-toolbar {
+  margin-block: 15px 18px;
+  padding: 13px 17px;
+  border: 1px solid #334c5b;
+  border-radius: 9px;
+  background: #12212c;
+}
+.theme-pit #grand-prix .gp-status { color: var(--theme-gold); }
+.theme-pit .pit-list-heading { margin-block: 19px 11px; font-size: clamp(16px,2vw,22px); }
+.theme-pit .pit-list-heading .ui-icon { color: var(--theme-gold); }
+.theme-pit #grand-prix #gp-list { gap: 11px; }
+.theme-pit #grand-prix #gp-list .gp-card {
+  min-block-size: clamp(135px,14vw,197px);
+  border: 1px solid #365365;
+  border-radius: 10px;
+  background: #142532;
+  color: #edf6fa;
+}
+.theme-pit #grand-prix #gp-list .gp-card:is(:hover,[aria-expanded=true],[data-earned]) { border-color: var(--theme-gold); }
+.theme-pit .gp-card::before { background: linear-gradient(0deg,#09131cfb,#0b1924c8 45%,#101d3029 93%); }
+.theme-pit .gp-card .gp-card-title { color: #f2f8fd; }
+.theme-pit .gp-rounds li { border-color: #355260; background: #0f202b; }
+.theme-pit .gp-rounds li[aria-current] { border-color: var(--theme-gold); }
+.theme-pit .gp-table :is(td,th) { border-color: #344d5c; }
+.theme-pit .gp-table .gp-self { background: #183b3a; }
+.theme-pit .gp-driver-title { border-color: #52968e; color: var(--theme-gold); }
+.theme-pit .pit-garage-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin-block: 0 15px;
+}
+.theme-pit .pit-garage-links a {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-block-size: 43px;
+  padding: 6px 12px;
+  border: 1px solid #344e5f;
+  border-radius: 8px;
+  background: #132531;
+  color: #e0edf2;
+  font-size: 13px;
+  font-weight: 750;
+}
+.theme-pit .pit-garage-links a:hover { border-color: var(--theme-gold); color: var(--theme-gold); }
+.theme-pit :is(.car-stage,.workshop-preview,.shop-car-preview canvas) {
+  border-color: #36576a;
+  border-radius: 10px;
+  background: radial-gradient(ellipse at 51% 48%,#294c61,#101d29 70%);
+}
+.theme-pit #garage .garage-grid {
+  border-color: #36576a;
+  border-radius: var(--pit-radius);
+  background: #122331;
+}
+.theme-pit #garage .car-stage,
+.theme-pit #shop .shop-car-preview canvas { background: radial-gradient(ellipse at 51% 45%,#2c4e62,#101e2a 73%); }
+.theme-pit #garage .car-info { background: #132330; border-color: #304a5b; }
+.theme-pit #shop .crown-shop-heading {
+  border-color: #46626c;
+  border-radius: 10px;
+  background: linear-gradient(90deg,#101d2af2,#14253276),url("./crown-omoji.webp") center 54%/cover;
+}
+.theme-pit #shop .crown-shop-heading p { color: #c7d8e4; }
+.theme-pit #operator-garage .operator-choices button,
+.theme-pit .workshop-console { border-color: #416272; background: #142936; }
+.theme-pit #operator-garage .operator-choices button[aria-pressed=true] { border-color: var(--theme-gold); background: #17413e; color: #eafff8; }
+.theme-pit #operator-garage .operator-studio { border-color: #426273; }
+.theme-pit :is(.modal[data-overlay]:not(#race),#settings),
+.theme-pit #race :is(.race-panel,.race-loading-card) {
+  border: 1px solid #416070;
+  border-block-start: 3px solid var(--theme-gold);
+  border-radius: var(--pit-radius);
+  background: #142530;
+  color: #eff8fc;
+  box-shadow: 0 20px 62px #03090eb3;
+}
+.theme-pit .modal[data-overlay]:not(#race)::before { display: none; }
+.theme-pit .modal-head { gap: 12px; align-items: start; }
+.theme-pit .modal-head h2 {
+  color: #f1f8fc;
+  font-size: clamp(19px,3.1vw,29px);
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}
+.theme-pit .modal-head .cross {
+  min-width: 44px;
+  flex: 0 0 44px;
+  min-height: 44px;
+  background: #203542;
+  border: 1px solid #486773;
+  border-radius: 8px;
+  color: #e5f2f7;
+}
+.theme-pit #error { border-block-start-color: var(--pit-coral); }
+.theme-pit #error-title .ui-icon { color: var(--pit-coral); }
+.theme-pit #error-text { max-width: 54ch; color: #c8d9e4; line-height: 1.7; }
+.theme-pit #error .settings-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+.theme-pit #error .settings-actions > button { min-block-size: 44px; }
+.theme-pit #race :is(.race-timing,.race-map,.instrument,.race-buttons button) {
+  background: #0c1a24ed;
+  border-color: #61809487;
+  color: #dceef6;
+}
+.theme-pit #race :is(#race-gear,.gp-race-status) { color: var(--theme-gold); }
+.theme-pit #race :is(.rpm,.progress,.nitro-meter) { background: #0c151d; }
+.theme-pit #race :is(.rpm i,.progress i,.nitro-meter i) { background: linear-gradient(90deg,#359d9c,#80f6d9); }
+.theme-pit #race .touch-controls button { background: #0f2630ec; border-color: #81b4ba9c; color: #edfdfc; }
+.theme-pit #race .touch-controls button:active { background: #245b58; border-color: var(--theme-gold); }
+.theme-pit footer {
+  border-color: #2f4756;
+  background: #0d1822;
+  color: #b3c7d2;
+}
+.theme-pit .footer-layout a:hover { color: var(--theme-gold); }
+
+@media (max-width: 1080px) {
+  :root { --pit-offset: 151px; }
+  .theme-pit .site-header .header-inner:not(.announcement-inner) {
+    grid-template-columns: minmax(0,1fr) auto;
+    grid-template-areas: "brand balance" "tabs tabs";
+    gap: 2px 8px;
+    min-block-size: auto;
+    padding-block: 7px 5px;
+  }
+  .theme-pit .site-header .brand { grid-area: brand; }
+  .theme-pit .site-header .header-actions { grid-area: balance; }
+  .theme-pit .site-header .gp-header-title { max-inline-size: 30vw; }
+  .theme-pit .site-header .simple-nav {
+    grid-area: tabs;
+    justify-content: stretch;
+    display: grid;
+    grid-template-columns: repeat(7,minmax(0,1fr));
+  }
+  .theme-pit .site-header .simple-nav a { font-size: clamp(10px,1.65vw,13px); }
+}
+@media (max-width: 700px) {
+  :root { --pit-offset: 145px; }
+  .theme-pit { --page-gutter: 13px; }
+  .theme-pit .site-header .brand img { width: 35px; height: 35px; }
+  .theme-pit .site-header .simple-nav { margin-block-start: 3px; gap: 2px; }
+  .theme-pit .site-header .simple-nav a {
+    flex-direction: column;
+    gap: 4px;
+    min-block-size: 43px;
+    padding: 2px 0;
+    font-size: clamp(8px,2.4vw,12px);
+  }
+  .theme-pit .site-header .simple-nav a .ui-icon { width: 16px; height: 16px; }
+  .theme-pit .nav-full { display: none; }
+  .theme-pit .nav-short { display: inline; }
+  .theme-pit .site-header :is(.wallet-badge,.gp-header-title) { min-block-size: 30px; padding: 4px 6px; }
+  .theme-pit .site-header .wallet-badge span { font-size: 9px; }
+  .theme-pit .site-header .gp-header-title { max-inline-size: 24vw; font-size: 9px; }
+  .theme-pit #setup .apex-hero {
+    min-block-size: clamp(365px,109vw,477px);
+    align-content: end;
+    padding: 18px 16px;
+  }
+  .theme-pit .apex-hero-art img { object-position: 77% 32%; }
+  .theme-pit #setup .apex-hero::after {
+    background: linear-gradient(0deg,#08111aff 0%,#08111ad9 32%,#08111a09 77%),
+                linear-gradient(90deg,#08111a75,transparent 62%);
+  }
+  .theme-pit .apex-wordmark { margin-block-end: 13px; }
+  .theme-pit .apex-wordmark h1 { font-size: clamp(46px,13vw,75px); }
+  .theme-pit .apex-wordmark .hero-brand-en { font-size: 12px; }
+  .theme-pit .theme-hero-copy { margin-block-start: 6px; }
+  .theme-pit #setup :is(.apex-hero .launch,.apex-hero-options) {
+    min-block-size: 45px;
+    padding: 8px 9px;
+    font-size: clamp(11px,3vw,14px);
+  }
+  .theme-pit .apex-hero-counts { margin-block: 9px 16px; }
+  .theme-pit .reel-shortcuts { grid-template-columns: minmax(0,1fr); gap: 6px; }
+  .theme-pit .reel-tile { min-block-size: 71px; align-items: center; padding: 9px 12px; }
+  .theme-pit .reel-tile img { object-position: 70% 56%; }
+  .theme-pit .reel-tile::before { background: linear-gradient(90deg,#0a1520fa,#0a1520c9 60%,#08152230); }
+  .theme-pit .reel-tile-text { gap: 1px; }
+  .theme-pit .reel-tile-text small { font-size: 11px; }
+  .theme-pit .reel-utility a { min-height: 40px; font-size: 11px; padding-inline: 7px; }
+  .theme-pit .content > [data-menu-view]:not(#setup) > .section-heading {
+    align-items: start;
+    min-block-size: 134px;
+    padding: 14px;
+    background: linear-gradient(90deg,#0a1520fa,#0a1520d1 57%,#1025314d),var(--section-art) center/cover;
+  }
+  .theme-pit .content > [data-menu-view]:not(#setup) > .section-heading h2 { font-size: clamp(25px,7.1vw,39px); }
+  .theme-pit .content > [data-menu-view]:not(#setup) > .section-heading .theme-intro { font-size: 12px; }
+  .theme-pit .section-heading .quiet { min-block-size: 39px; }
+  .theme-pit #grand-prix .gp-toolbar { padding: 10px; }
+  .theme-pit #grand-prix #gp-list { gap: 7px; }
+  .theme-pit .pit-garage-links { gap: 4px; }
+  .theme-pit .pit-garage-links a { padding-inline: 7px; font-size: 12px; }
+}
+@media (max-width: 345px) {
+  .theme-pit .site-header .simple-nav a { font-size: 8px; }
+  .theme-pit .announcements .announcement-inner { column-gap: 5px; font-size: 10px; }
+  .theme-pit .site-header .header-actions { gap: 3px; }
+  .theme-pit .site-header .wallet-badge { gap: 3px; }
+  .theme-pit #grand-prix #gp-list .gp-card { min-block-size: 128px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .theme-pit .reel-tile { transition: none; }
+}
+
+.theme-pit .section-heading .quiet {
+  color: #e5f1f6;
+  background: #142732f2;
+  border-color: #567282;
+  border-radius: 8px;
+}
+.theme-pit .section-heading .quiet:hover { color: var(--theme-gold); border-color: var(--theme-gold); }
+.theme-pit .reel-arrow .ui-icon { width: 17px; height: 17px; transform: rotate(-38deg); }
+.theme-pit #gp-titles :is(button,input,select) { min-block-size: 42px; }
+.theme-pit #gp-titles button {
+  padding-inline: 10px;
+  border: 1px solid #456071;
+  border-radius: 8px;
+}
+.theme-pit #gp-titles button:hover { color: var(--theme-gold); border-color: var(--theme-gold); }
+@media (max-width: 700px) {
+  .theme-pit .site-header .simple-nav a { font-size: clamp(9px,2.6vw,12px); }
+}
+@media (max-width: 345px) {
+  .theme-pit .site-header .simple-nav a { font-size: 9px; }
+  .theme-pit .nav-narrow-hide { display: none; }
+}
+
+.theme-pit .announcements.is-ready:not(.is-static) #announcement-copy { animation-delay: -4.5s; }
+@media (max-width: 700px) {
+  .theme-pit .announcements.is-ready:not(.is-static) #announcement-copy { animation-delay: -2.2s; }
+}
+
+.theme-pit .workshop-preview > .car-stage { background: radial-gradient(ellipse at 51% 45%,#2c4e62,#101e2a 73%); }
+.theme-pit .workshop-swatches .workshop-swatch {
+  min-block-size: 44px;
+  border-color: #3f596b;
+  border-radius: 7px;
+  background: #152835;
+}
+.theme-pit .workshop-swatches .workshop-swatch:hover,
+.theme-pit .workshop-swatches .workshop-swatch[aria-pressed=true] {
+  border-color: var(--theme-gold);
+  background: #193c40;
+  color: #e5fffa;
+}
+.theme-pit :is(.workshop-swatch,.workshop-sample)::before { border-color: #98aeb8; }
+.theme-pit .workshop-console input[aria-invalid=true] { border-color: var(--pit-coral); }
+.theme-pit #garage :is(.spec-list i,.spec-bar) { border-radius: 4px; }
+.theme-pit :is(.race-overlay,.race-loading) :is(h2,p) { overflow-wrap: anywhere; }
+@media (max-width: 700px) {
+  .theme-pit .announcement-inner #announcement-copy { font-size: 11px; }
+  .theme-pit .modal-head h2 { padding-block-start: 4px; }
+  .theme-pit #error .settings-actions > button { flex: 1 1 max-content; }
+}
+
+.theme-pit #race .race-renderer-notice {
+  max-inline-size: 28ch;
+  margin-block-start: 4px;
+  padding-block-start: 4px;
+  border-block-start: 1px solid #69969a78;
+  color: #bce7dc;
+  font-size: clamp(9px,1.7vw,11px);
+  line-height: 1.32;
+}
+
+@media (max-width: 365px) {
+  .theme-pit .site-header .header-inner:has(.gp-header-title:not([hidden])) .brand > span { display: none; }
+}
