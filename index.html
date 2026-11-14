@@ -23,15 +23,15 @@
 <meta name="twitter:description" content="全309台で夜の峠、100 km耐久、経験値コースなど全243コースを走る3Dブラウザゲーム。旧車、現代の日本車、スーパーカーを収録。PC・スマホでプレイできます。">
 <meta name="twitter:image" content="https://uni-tadayasu.github.io/omoji-z/assets/ogp-share.jpg">
 <meta name="twitter:image:alt" content="雨の峠を走る銀色の旧車と尾文字Zのロゴ。">
-<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@id":"https://uni-tadayasu.github.io/omoji-z/#page","@type":"WebPage","url":"https://uni-tadayasu.github.io/omoji-z/","name":"尾文字Z｜愛車で走る3D峠レース・ブラウザゲーム","description":"全309台で夜の峠、100 km耐久、経験値コースなど全243コースを走る3Dブラウザゲーム。旧車、現代の日本車、スーパーカーを収録。PC・スマホでプレイできます。","inLanguage":"ja","mainEntity":{"@id":"https://uni-tadayasu.github.io/omoji-z/#game"}},{"@id":"https://uni-tadayasu.github.io/omoji-z/#game","@type":"VideoGame","name":"尾文字Z","alternateName":"OMOJI Z","url":"https://uni-tadayasu.github.io/omoji-z/","description":"全309台で夜の峠、100 km耐久、経験値コースなど全243コースを走る3Dブラウザゲーム。旧車、現代の日本車、スーパーカーを収録。PC・スマホでプレイできます。","inLanguage":"ja","genre":["レース","レーシングゲーム"],"gamePlatform":"Web Browser","playMode":{"@id":"https://schema.org/SinglePlayer"},"image":{"@type":"ImageObject","contentUrl":"https://uni-tadayasu.github.io/omoji-z/assets/ogp-share.jpg","caption":"雨の峠を走る銀色の旧車と尾文字Zのロゴ。","width":1200,"height":630},"isAccessibleForFree":true,"mainEntityOfPage":{"@id":"https://uni-tadayasu.github.io/omoji-z/#page"},"copyrightHolder":{"@type":"Organization","name":"KASAI SOLUTIONS INC."},"copyrightNotice":"© KASAI SOLUTIONS INC."}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@id":"https://uni-tadayasu.github.io/omoji-z/#publisher","@type":"Organization","name":"KASAI SOLUTIONS INC."},{"@id":"https://uni-tadayasu.github.io/omoji-z/#website","@type":"WebSite","url":"https://uni-tadayasu.github.io/omoji-z/","name":"尾文字Z","alternateName":"OMOJI Z","inLanguage":"ja","publisher":{"@id":"https://uni-tadayasu.github.io/omoji-z/#publisher"}},{"@id":"https://uni-tadayasu.github.io/omoji-z/#page","@type":"WebPage","url":"https://uni-tadayasu.github.io/omoji-z/","name":"尾文字Z｜愛車で走る3D峠レース・ブラウザゲーム","description":"全309台で夜の峠、100 km耐久、経験値コースなど全243コースを走る3Dブラウザゲーム。旧車、現代の日本車、スーパーカーを収録。PC・スマホでプレイできます。","inLanguage":"ja","isPartOf":{"@id":"https://uni-tadayasu.github.io/omoji-z/#website"},"mainEntity":{"@id":"https://uni-tadayasu.github.io/omoji-z/#game"}},{"@id":"https://uni-tadayasu.github.io/omoji-z/#game","@type":"VideoGame","name":"尾文字Z","alternateName":"OMOJI Z","url":"https://uni-tadayasu.github.io/omoji-z/","description":"全309台で夜の峠、100 km耐久、経験値コースなど全243コースを走る3Dブラウザゲーム。旧車、現代の日本車、スーパーカーを収録。PC・スマホでプレイできます。","inLanguage":"ja","genre":"レーシングゲーム","gamePlatform":"Web Browser","playMode":[{"@id":"https://schema.org/SinglePlayer"},{"@id":"https://schema.org/MultiPlayer"}],"image":{"@type":"ImageObject","contentUrl":"https://uni-tadayasu.github.io/omoji-z/assets/ogp-share.jpg","caption":"雨の峠を走る銀色の旧車と尾文字Zのロゴ。","width":1200,"height":630},"isAccessibleForFree":true,"mainEntityOfPage":{"@id":"https://uni-tadayasu.github.io/omoji-z/#page"},"publisher":{"@id":"https://uni-tadayasu.github.io/omoji-z/#publisher"},"copyrightHolder":{"@id":"https://uni-tadayasu.github.io/omoji-z/#publisher"},"copyrightNotice":"© KASAI SOLUTIONS INC."}]}</script>
 <meta name="theme-color" content="#0b1018">
 <link rel="icon" href="./assets/omoji-favicon.ico" sizes="any">
 <link rel="icon" href="./assets/omoji-icon-192.png" type="image/png" sizes="192x192">
 <link rel="apple-touch-icon" href="./assets/omoji-icon-192.png">
 <link rel="manifest" href="./manifest.webmanifest">
 <link rel="preload" as="image" href="./assets/hero.webp">
-<link rel="stylesheet" href="./assets/game.css?v=upload-only-6">
-<script type="module" src="./assets/game.js?v=upload-only-6"></script>
+<link rel="stylesheet" href="./assets/game.css?v=upload-only-7">
+<script type="module" src="./assets/game.js?v=upload-only-7"></script>
 </head>
 <body class="simple-menu">
 <a class="skip" href="#setup">レース設定へ</a>
@@ -111,6 +111,7 @@
         </div>
       </div>
       </details>
+      <details class="simple-panel" id="mission-panel"><summary data-ui-icon="stage">日替わり・週替わりミッション</summary><div id="race-missions"></div></details>
     </section>
 
     <section id="garage" class="content-section" data-menu-view hidden aria-labelledby="garage-title">
@@ -277,7 +278,7 @@
 </main>
 <footer><div class="wrap footer-layout">
       <p class="site-copyright"><strong>© KASAI SOLUTIONS INC.</strong><small>サイト内の画像の無断保存・転載を禁止します。</small></p>
-      <nav aria-label="フッターナビゲーション"><a href="#guide" data-ui-icon="keyboard">操作ガイド</a></nav>
+      <nav aria-label="フッターナビゲーション"><a href="./guide.html">操作ガイド</a> <a href="./courses.html">コース図鑑</a> <a href="./cars.html">車両図鑑</a></nav>
     </div></footer>
 
 <noscript><p class="noscript">プレイするには JavaScript を有効にしてください。</p></noscript>
