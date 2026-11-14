@@ -50,3 +50,693 @@
 @media(max-width:720px),(max-height:540px) and (orientation:landscape){
   #race #race-speed[data-four-digit-speed]{font-size:clamp(27px,8.25vw,36px)}
 }
+
+/* Night race menu and telemetry */
+:root {
+  --theme-ink: #090f18;
+  --theme-panel: #101b29;
+  --theme-raised: #172636;
+  --theme-border: #364553;
+  --theme-muted: #b7c3cf;
+  --theme-ivory: #f6eee4;
+  --theme-gold: #f4bf75;
+  --theme-gold-dark: #211404;
+  --theme-aqua: #7dd7d5;
+  --theme-faint: #b9daeb12;
+  --theme-radius: 12px;
+  --art-road: url("./theme-hero.webp");
+  --art-garage: url("./theme-garage.webp");
+  --art-tuning: url("./theme-shop.webp");
+  --art-results: url("./theme-records.webp");
+  --art-audio: url("./theme-settings.webp");
+  --art-controls: url("./theme-settings.webp");
+  background: var(--theme-ink);
+}
+
+body.simple-menu {
+  --bg: var(--theme-ink);
+  --panel: var(--theme-panel);
+  --paper: var(--theme-ivory);
+  --sub: var(--theme-muted);
+  --line: var(--theme-border);
+  --yellow: var(--theme-gold);
+  --cyan: var(--theme-aqua);
+  --apex-surface: var(--theme-panel);
+  --apex-deep: var(--theme-ink);
+  --apex-raised: var(--theme-raised);
+  --apex-border: var(--theme-border);
+  --apex-light: var(--theme-ivory);
+  --apex-muted: var(--theme-muted);
+  --apex-accent: var(--theme-gold);
+  --apex-signal: var(--theme-aqua);
+  --page-gutter: clamp(12px, 3.2vw, 50px);
+  background: radial-gradient(ellipse at 85% 10%, #182f426e, transparent 38rem), var(--theme-ink);
+}
+.simple-menu :is(.wrap, .site-header .header-inner) {
+  width: min(1240px, calc(100% - 2 * var(--page-gutter)));
+}
+.simple-menu .site-header {
+  border-bottom: 1px solid #67869b4d;
+  background: linear-gradient(105deg, #0b111b, #121e2d 57%, #111a25);
+  box-shadow: 0 6px 24px #03070d5c;
+}
+.simple-menu .site-header .header-inner:not(.announcement-inner) {
+  min-block-size: 66px;
+  gap: 4px clamp(8px, 2vw, 27px);
+}
+.simple-menu .site-header .brand {
+  display: flex;
+  color: var(--theme-ivory);
+  font-size: 22px;
+  font-weight: 840;
+  letter-spacing: -.06em;
+}
+.simple-menu .site-header .brand img {
+  inline-size: 38px;
+  block-size: 38px;
+  border: 1px solid #e6bc795e;
+  border-radius: 8px;
+  box-shadow: 0 3px 12px #02050b8c;
+}
+.simple-menu .site-header .brand small {
+  display: block;
+  margin-block-start: 1px;
+  font: 750 10px/1 var(--en);
+  letter-spacing: .24em;
+  color: var(--theme-muted);
+}
+.simple-menu .site-header .brand-z {
+  color: var(--theme-gold);
+  margin-inline-start: .04em;
+}
+.simple-menu .site-header nav :is(a, button) {
+  padding-inline: clamp(7px, 1.3vw, 20px);
+  gap: .42em;
+  line-height: 1.3;
+}
+.simple-menu .site-header nav :is(a, button)[aria-current] {
+  background: linear-gradient(0deg, #f4bf751a, transparent 88%);
+  box-shadow: inset 0 -2px var(--theme-gold);
+}
+.simple-menu .site-header .wallet-badge {
+  min-inline-size: 0;
+  max-inline-size: min(100%, 21ch);
+  padding: 6px 10px;
+  border: 1px solid #b3b0a64b;
+  border-radius: 8px;
+  background: linear-gradient(145deg, #251e20ca, #101b27);
+}
+.simple-menu .site-header .wallet-badge strong {
+  color: var(--theme-gold);
+  overflow-wrap: anywhere;
+  font-variant-numeric: tabular-nums;
+}
+.simple-menu .announcements {
+  background: #101d29;
+  border-color: #3b4d5a;
+}
+.simple-menu .announcements .announcement-inner {
+  min-block-size: 38px;
+}
+.simple-menu #announcement-toggle {
+  padding-inline: 10px;
+  border-color: #587080;
+  color: var(--theme-muted);
+}
+.simple-menu .content {
+  padding-block: clamp(16px, 3vw, 34px);
+}
+.simple-menu :is(#setup, #garage, #online-play, #records, #audio) {
+  background: transparent;
+}
+.simple-menu .apex-hero-content {
+  min-inline-size: 0;
+  inline-size: fit-content;
+}
+.simple-menu #setup .apex-hero {
+  grid-template-columns: minmax(0, 1fr) minmax(0, auto);
+  gap: 14px;
+  min-block-size: clamp(385px, 39vw, 530px);
+  padding: clamp(24px, 4vw, 57px);
+  border-color: #ac9d863b;
+  border-radius: clamp(13px, 1.8vw, 23px);
+  background: var(--theme-panel);
+  box-shadow: 0 20px 50px #01050b9e;
+}
+.simple-menu .apex-hero-art img {
+  object-position: center 59%;
+}
+.simple-menu .apex-hero::after {
+  background:
+    linear-gradient(90deg, #060b14f7 0%, #060c15e3 14%, #080e17a8 34%, #0a10171e 65%, #0a101708 100%),
+    linear-gradient(0deg, #080e17ee 0%, #080e17a3 13%, transparent 47%);
+}
+.simple-menu .apex-wordmark {
+  margin-block-end: clamp(17px, 3vw, 34px);
+}
+.simple-menu .apex-wordmark > span,
+.simple-menu .hero-brand-en {
+  color: var(--theme-gold);
+  font-weight: 700;
+  font-size: clamp(13px, 1.5vw, 17px);
+  letter-spacing: .26em;
+}
+.simple-menu .apex-wordmark h1 {
+  font-size: clamp(58px, 8vw, 115px);
+  font-weight: 850;
+  color: var(--theme-ivory);
+  text-shadow: 0 5px 34px #060a11a6;
+}
+.simple-menu .apex-wordmark h1 span {
+  color: var(--theme-gold);
+}
+.simple-menu .theme-hero-copy {
+  margin: 10px 0 0;
+  max-inline-size: 31ch;
+  color: var(--theme-ivory);
+  font-size: clamp(13px, 1.7vw, 17px);
+  line-height: 1.52;
+  text-shadow: 0 2px 10px #040710;
+}
+.simple-menu .apex-hero .selection-summary {
+  padding-inline-start: 13px;
+  border-inline-start: 2px solid var(--theme-aqua);
+}
+.simple-menu .apex-hero .selection-summary > span {
+  color: var(--theme-aqua);
+  font-weight: 720;
+}
+.simple-menu .apex-hero #launch-track {
+  font-size: clamp(20px, 3vw, 30px);
+  font-weight: 800;
+  line-height: 1.25;
+}
+.simple-menu .apex-hero .selection-summary p {
+  color: var(--theme-ivory);
+  overflow-wrap: anywhere;
+}
+.simple-menu .apex-hero .simple-race-actions {
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.simple-menu #setup .apex-hero .launch,
+.simple-menu .apex-hero-options {
+  min-block-size: 48px;
+  min-inline-size: 0;
+  padding-inline: clamp(12px, 1.8vw, 24px);
+  border-radius: 8px;
+}
+.simple-menu #setup .apex-hero .launch {
+  justify-content: space-between;
+  gap: 14px;
+  color: var(--theme-gold-dark);
+  background: linear-gradient(115deg, #ffe0aa, #eab164);
+  border-color: #ffe1b08a;
+  box-shadow: 0 4px 19px #eeaa5047;
+}
+.simple-menu #setup .apex-hero .launch:hover {
+  background: #ffe1ab;
+}
+.simple-menu .apex-hero-options {
+  justify-content: center;
+  color: var(--theme-ivory);
+  border-color: #bed7e366;
+  background: #111e2be8;
+}
+.simple-menu .apex-hero-options:hover {
+  border-color: var(--theme-aqua);
+  background: #192d3de8;
+}
+.simple-menu .apex-hero-counts {
+  justify-self: end;
+  gap: clamp(10px, 2vw, 24px);
+  padding: 6px 14px;
+  background: #101925d6;
+  border: 1px solid #d5b58951;
+  border-radius: 9px;
+  box-shadow: 0 2px 15px #03060c63;
+}
+.simple-menu .apex-hero-counts a {
+  text-align: center;
+}
+.simple-menu .apex-hero-counts strong {
+  color: var(--theme-gold);
+}
+.simple-menu .apex-hero-counts span {
+  color: var(--theme-ivory);
+}
+.simple-menu .apex-quick-links {
+  gap: 10px;
+  margin-block-start: 14px;
+}
+.simple-menu .apex-quick-links a {
+  --quick-art: var(--art-garage);
+  align-content: center;
+  gap: 4px 10px;
+  min-block-size: 93px;
+  padding: 13px clamp(10px, 2vw, 24px);
+  border-color: var(--theme-border);
+  border-radius: var(--theme-radius);
+  background: linear-gradient(92deg, #101b29 3%, #101b29ef 46%, #0d182580), var(--quick-art) right center / auto 150% no-repeat;
+  box-shadow: 0 3px 14px #02070d5c;
+}
+.simple-menu .apex-quick-links a:nth-child(2) { --quick-art: var(--art-tuning); }
+.simple-menu .apex-quick-links a:nth-child(3) { --quick-art: var(--art-results); }
+.simple-menu .apex-quick-links a .ui-icon {
+  inline-size: 25px;
+  block-size: 25px;
+  color: var(--theme-aqua);
+}
+.simple-menu .apex-quick-links a span {
+  font-size: clamp(12px, 1.7vw, 16px);
+}
+.simple-menu .apex-quick-links a small {
+  color: var(--theme-muted);
+}
+.simple-menu .technique-guide {
+  --ui-art: url("./mugen-apex-loop.webp");
+  margin-block: 14px 12px;
+  padding: 14px clamp(12px, 2.6vw, 26px);
+  border-inline-start: 3px solid var(--theme-aqua);
+  background: linear-gradient(92deg, #111d2bf5 15%, #101b29e8 66%, #101b296e), var(--ui-art) right 58% / auto 180% no-repeat;
+}
+.simple-menu :is(.simple-race-details, #mission-panel) {
+  border-color: var(--theme-border);
+  border-radius: var(--theme-radius);
+}
+.simple-menu :is(.simple-race-details, #mission-panel)>summary {
+  min-block-size: 52px;
+  font-size: 15px;
+  background: linear-gradient(95deg, var(--theme-panel) 20%, #162536d9 83%, #152332b8), var(--art-results) right 53% / auto 195% no-repeat;
+  border-radius: var(--theme-radius);
+}
+.simple-menu :is(.simple-race-details, #mission-panel)[open]>summary {
+  border-end-start-radius: 0;
+  border-end-end-radius: 0;
+}
+.simple-menu :is(.course-browser, .mode-panel) {
+  min-inline-size: 0;
+}
+.simple-menu :is(.bonus-guide, .race-challenge, .mode-card, .track-card) {
+  border-color: var(--theme-border);
+  border-radius: 9px;
+}
+.simple-menu :is(.track-card, .mode-card)[aria-pressed="true"] {
+  border-color: var(--theme-gold);
+  box-shadow: inset 0 0 0 1px #f4bf753e;
+}
+.simple-menu #setup :is(.mode-card, .bonus-guide) {
+  background-color: var(--theme-raised);
+}
+.simple-menu #setup .mode-card[aria-pressed="true"] {
+  background: linear-gradient(120deg, #3a2e26, #273640);
+}
+.simple-menu #setup .course-features .bonus-guide {
+  background: linear-gradient(90deg, #142130f5, #132331ef 68%, #122333a9), var(--ui-art, var(--art-road)) right center / cover;
+}
+.simple-menu #setup .track-card::after {
+  background: linear-gradient(0deg, #07111bf8 0%, #0b1625dd 26%, #0e1a2e38 67%, #0d192628 100%);
+}
+
+.simple-menu #garage { --section-art: var(--art-garage); }
+.simple-menu #shop { --section-art: var(--art-tuning); }
+.simple-menu #community { --section-art: var(--art-results); }
+.simple-menu #preferences { --section-art: var(--art-controls); }
+
+.simple-menu .content > [data-menu-view]:not(#setup) > .section-heading {
+  position: relative;
+  align-items: flex-end;
+  isolation: isolate;
+  overflow: hidden;
+  min-block-size: clamp(135px, 17vw, 220px);
+  margin-block-end: clamp(13px, 2.5vw, 24px);
+  padding: clamp(16px, 3.1vw, 38px);
+  border: 1px solid var(--theme-border);
+  border-radius: clamp(10px, 1.5vw, 16px);
+  background: linear-gradient(89deg, #08101bf7 0%, #0b1421e8 26%, #0b1726ab 52%, #0b17262e), var(--section-art) center 56% / cover no-repeat;
+  box-shadow: 0 9px 27px #0307108c;
+}
+.simple-menu .content > [data-menu-view]:not(#setup) > .section-heading::before {
+  content: "";
+  position: absolute;
+  inset: auto auto 0 0;
+  inline-size: min(26%, 195px);
+  block-size: 2px;
+  background: linear-gradient(90deg, var(--theme-gold), transparent);
+}
+.simple-menu .content > [data-menu-view]:not(#setup) > .section-heading h2 {
+  font-size: clamp(28px, 4.7vw, 55px);
+  color: var(--theme-ivory);
+  line-height: 1.13;
+  text-shadow: 0 2px 19px #02040bbf;
+}
+.simple-menu .content > [data-menu-view]:not(#setup) > .section-heading .theme-intro {
+  max-inline-size: 45ch;
+  margin: 6px 0 0;
+  color: var(--theme-muted);
+  font-size: 13px;
+  line-height: 1.65;
+  overflow-wrap: anywhere;
+}
+.simple-menu .section-heading .quiet,
+.simple-menu footer .quiet {
+  padding-inline: 12px;
+  border: 1px solid #6c839470;
+  border-radius: 7px;
+  background: #111e2bec;
+  color: var(--theme-ivory);
+}
+.simple-menu .section-heading .quiet:hover,
+.simple-menu footer .quiet:hover {
+  border-color: var(--theme-aqua);
+}
+.simple-menu .shop-shortcuts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.simple-menu .theme-section-foot {
+  margin-block: 12px 0;
+}
+.simple-menu .theme-section-foot a {
+  min-block-size: 44px;
+  align-items: center;
+}
+.simple-menu :is(.theme-quick, .theme-scroll-top) {
+  color: var(--theme-aqua);
+  overflow-wrap: anywhere;
+}
+.simple-menu .theme-scroll-top {
+  min-block-size: 44px;
+  max-inline-size: 100%;
+}
+.simple-menu :is(#garage, #shop, #community, #preferences) .simple-panel {
+  border-radius: var(--theme-radius);
+  background: var(--theme-panel);
+}
+.simple-menu :is(#garage, #shop, #community, #preferences) .simple-panel > summary {
+  border-radius: var(--theme-radius);
+  background-image: linear-gradient(93deg, var(--theme-panel) 20%, #132030f0 57%, #142131a6), var(--apex-row-art, var(--section-art));
+  background-position: right center;
+  background-size: cover, min(65%, 505px) auto;
+}
+.simple-menu :is(#garage, #shop, #community, #preferences) .simple-panel[open] > summary {
+  border-end-start-radius: 0;
+  border-end-end-radius: 0;
+}
+.simple-menu #garage .garage-grid {
+  border-radius: var(--theme-radius);
+  box-shadow: 0 7px 24px #0307109e;
+}
+.simple-menu #garage .car-stage {
+  background: radial-gradient(ellipse at 47% 62%, #3b658390, #162b41a6 42%, transparent 79%),
+    linear-gradient(0deg, #070b13f4, #0d1b2fb0 52%, #0b1525c2),
+    var(--art-garage) center / cover no-repeat;
+}
+.simple-menu #garage .car-info {
+  background: linear-gradient(146deg, #202f3d, #121e2b 38%, #101922);
+}
+.simple-menu #garage .car-stats dd {
+  color: var(--theme-gold);
+}
+.simple-menu #shop .shop-panel {
+  border-radius: var(--theme-radius);
+  background: linear-gradient(142deg, #172635, var(--theme-panel) 48%);
+}
+.simple-menu #shop .shop-car {
+  border-radius: 9px;
+  background: linear-gradient(119deg, #0d1520, #182636);
+}
+.simple-menu #shop .shop-car-preview canvas {
+  background: radial-gradient(ellipse at 50% 69%, #3b5a6d, #263a4c44 55%, #0b17238a), var(--art-garage) center / cover no-repeat;
+}
+.simple-menu #community :is(.p2p-room-surface, .save-sync-panel, .link-rank) {
+  border-radius: var(--theme-radius);
+  background: linear-gradient(107deg, var(--theme-panel) 25%, #111d2bf2 61%, #111d2bbf), var(--section-art) right center / cover no-repeat;
+}
+.simple-menu #preferences .simple-setting-links > .primary {
+  min-block-size: 48px;
+  color: var(--theme-gold-dark);
+  background: linear-gradient(115deg, #ffe0aa, #eab164);
+}
+.simple-menu #audio .menu-theme {
+  background: linear-gradient(100deg, #101a28 22%, #101a28e0 62%, #101a287e), var(--art-audio) center / cover no-repeat;
+}
+.simple-menu #audio .song-select[aria-pressed="true"] {
+  background: #f4bf751c;
+}
+.simple-menu .modal[data-overlay]:not(#race),
+.simple-menu #settings {
+  border: 1px solid var(--theme-border);
+  border-block-start: 3px solid var(--theme-gold);
+  border-radius: var(--theme-radius);
+  background: linear-gradient(120deg, #0d1927f6 21%, #132133ef 62%, #101d2ddd), var(--art-controls) center / cover no-repeat;
+  color: var(--theme-ivory);
+  box-shadow: 0 14px 38px #020610bb;
+}
+.simple-menu footer {
+  border-color: var(--theme-border);
+  background: linear-gradient(90deg, #0d1723, #0e1925ef), var(--art-results) right center / cover no-repeat;
+  color: var(--theme-muted);
+}
+.simple-menu :is(a, button, summary, select, input, textarea):focus-visible {
+  outline-color: var(--theme-aqua);
+}
+
+#race {
+  --race-line: #9eb5c367;
+}
+#race :is(.race-timing, .race-map, .instrument) {
+  border-color: var(--race-line);
+  border-radius: 10px;
+  background: linear-gradient(150deg, #0c1726ec, #152434e8);
+  box-shadow: 0 5px 17px #02060d88;
+}
+#race .race-timing {
+  border-inline-start: 3px solid var(--theme-gold);
+}
+#race .race-timing :is(#race-time, #race-position) {
+  color: var(--theme-ivory);
+}
+#race .race-timing #race-best,
+#race .race-timing .race-track-label .ui-icon,
+#race #race-nitro-label {
+  color: var(--theme-aqua);
+}
+#race :is(.race-wallet, .race-buttons button) {
+  border-color: var(--race-line);
+  background: #132336ec;
+}
+#race .race-wallet strong {
+  color: var(--theme-gold);
+}
+#race .race-buttons button:active,
+#race .race-buttons button:hover {
+  border-color: var(--theme-gold);
+  color: var(--theme-gold);
+}
+#race .touch-controls button {
+  background: linear-gradient(152deg, #263b4ce8, #101e2cf3);
+}
+#race .touch-controls button.active {
+  color: var(--theme-gold-dark);
+  background: var(--theme-gold);
+  border-color: var(--theme-gold);
+}
+#race .race-loading {
+  background: linear-gradient(#091422af, #07101bed), var(--loading-art, none) center / cover no-repeat, var(--art-results) center / cover no-repeat #0a1420;
+}
+#race .race-loading .race-loading-card,
+#race .race-overlay .race-panel {
+  border: 1px solid #d1b07870;
+  border-block-start: 3px solid var(--theme-gold);
+  border-radius: var(--theme-radius);
+  background: linear-gradient(125deg, #111d2bf9, #0e1927e8 69%, #111e2ccc), var(--art-results) center / cover no-repeat;
+  box-shadow: 0 12px 38px #01040bbb;
+}
+#race #pause-layer .race-panel {
+  background: linear-gradient(125deg, #111d2bf9, #0e1927e8 69%, #111e2ccc), var(--art-controls) center / cover no-repeat;
+}
+#race .rpm i {
+  background: linear-gradient(90deg, var(--theme-aqua), var(--theme-gold));
+}
+#race .rpm i.near-redline {
+  background: #f99179;
+}
+#race .race-local-overlay .race-panel .primary:hover {
+  background: #ffe1ab;
+}
+
+@media (max-width: 760px) {
+  .simple-menu .site-header .header-inner:not(.announcement-inner) {
+    min-block-size: 89px;
+    gap: 0 8px;
+  }
+  .simple-menu .site-header .brand img {
+    inline-size: 32px;
+    block-size: 32px;
+  }
+  .simple-menu .site-header .brand {
+    gap: 7px;
+    font-size: 18px;
+  }
+  .simple-menu .site-header nav :is(a, button) {
+    padding-inline: 2px;
+    gap: 3px;
+    font-size: clamp(10px, 3.2vw, 13px);
+  }
+  .simple-menu #setup .apex-hero {
+    min-block-size: 490px;
+    grid-template-columns: minmax(0, 1fr);
+    align-content: end;
+    gap: 11px;
+    padding: 19px;
+  }
+  .simple-menu .apex-hero-art img {
+    object-position: 78% 46%;
+  }
+  .simple-menu .apex-hero::after {
+    background: linear-gradient(0deg, #070e18f7 4%, #080f19e9 28%, #080f198e 48%, #0c152536 67%, #0e172705 100%);
+  }
+  .simple-menu .apex-wordmark {
+    margin-block-end: 14px;
+  }
+  .simple-menu .apex-wordmark h1 {
+    font-size: clamp(53px, 12vw, 76px);
+  }
+  .simple-menu .apex-hero .simple-race-actions {
+    margin-block-start: 12px;
+  }
+  .simple-menu .apex-hero-counts {
+    justify-self: stretch;
+    justify-content: start;
+    gap: 8px 16px;
+    width: fit-content;
+    max-inline-size: 100%;
+    padding: 3px 9px;
+  }
+  .simple-menu .apex-hero-counts a {
+    min-block-size: 42px;
+  }
+  .simple-menu .apex-quick-links a {
+    min-block-size: 82px;
+    padding: 9px;
+    background-size: auto, auto 120%;
+  }
+  .simple-menu .apex-quick-links a .ui-icon {
+    inline-size: 20px;
+    block-size: 20px;
+  }
+  .simple-menu .content > [data-menu-view]:not(#setup) > .section-heading {
+    min-block-size: 128px;
+    align-items: flex-end;
+    gap: 10px;
+    background-position: center, 59% center;
+  }
+}
+
+@media (max-width: 410px) {
+  .simple-menu #setup .apex-hero {
+    min-block-size: clamp(425px, 65svh, 490px);
+    padding: 14px;
+  }
+  .simple-menu .apex-hero-art img {
+    object-position: 84% 47%;
+  }
+  .simple-menu .site-header .wallet-badge {
+    padding: 4px 7px;
+  }
+  .simple-menu .apex-quick-links {
+    gap: 5px;
+  }
+  .simple-menu .apex-quick-links a {
+    grid-template-columns: minmax(0, 1fr);
+    min-block-size: 81px;
+    gap: 3px;
+    padding: 7px;
+  }
+  .simple-menu .apex-quick-links a .ui-icon {
+    grid-row: auto;
+    inline-size: 17px;
+    block-size: 17px;
+  }
+  .simple-menu .apex-quick-links a small {
+    font-size: 11px;
+  }
+  .simple-menu .content > [data-menu-view]:not(#setup) > .section-heading .theme-intro {
+    font-size: 12px;
+  }
+}
+
+@media (max-height: 455px) and (orientation: landscape) {
+  .simple-menu .site-header .header-inner:not(.announcement-inner) {
+    min-block-size: 49px;
+  }
+  .simple-menu #setup .apex-hero {
+    min-block-size: 330px;
+  }
+}
+@media (forced-colors: active) {
+  .simple-menu :is(.site-header, .apex-quick-links a, .apex-hero-counts, #setup .apex-hero),
+  .simple-menu .content > [data-menu-view]:not(#setup) > .section-heading,
+  .simple-menu :is(#garage, #shop, #community, #preferences) .simple-panel > summary,
+  #race :is(.race-timing, .race-map, .instrument, .race-loading, .race-loading .race-loading-card, .race-overlay .race-panel) {
+    border-color: ButtonText;
+    background: Canvas;
+    box-shadow: none;
+  }
+  .simple-menu .apex-hero-art,
+  .simple-menu .apex-hero::after {
+    display: none;
+  }
+}
+
+.simple-menu .theme-hero-copy {
+  margin: 0;
+  color: #f6eee4;
+  font-size: clamp(.87rem, 1.7vw, 1.04rem);
+  font-weight: 650;
+  letter-spacing: .06em;
+  text-wrap: balance;
+}
+.simple-menu .theme-section-foot { margin: 16px 0 0; }
+.simple-menu .theme-section-foot .quiet,
+.simple-menu .simple-setting-links .quiet { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; }
+.simple-menu .simple-setting-links { gap: 10px; flex-wrap: wrap; }
+.simple-menu .bonus-guide.technique-guide {
+  --art: url('./mugen-apex-loop.webp');
+  background-image: linear-gradient(98deg, #101923 32%, #111d28ed 63%, #111d28ad 100%), var(--art);
+  background-position: center;
+  background-size: cover;
+}
+.simple-menu .garage-hint .ui-icon { color: var(--theme-aqua); }
+.simple-menu #garage .car-stage {
+  background: radial-gradient(ellipse at 50% 51%, #355066 0%, #192938 44%, #0d1621 80%);
+}
+.simple-menu .apex-hero-art img { -webkit-user-drag: none; }
+.theme-long-courses {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr));
+  grid-column: 1 / -1;
+  gap: 10px;
+}
+.theme-long-courses a {
+  display: grid;
+  grid-template-columns: 1.1rem minmax(0,1fr);
+  align-content: end;
+  align-items: center;
+  gap: 5px 9px;
+  min-height: 112px;
+  padding: 12px;
+  border: 1px solid var(--theme-border);
+  border-radius: 9px;
+  color: var(--theme-ivory);
+  background: linear-gradient(0deg, #0b121bea, #0b121b75), var(--theme-long-art) center 52% / cover;
+  text-decoration: none;
+  overflow-wrap: anywhere;
+}
+.theme-long-courses a:first-child { --theme-long-art: url('./xp-dawn-30km.webp'); }
+.theme-long-courses a:last-child { --theme-long-art: url('./bonus-bay-30km.webp'); }
+.theme-long-courses a:hover { border-color: var(--theme-gold); }
+.theme-long-courses small { grid-column: 2; color: var(--theme-gold); font-size: .77rem; }
+.theme-long-courses .ui-icon { color: var(--theme-aqua); }
