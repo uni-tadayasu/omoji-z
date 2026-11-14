@@ -1,0 +1,15 @@
+{
+  "id": "./",
+  "lang": "ja",
+  "name": "尾文字Z | OMOJI Z",
+  "short_name": "尾文字Z",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "theme_color": "#151717",
+  "background_color": "#151717",
+  "icons": [
+    {"src":"./assets/omoji-icon-192.png","sizes":"192x192","type":"image/png"},
+    {"src":"./assets/omoji-icon-512.png","sizes":"512x512","type":"image/png"}
+  ]
+}

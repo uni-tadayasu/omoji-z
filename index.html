@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>尾文字Z | 峠を走る旧車3Dレース</title>
+<meta name="description" content="尾文字Zは、1960〜1999年式をモチーフにした旧車63台で、峠や海岸など全21コースを走る3Dレーシングゲーム。チューニングやタイムアタックを楽しめます。">
+<meta name="theme-color" content="#151717">
+<link rel="icon" href="./assets/omoji-favicon.ico" sizes="any">
+<link rel="icon" href="./assets/omoji-icon-192.png" type="image/png" sizes="192x192">
+<link rel="apple-touch-icon" href="./assets/omoji-icon-192.png">
+<link rel="manifest" href="./manifest.webmanifest">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:site_name" content="尾文字Z">
+<meta property="og:title" content="尾文字Z | 峠を走る旧車3Dレース">
+<meta property="og:description" content="雨・夜・雪の峠を、クラシックカーとユーロビートで駆ける3Dブラウザゲーム。">
+<meta property="og:image" content="./assets/ogp.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="深夜の濡れた峠を走る銀色のクラシックカーと尾文字Zのロゴ">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="尾文字Z | 峠を走る旧車3Dレース">
+<meta name="twitter:description" content="クラシックカーで峠、海岸、雪山を走る3Dレース。旧車のチューニングと4つのソロモードに対応。">
+<meta name="twitter:image" content="./assets/ogp.jpg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"VideoGame","name":"尾文字Z","alternateName":"OMOJI Z","image":"./assets/ogp.jpg","description":"日欧米のクラシックカーで雨・夜・雪の峠を走る3Dブラウザレーシングゲーム。","genre":"Racing","inLanguage":"ja","gamePlatform":"Web Browser","playMode":"SinglePlayer","isAccessibleForFree":true}</script>
+<link rel="preload" as="image" href="./assets/hero.webp">
+<link rel="stylesheet" href="./assets/game.css">
+<script type="module" src="./assets/game.js"></script>
+</head>
+<body>
+<a class="skip" href="#setup">レース設定へ</a>
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="#top" aria-label="尾文字Z トップ"><img src="./assets/omoji-icon-192.png" alt="" width="38" height="38"><span>尾文字<span class="brand-z">Z</span><small>OMOJI Z</small></span></a>
+    <nav aria-label="メインナビゲーション"><a href="#setup" aria-current="location">レース</a><a href="#garage">ガレージ</a><a href="#records">記録</a><a href="#audio">BGM</a></nav>
+    <button type="button" class="settings-btn" data-open="settings" aria-label="設定"><span aria-hidden="true" class="settings-icon">⚙︎</span><span class="desktop-label">設定</span></button>
+  </div>
+</header>
+<main id="top">
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="hero-inner wrap">
+      <div class="hero-content">
+        <p class="eyebrow"><span></span> TOUGE RACING</p>
+        <h1 id="hero-title">尾文字<span>Z</span></h1>
+        <p class="hero-copy">旧車で駆ける、峠とその先。</p>
+        <p class="hero-description">夜、雨、雪。路面を読み、ユーロビートに乗って<br class="wide-break">最後のヘアピンを抜けろ。</p>
+        <div class="hero-actions"><button type="button" class="primary" data-start>レースを始める <span aria-hidden="true">↗</span></button><a class="ghost" href="#garage">ガレージ <span aria-hidden="true">↓</span></a></div>
+        <p class="hero-hint"><span class="online-dot"></span> キーボード・タッチ・コントローラー対応</p>
+      </div>
+      <div class="hero-coordinate" aria-hidden="true"><span class="coord-cross">＋</span><span>JAPAN<span class="coord-sub">MOUNTAIN PASS</span></span></div>
+    </div>
+  </section>
+  <div class="stat-band">
+    <div class="wrap stats">
+      <div><strong id="track-count"></strong><span>Race courses<small>峠・海岸・雪山など</small></span></div>
+      <div><strong id="car-count"></strong><span>Classic cars<small>日欧米の3D旧車</small></span></div>
+      <div><strong id="music-count">05</strong><span>Original tracks<small>オリジナルBGM</small></span></div>
+      <div class="stats-end" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+    </div>
+  </div>
+  <div class="wrap content">
+    <section id="setup" class="content-section" aria-labelledby="setup-title">
+      <div class="section-heading"><div><p class="kicker">RACE SETUP</p><h2 id="setup-title">レース設定</h2></div><button type="button" class="quiet" data-open="controls">操作方法 <span aria-hidden="true">↗</span></button></div>
+      <div class="setup-grid">
+        <div>
+          <h3>コースを選ぶ</h3>
+          <div class="catalog-tools">
+            <label for="track-search">コース検索<input type="search" id="track-search" placeholder="コース名・天候など" autocomplete="off" aria-controls="track-list"></label>
+            <label for="track-filter">地形<select id="track-filter" aria-controls="track-list"><option value="">すべて</option></select></label>
+          </div>
+          <div class="catalog-status"><p id="track-matches" role="status"></p><button type="button" class="catalog-current" id="track-current" aria-controls="track-list"></button></div>
+          <div class="track-list" id="track-list" role="group" aria-label="コース">
+            <p>榛嶺峠は月夜の杉林、霧沢峠は濡れた舗装とトンネル、白峰峠は雪景色と渓谷橋を走ります。</p>
+          </div>
+        </div>
+        <div class="mode-panel">
+          <h3>モードを選ぶ</h3>
+          <div class="mode-list" id="mode-list" role="group" aria-label="モード">
+            <p>峠バトル、タイムアタック、ドリフト、練習走行。</p>
+          </div>
+          <label class="select-label" id="difficulty-field" for="difficulty">ライバルの強さ
+            <select id="difficulty"><option value="easy">初級</option><option value="normal" selected>中級</option><option value="hard">上級</option></select>
+          </label>
+          <button type="button" class="primary launch" data-start>この設定でスタート <span aria-hidden="true">↗</span></button>
+        </div>
+      </div>
+    </section>
+    <section id="garage" class="content-section" aria-labelledby="garage-title">
+      <div class="section-heading"><div><p class="kicker">CLASSIC GARAGE</p><h2 id="garage-title">ガレージ</h2></div><p class="section-note">車を選ぶと、3Dモデルと性能を確認できます。</p></div>
+      <div class="garage-grid">
+        <div class="car-stage">
+          <canvas id="car-canvas" aria-label="選択中の車の3Dモデル"></canvas>
+          <div class="garage-stamp" aria-hidden="true">GARAGE <small>CAR VIEW</small></div>
+          <div id="garage-error" class="garage-error" hidden>このブラウザで車両の描画を開始できませんでした。</div>
+          <div class="paint-picker"><label for="paint">ボディカラー</label><input id="paint" type="text" value="#dcdcd8" maxlength="7" spellcheck="false" autocomplete="off" aria-describedby="paint-status"><button type="button" id="reset-paint">標準色</button><output id="paint-status" class="paint-status" aria-live="polite"></output></div>
+          <div class="garage-hint">ドラッグで回転</div>
+        </div>
+        <div id="car-info" class="car-info"></div>
+      </div>
+      <div class="catalog-tools car-catalog-tools">
+        <label for="car-search">車種検索<input type="search" id="car-search" placeholder="車名・年式・駆動方式など" autocomplete="off" aria-controls="car-list"></label>
+        <label for="car-filter">国<select id="car-filter" aria-controls="car-list"><option value="">すべて</option></select></label>
+      </div>
+      <div class="catalog-status"><p id="car-matches" role="status"></p><button type="button" class="catalog-current" id="car-current" aria-controls="car-list"></button></div>
+      <div class="car-list" id="car-list" role="group" aria-label="車種"></div>
+      <div id="garage-tuning"></div>
+    </section>
+    <div class="lower-grid">
+      <section id="records" class="content-section" aria-labelledby="records-title">
+        <div class="section-heading"><div><p class="kicker">PERSONAL BEST</p><h2 id="records-title">記録</h2></div></div>
+        <div class="records" id="record-list"><p>完走するとこの端末にベスト記録が保存されます。</p></div>
+      </section>
+      <section id="audio" class="content-section" aria-labelledby="audio-title">
+        <div class="section-heading"><div><p class="kicker">EUROBEAT RADIO</p><h2 id="audio-title">BGM</h2></div><button type="button" class="quiet" data-open="settings">音量設定 <span aria-hidden="true">↗</span></button></div>
+        <div class="song-list" id="song-list" aria-label="収録BGM"></div>
+        <p class="panel-note" id="song-status" aria-live="polite">再生ボタンで試聴、曲名でレースBGMを指定できます。</p>
+      </section>
+    </div>
+  </div>
+</main>
+<footer><div class="wrap"><a class="footer-brand" href="#top">尾文字<span>Z</span></a><p>架空の峠を舞台にした、オリジナルレーシングゲーム。</p><a href="#top" class="quiet">トップへ ↑</a></div></footer>
+
+<noscript><p class="noscript">プレイするには JavaScript を有効にしてください。</p></noscript>
+<div id="settings" class="modal" aria-labelledby="settings-title" data-overlay role="dialog" aria-modal="true" tabindex="-1" hidden>
+  <div class="modal-head"><h2 id="settings-title">設定</h2><button type="button" class="cross" data-close aria-label="閉じる">×</button></div>
+  <div class="setting-rows">
+    <label for="volume-music"><span>BGM 音量 <output id="volume-music-value">65%</output></span><input id="volume-music" type="range" min="0" max="100" value="65"></label>
+    <label for="volume-sfx"><span>効果音 音量 <output id="volume-sfx-value">85%</output></span><input id="volume-sfx" type="range" min="0" max="100" value="85"></label>
+    <label class="select-label" for="song-picker">レースBGM<select id="song-picker"><option value="auto">コースに合わせて選ぶ</option></select></label>
+    <label class="select-label" for="quality">描画品質<select id="quality"><option value="auto">自動</option><option value="low">低</option><option value="medium">中</option><option value="high">高</option></select></label>
+    <label class="check-label" for="assist"><input id="assist" type="checkbox"><span>運転アシスト<small>アクセル操作中に、進路とコーナー手前の減速を補助します。アシスト走行は記録対象外です。</small></span></label>
+    <div id="gamepad-settings"></div>
+  </div>
+</div>
+<div id="controls" class="modal" aria-labelledby="controls-title" data-overlay role="dialog" aria-modal="true" tabindex="-1" hidden>
+  <div class="modal-head"><h2 id="controls-title">操作方法</h2><button type="button" class="cross" data-close aria-label="閉じる">×</button></div>
+  <dl class="key-list"><div><dt>アクセル</dt><dd><kbd>W</kbd> <kbd>↑</kbd></dd></div><div><dt>ブレーキ・後退</dt><dd><kbd>S</kbd> <kbd>↓</kbd></dd></div><div><dt>ステアリング</dt><dd><kbd>A</kbd> <kbd>D</kbd> <kbd>←</kbd> <kbd>→</kbd></dd></div><div><dt>ハンドブレーキ</dt><dd><kbd>Space</kbd></dd></div><div><dt>カメラ切替</dt><dd><kbd>C</kbd></dd></div><div><dt>コースへ復帰</dt><dd><kbd>R</kbd></dd></div><div><dt>一時停止</dt><dd><kbd>Esc</kbd></dd></div></dl>
+  <p class="panel-note">スマートフォンは画面下のボタンで操作できます。コントローラーの割り当ては設定から変更できます。</p>
+</div>
+
+<div id="race" class="race" aria-label="3Dレース" data-overlay role="dialog" aria-modal="true" tabindex="-1" hidden>
+  <canvas id="race-canvas" aria-label="3Dレース画面"></canvas>
+  <div class="race-top">
+    <div class="race-timing"><span id="race-track-name">峠</span><strong id="race-time">00:00.000</strong><small id="race-best"></small></div>
+    <div class="race-map"><canvas id="map" width="164" height="112" aria-label="コースマップ"></canvas><div class="progress" role="progressbar" aria-label="走行進捗" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><i id="race-progress"></i></div></div>
+    <div class="race-buttons"><button type="button" id="camera" aria-label="カメラ切替" title="カメラ切替 C">CAM</button><button type="button" id="reset-car" aria-label="コースへ復帰" title="コースへ復帰 R">↻</button><button type="button" id="pause" aria-label="一時停止" title="一時停止 Esc">Ⅱ</button></div>
+  </div>
+  <div class="race-side"><strong id="race-position"></strong><small id="race-context"></small></div>
+  <div class="countdown" id="countdown" hidden></div>
+  <p class="race-tip" id="race-tip" hidden><kbd>W A S D</kbd> または矢印キーで走行 <kbd>Space</kbd> でドリフト</p>
+  <div class="instrument"><div class="rpm"><i id="race-rpm"></i></div><div><strong id="race-speed">0</strong><span>KM/H</span><b id="race-gear">N</b></div></div>
+  <div class="touch-controls" aria-label="タッチ操作">
+    <div><button type="button" data-action="left" aria-label="左へ">◀</button><button type="button" data-action="right" aria-label="右へ">▶</button></div>
+    <div><button type="button" data-action="handbrake" aria-label="ハンドブレーキ">DRIFT</button><button type="button" data-action="brake" aria-label="ブレーキ">BRAKE</button><button type="button" data-action="accelerate" aria-label="アクセル">GAS</button></div>
+  </div>
+  <div class="race-overlay" id="pause-layer" hidden>
+    <div class="race-panel">
+      <p class="kicker">PAUSED</p><h2>一時停止</h2>
+      <button type="button" class="primary" id="resume-race">レースに戻る</button>
+      <button type="button" class="ghost" id="restart-race">最初からやり直す</button>
+      <button type="button" class="ghost" data-exit>レース設定に戻る</button>
+    </div>
+  </div>
+  <div class="race-overlay" id="result-layer" hidden>
+    <div class="race-panel">
+      <p class="kicker" id="result-kicker">FINISH</p><h2 id="result-title">完走</h2>
+      <dl id="result-details" class="result-details"></dl>
+      <p id="result-note" class="panel-note" hidden></p>
+      <button type="button" class="primary" id="retry-race">もう一度走る</button>
+      <button type="button" class="ghost" data-exit>レース設定に戻る</button>
+    </div>
+  </div>
+</div>
+
+<div id="error" class="modal" aria-labelledby="error-title" data-overlay role="dialog" aria-modal="true" tabindex="-1" hidden><div class="modal-head"><h2 id="error-title">レースを読み込めませんでした</h2><button type="button" class="cross" data-close aria-label="閉じる">×</button></div><p id="error-text"></p></div>
+</body>
+</html>
