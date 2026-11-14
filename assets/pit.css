@@ -564,3 +564,38 @@ html { scroll-padding-top: var(--pit-offset); }
 @media (max-width: 365px) {
   .theme-pit .site-header .header-inner:has(.gp-header-title:not([hidden])) .brand > span { display: none; }
 }
+
+/* Operator vehicle gallery */
+.theme-pit #operator-garage .operator-gallery {
+  display: grid;
+  grid-template-columns: repeat(2,minmax(0,1fr));
+  gap: 10px;
+  margin: 10px clamp(12px,2.1vw,26px) 14px;
+}
+.theme-pit #operator-garage .operator-gallery .operator-studio {
+  margin: 0;
+  min-block-size: clamp(130px,19vw,285px);
+  border-radius: 8px;
+  background: #0d1924;
+}
+.theme-pit #operator-garage .operator-gallery .operator-studio img { object-position: center 55%; }
+.theme-pit #operator-garage .operator-gallery .operator-studio::before {
+  background: linear-gradient(0deg,#06111bee,#0b172058 31%,transparent 63%);
+}
+.theme-pit #operator-garage .operator-gallery figcaption { max-inline-size: 100%; }
+.theme-pit #operator-garage .operator-gallery figcaption strong {
+  overflow-wrap: anywhere;
+  color: #eef7f9;
+  font-size: clamp(18px,2.2vw,32px);
+  line-height: 1.2;
+}
+.theme-pit .rolls-model-status {
+  border-color: #486776;
+  border-radius: 7px;
+  background: #102330f2;
+  color: #e4f1f7;
+}
+@media(max-width: 560px) {
+  .theme-pit #operator-garage .operator-gallery { grid-template-columns: minmax(0,1fr); }
+  .theme-pit #operator-garage .operator-gallery .operator-studio { min-block-size: clamp(118px,49vw,230px); }
+}

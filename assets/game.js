@@ -4621,15 +4621,27 @@ function omojiCrownWindows(group, car, paint) {
 }
 
 
-const OMOJI_ROLLS_ID = 'rolls-royce-operator';
-let omojiRollsAsset;
-let omojiRollsPending;
-let omojiRollsFullPending;
-let omojiRollsPacked;
-let omojiRollsRetryAfter = 0;
+// Imported operator models share a decoder while retaining their own assets and materials.
+const omojiOperatorModels = new Map([
+    ['rolls-royce-operator', {file:'rolls-royce.bin', label:'ロールスロイス', meshName:'Rolls-Royce GLB',
+        length:.98040771484375, width:.3808746337890625, height:.2905731201171875}],
+    ['maybach-classic', {file:'maybach-model.bin', label:'マイバッハ', meshName:'Maybach GLB',
+        length:.98077392578125, width:.4433441162109375, height:.3267669379711151, brightTrim:true}],
+]);
 
-function omojiRollsIsCar(car) {
-    return (typeof car === 'string' ? car : car?.id) === OMOJI_ROLLS_ID;
+function omojiOperatorModel(car) {
+    return omojiOperatorModels.get(typeof car === 'string' ? car : car?.id);
+}
+
+function omojiOperatorVisualLevel(car, quality) {
+    const {asset} = omojiOperatorModel(car) ?? {};
+    return asset ? quality === 'high' && !!asset.high ? 'high' : 'low' : 'fallback';
+}
+
+function omojiOperatorPaint(car, color) {
+    const base = Ht(car.id)?.paint ?? car.paint;
+    const chosen = (color || car.paint)?.toLowerCase();
+    return chosen && chosen !== base?.toLowerCase() ? chosen : null;
 }
 
 function omojiRollsReadGlb(file) {
@@ -4717,12 +4729,12 @@ function omojiRollsTexture(image, srgb) {
     return texture;
 }
 
-async function omojiRollsFetch() {
+async function omojiOperatorFetch(model) {
     const controller = new AbortController();
     const timeout = setTimeout(() => controller.abort(), 40_000);
     try {
-        const response = await fetch(new URL('./assets/rolls-royce.bin', document.baseURI), {signal:controller.signal});
-        if (!response.ok) throw Error('ロールスロイスのモデルを読み込めませんでした。');
+        const response = await fetch(new URL('./' + model.file, import.meta.url), {signal:controller.signal});
+        if (!response.ok) throw Error(model.label + 'のモデルを読み込めませんでした。');
         return await response.arrayBuffer();
     } finally { clearTimeout(timeout); }
 }
@@ -4738,7 +4750,7 @@ function omojiRollsDecodeFull(buffer) {
             resolve(result);
         };
         try {
-            worker = new Worker(new URL('./assets/rolls-asset-codec.js',document.baseURI),{type:'module'});
+            worker = new Worker(new URL('./rolls-asset-codec.js',import.meta.url),{type:'module'});
             timeout = setTimeout(() => finish(null), 18_000);
             worker.onmessage = ({data}) => finish(data.buffer ?? null);
             worker.onerror = () => finish(null);
@@ -4750,39 +4762,39 @@ function omojiRollsDecodeFull(buffer) {
     });
 }
 
-function omojiRollsLoadLite() {
-    if (omojiRollsAsset) return Promise.resolve(omojiRollsAsset);
-    if (omojiRollsPending) return omojiRollsPending;
-    if (performance.now() < omojiRollsRetryAfter) return Promise.resolve(null);
-    omojiRollsPending = omojiRollsFetch().then(async packed => {
+function omojiOperatorLoadLite(model) {
+    if (model.asset) return Promise.resolve(model.asset);
+    if (model.pending) return model.pending;
+    if (performance.now() < (model.retryAfter ?? 0)) return Promise.resolve(null);
+    model.pending = omojiOperatorFetch(model).then(async packed => {
         const {decodeRollsAsset} = await import('./rolls-asset-codec.js');
-        omojiRollsPacked = packed;
         const file = decodeRollsAsset(packed,{lite:true});
         const bundle = omojiRollsReadGlb(file);
         const pbr = bundle.high.material.pbrMetallicRoughness;
         const blobs = [bundle.texture(pbr.baseColorTexture.index),bundle.texture(pbr.metallicRoughnessTexture.index),
             bundle.texture(bundle.high.material.normalTexture.index)];
         const handles = await Promise.all(blobs.map(blob => omojiRollsMakeImage(blob)));
-        omojiRollsAsset = {high:null,low:bundle.high, materials:pbr, tex:handles, blobs,
+        model.packed = packed;
+        model.asset = {high:null,low:bundle.high, materials:pbr, tex:handles, blobs,
             base:omojiRollsTexture(handles[0],true), metal:omojiRollsTexture(handles[1],false),
             normal:omojiRollsTexture(handles[2],false), geometry:new Map()};
-        return omojiRollsAsset;
+        return model.asset;
     }).catch(error => {
-        omojiRollsRetryAfter = performance.now()+6_000;
-        if (typeof console !== 'undefined') console.warn('Rolls-Royce rendering', error.message);
+        model.retryAfter = performance.now()+6_000;
+        console.warn(model.label + 'の3Dモデル', error.message);
         return null;
-    }).finally(() => { omojiRollsPending=null; });
-    return omojiRollsPending;
+    }).finally(() => { model.pending=null; });
+    return model.pending;
 }
 
-async function omojiRollsLoad(full = false) {
-    const asset = await omojiRollsLoadLite();
+async function omojiOperatorLoad(model, full = false) {
+    const asset = await omojiOperatorLoadLite(model);
     if (!asset || !full || asset.high) return asset;
-    if (omojiRollsFullPending) return omojiRollsFullPending;
-    if (!omojiRollsPacked) return asset;
-    const packed = omojiRollsPacked;
-    omojiRollsPacked = null;
-    omojiRollsFullPending = omojiRollsDecodeFull(packed).then(async file => {
+    if (model.fullPending) return model.fullPending;
+    if (!model.packed || typeof Worker !== 'function') return asset;
+    const packed = model.packed;
+    model.packed = null;
+    model.fullPending = omojiRollsDecodeFull(packed).then(async file => {
         if (file) {
             asset.high = omojiRollsReadGlb(file).high;
             const pixels = Math.min(screen.width*(window.devicePixelRatio||1),screen.height*(window.devicePixelRatio||1));
@@ -4800,8 +4812,8 @@ async function omojiRollsLoad(full = false) {
         }
         asset.blobs=null;
         return asset;
-    }).catch(() => asset);
-    return omojiRollsFullPending;
+    }).catch(error => { console.warn(model.label + 'の高精細モデル', error.message); return asset; });
+    return model.fullPending;
 }
 
 function omojiRollsToFloat(attribute) {
@@ -4813,12 +4825,11 @@ function omojiRollsToFloat(attribute) {
     return Float32Array.from(from,value => Math.max(-1,value/max));
 }
 
-function omojiRollsScale(car) {
-    return car.dimensions[0]/.98040771484375;
+function omojiOperatorScale(car, model) {
+    return car.dimensions[0] / model.length;
 }
 
-function omojiRollsGeometry(quality) {
-    const asset = omojiRollsAsset;
+function omojiOperatorGeometry(asset, quality) {
     const mesh = quality === 'high' && asset.high ? asset.high : asset.low;
     if (asset.geometry.has(mesh)) return asset.geometry.get(mesh);
     const geometry = new He();
@@ -4832,42 +4843,56 @@ function omojiRollsGeometry(quality) {
     return geometry;
 }
 
-function omojiRollsModel(car, options) {
-    const asset = omojiRollsAsset;
+function omojiOperatorMesh(car, options, operator) {
+    const asset = operator.asset;
     const model = new Tt();
     model.name = car.code;
-    const tint = options.color && options.color.toLowerCase() !== car.paint.toLowerCase();
-    const shade = new _e(tint ? options.color : '#000000');
+    const tint = omojiOperatorPaint(car, options.color);
+    const shade = new _e(tint || '#000000');
     const braking = {value:0};
     const light = options.showroom ? null : omojiCarReflection(!!options.beam);
     const surface = new Ws({
         color:'#ffffff', map:asset.base, roughnessMap:asset.metal,
         metalnessMap:asset.metal, normalMap:asset.normal, roughness:asset.materials.roughnessFactor ?? 1,
         metalness:asset.materials.metallicFactor ?? 1, envMap:light, envMapIntensity:1.08,
-        clearcoat:.26, clearcoatRoughness:.32
+        clearcoat:operator.brightTrim ? .48 : .26, clearcoatRoughness:operator.brightTrim ? .22 : .32
     });
+    // Glints stay inside the original lens and grille areas, using the baked image as a mask.
+    const maybachFinish = operator.brightTrim ? `
+vec3 p = omojiOperatorPosition;
+float front = smoothstep(.375,.456,p.z);
+float chrome = front * (1.0-smoothstep(.105,.132,abs(p.x))) *
+    smoothstep(.052,.08,p.y) * (1.0-smoothstep(.135,.159,p.y)) *
+    smoothstep(.24,.58,min(diffuseColor.r,min(diffuseColor.g,diffuseColor.b)));
+float lampLens = front * smoothstep(.105,.140,abs(p.x)) * (1.0-smoothstep(.177,.209,abs(p.x))) *
+    smoothstep(.120,.140,p.y) * (1.0-smoothstep(.160,.185,p.y)) *
+    smoothstep(.23,.65,max(diffuseColor.r,max(diffuseColor.g,diffuseColor.b)));
+totalEmissiveRadiance += vec3(.05,.07,.08)*chrome + vec3(.16,.21,.28)*lampLens*omojiOperatorHeadlight;
+` : '';
+    surface.customProgramCacheKey = () => operator.brightTrim ? 'omoji-maybach-s680' : 'omoji-rolls-royce';
     surface.onBeforeCompile = shader => {
+        shader.uniforms.omojiOperatorHeadlight={value:options.lights===false ? .15 : options.beam ? 1 : .35};
         shader.uniforms.omojiRollsPaint={value:shade};
         shader.uniforms.omojiRollsBrake=braking;
-        shader.vertexShader='varying float omojiRollsZ;\n'+shader.vertexShader.replace('#include <begin_vertex>',
-            '#include <begin_vertex>\nomojiRollsZ=position.z;');
-        shader.fragmentShader='uniform vec3 omojiRollsPaint;\nuniform float omojiRollsBrake;\nvarying float omojiRollsZ;\n'+shader.fragmentShader.replace('#include <map_fragment>',
+        shader.vertexShader='varying vec3 omojiOperatorPosition;\n'+shader.vertexShader.replace('#include <begin_vertex>',
+            '#include <begin_vertex>\nomojiOperatorPosition=position;');
+        shader.fragmentShader='uniform vec3 omojiRollsPaint;\nuniform float omojiRollsBrake;\nuniform float omojiOperatorHeadlight;\nvarying vec3 omojiOperatorPosition;\n'+shader.fragmentShader.replace('#include <map_fragment>',
             '#include <map_fragment>\n#ifdef USE_METALNESSMAP\nfloat panels = texture2D(metalnessMap, vMetalnessMapUv).b;\nfloat dark = 1.0 - smoothstep(.115, .38, max(diffuseColor.r,max(diffuseColor.g,diffuseColor.b)));\nfloat neutral = 1.0 - smoothstep(.045,.14,abs(diffuseColor.r-diffuseColor.b));\ndiffuseColor.rgb += omojiRollsPaint * dark * neutral * panels * .31;\n#endif').replace('#include <emissivemap_fragment>',
-            '#include <emissivemap_fragment>\nfloat lamp = smoothstep(.08,.28,diffuseColor.r-max(diffuseColor.b,diffuseColor.g)*1.6) * (1.0-smoothstep(-.430,-.390,omojiRollsZ));\ntotalEmissiveRadiance += vec3(.8,.017,.026)*lamp*omojiRollsBrake;');
+            '#include <emissivemap_fragment>\nfloat lamp = smoothstep(.08,.28,diffuseColor.r-max(diffuseColor.b,diffuseColor.g)*1.6) * (1.0-smoothstep(-.430,-.390,omojiOperatorPosition.z));\ntotalEmissiveRadiance += vec3(.8,.017,.026)*lamp*omojiRollsBrake;' + maybachFinish);
     };
-    const mesh = new Fe(omojiRollsGeometry(options.quality ?? 'medium'), surface);
-    mesh.name = 'Rolls-Royce GLB';
-    mesh.scale.setScalar(omojiRollsScale(car));
+    const quality = omojiOperatorVisualLevel(car, options.quality);
+    const mesh = new Fe(omojiOperatorGeometry(asset, quality), surface);
+    mesh.name = operator.meshName;
+    mesh.scale.setScalar(omojiOperatorScale(car, operator));
     model.add(mesh);
     if (options.beam && options.lights!==false) ex(model,car);
-    model.userData = {data:car,wheels:[],frontWheels:[],tailLights:[],headlights:[],
+    model.userData = {data:car, importedQuality:quality,wheels:[],frontWheels:[],tailLights:[],headlights:[],
         animate({brake=0}={}) { braking.value=brake>.1 ? Math.min(1,brake*1.5) : 0; }};
     return model;
 }
 
-function omojiRollsSoftware(car,color) {
-    if (!omojiRollsAsset) return null;
-    const asset = omojiRollsAsset;
+function omojiOperatorSoftware(car,color,operator) {
+    const asset = operator.asset;
     const spec = asset.low;
     if (!asset.cpuSamples) {
         const size = 1024;
@@ -4878,7 +4903,7 @@ function omojiRollsSoftware(car,color) {
         ctx.clearRect(0,0,size,size);
         ctx.drawImage(asset.tex[1],0,0,size,size);
         const metallicRough = ctx.getImageData(0,0,size,size).data;
-        const positions = omojiRollsToFloat(spec.position), normals = omojiRollsToFloat(spec.normal), scale = omojiRollsScale(car);
+        const positions = omojiRollsToFloat(spec.position), normals = omojiRollsToFloat(spec.normal), scale = omojiOperatorScale(car, operator);
         const vertices = new Float32Array(positions.length*2);
         for (let i=0,j=0;i<positions.length;i+=3,j+=6) {
             vertices[j]=positions[i]*scale; vertices[j+1]=positions[i+1]*scale; vertices[j+2]=positions[i+2]*scale;
@@ -4887,10 +4912,11 @@ function omojiRollsSoftware(car,color) {
         asset.cpuSamples = {size, albedo, metallicRough, uv:omojiRollsToFloat(spec.uv), vertices,
             indexes:spec.index.data, projected:new Float32Array((positions.length/3)*5)};
     }
-    const chosen=color?.toLowerCase();
-    const custom=chosen && chosen!==car.paint.toLowerCase() ? j0(new _e(chosen)) : null;
-    const batch={...asset.cpuSamples,tint:custom};
-    return {key:car.id+':original:'+chosen,batches:[batch],dimensions:car.dimensions};
+    const chosen = omojiOperatorPaint(car, color);
+    const batch = {...asset.cpuSamples,tint:chosen ? j0(new _e(chosen)) : null};
+    const scale = omojiOperatorScale(car, operator);
+    return {key:car.id+':original:'+chosen,batches:[batch],
+        dimensions:[car.dimensions[0],Math.max(car.dimensions[1],operator.width*scale),Math.max(car.dimensions[2],operator.height*scale)]};
 }
 
 function omojiRollsRaster(batch,out,depth,width,height,brake,view) {
@@ -4940,35 +4966,47 @@ function omojiRollsRaster(batch,out,depth,width,height,brake,view) {
     }
 }
 
-function omojiRollsRefreshShowroom(car) {
-    if (!omojiRollsIsCar(car) || omojiRollsAsset || omojiRollsPending || performance.now()<omojiRollsRetryAfter) return;
-    if (typeof document === 'undefined') return;
+function omojiOperatorShowroomQuality() {
+    return matchMedia('(pointer: coarse)').matches || ye.quality === 'low' ? 'low' : 'high';
+}
+
+function omojiRefreshOperatorShowroom(car) {
+    const operator = omojiOperatorModel(car);
     const panel = Y('rolls-model-status');
-    if (panel) { panel.hidden=false; panel.textContent='ロールスロイスの3Dモデルを読み込み中…'; }
-    void omojiRollsLoad().then(asset => {
-        const current = omojiShowroomCar(Ht(ye.car));
-        if (panel) { panel.hidden=!!asset || !omojiRollsIsCar(current); panel.textContent=asset?'':'専用モデルの読み込みに失敗しました。次回表示時に再試行します。'; }
-        if (asset && omojiRollsIsCar(current)) {
-            nf(current);
-            if (xr && !matchMedia('(pointer: coarse)').matches && navigator.hardwareConcurrency>4 && ye.quality!=='low') {
-                void omojiRollsLoad(true).then(() => {
-                    const live = omojiShowroomCar(Ht(ye.car));
-                    if (asset.high && omojiRollsIsCar(live)) nf(live);
-                });
-            }
+    if (!operator || operator.asset) {
+        if (panel) panel.hidden = true;
+        if (operator && xr && omojiOperatorShowroomQuality()==='high' && navigator.hardwareConcurrency>4 &&
+            !operator.asset.high && !operator.fullPending && operator.packed) {
+            void omojiOperatorLoad(operator,true).then(asset => {
+                const live = omojiShowroomCar(Ht(ye.car));
+                if (asset?.high && live?.id === car.id) nf(live);
+            });
         }
+        return;
+    }
+    if (performance.now() < (operator.retryAfter ?? 0)) {
+        if (panel) {
+            panel.hidden = false;
+            panel.textContent = operator.label + 'の3Dモデルを読み込めなかったため、簡易車体を表示しています。';
+        }
+        return;
+    }
+    if (panel) { panel.hidden = false; panel.textContent = operator.label + 'の3Dモデルを読み込み中…'; }
+    if (operator.pending) return;
+    void omojiOperatorLoadLite(operator).then(() => {
+        const current = omojiShowroomCar(Ht(ye.car));
+        if (current?.id === car.id) nf(current);
     });
 }
 
-async function omojiRollsPrefetchRace(options) {
-    const selected = omojiRollsIsCar(options.car);
-    const visitor = options.multiplayer?.players?.some(({car}) => omojiRollsIsCar(car));
-    if (!selected) {
-        if (visitor) void omojiRollsLoadLite().then(asset => {
-            if (asset && Ct === options && Pt.open && It?.multiplayer) It.refreshRollsOpponents();
-        }).catch(error => console.warn("Opponent artwork", error));
-        return true;
-    }
+async function omojiOperatorPrefetchRace(options) {
+    const selected = omojiOperatorModel(options.car);
+    const visitors = new Set(options.multiplayer?.players?.map(({car}) => omojiOperatorModel(car)).filter(Boolean));
+    visitors.delete(selected);
+    for (const visitor of visitors) void omojiOperatorLoadLite(visitor).then(asset => {
+        if (asset && Ct === options && Pt.open && It?.multiplayer) It.refreshOperatorOpponents();
+    }).catch(error => console.warn("Opponent artwork", error));
+    if (!selected) return true;
     const desktop = !matchMedia('(pointer: coarse)').matches && navigator.hardwareConcurrency > 4;
     const wantsHigh = !options.forceSoftware && !options.multiplayer &&
         (options.quality === 'high' || options.quality === 'auto' && desktop);
@@ -4981,28 +5019,27 @@ async function omojiRollsPrefetchRace(options) {
         } catch (error) { console.warn('Race WebGL probe', error); }
     }
     let timeout;
-    const asset = await Promise.race([omojiRollsLoad(supported).catch(error => {
+    const ready = omojiOperatorLoad(selected,supported).catch(error => {
         console.warn('Race vehicle artwork', error);
         return null;
-    }), new Promise(resolve => { timeout = setTimeout(() => resolve(omojiRollsAsset),
-        options.multiplayer ? 1500 : supported ? 14_000 : 9_000); })]).finally(() => clearTimeout(timeout));
-    if (!asset) {
-        const pending = omojiRollsPending;
-        if (pending) void pending.then(loaded => {
-            if (loaded && Ct === options && Pt.open && It?.world) {
-                It.refreshRollsOpponents();
-                if (It.refreshRollsPlayer()) {
-                    options.temporaryCarArtwork = false;
-                    omojiRaceRenderingNotice();
-                }
+    });
+    const asset = await Promise.race([ready, new Promise(resolve => {
+        timeout = setTimeout(() => resolve(selected.asset), options.multiplayer ? 1500 : supported ? 14_000 : 9_000);
+    })]).finally(() => clearTimeout(timeout));
+    if (!asset || supported && !asset.high) void ready.then(loaded => {
+        if (loaded && Ct === options && Pt.open && It?.world) {
+            It.refreshOperatorOpponents();
+            if (It.refreshOperatorPlayer()) {
+                options.temporaryCarArtwork = false;
+                omojiRaceRenderer(It.rendererMode);
             }
-        }).catch(error => console.warn("Vehicle artwork refresh", error));
-    }
+        }
+    }).catch(error => console.warn("Vehicle artwork refresh", error));
     return !!asset;
 }
 
-function fr(n,e={}){let t=typeof n=="object"&&n?.id?n:Wi(n);if(omojiRollsIsCar(t)&&omojiRollsAsset)return omojiRollsModel(t,e);if(t.id==="omoji-z")t=omojiCrownVisual(t);let i=N0[e.quality]||N0[e.opponent?"low":"medium"],r=new Tt;r.name=t.code;let s=new Tt;s.userData.detail=i,r.add(s);let optical=i!==N0.low&&!e.opponent,reflection=optical&&!e.showroom?omojiCarReflection(!!e.beam):null;
-let a=new Ws({color:e.color||t.paint,metalness:optical?(e.showroom?.39:.31):(e.showroom?.54:.39),roughness:t.id==="omoji-z"?.172:optical?.205:.24,envMap:reflection,envMapIntensity:optical?(e.showroom?1.19:e.beam?.86:1.07):(e.showroom?1.1:.87),clearcoat:optical?.96:.78,clearcoatRoughness:optical?.095:.11}),o=t.twoTone?a.clone():a;t.twoTone&&o.color.set(t.twoTone);let l=xt(t.accent,{roughness:.47,metalness:.33}),c=t.coachwork==="flagship",h=optical?omojiPhysicalLamp(c?"#c8dce8":"#dcd6c3",true,e.lights!==!1,reflection,t.front||"flagship"):xt(c?"#dcecff":"#f1e5bf",{roughness:.28,metalness:.09,emissive:c?"#dbeaff":"#fff0bb",emissiveIntensity:e.lights===!1?.14:1.2}),p=optical?omojiPhysicalLamp("#9e0d26",false,e.lights!==!1,reflection,t.rear||"flagship"):xt("#ce203b",{roughness:.34,metalness:.17,emissive:"#ff133a",emissiveIntensity:.48});Xb(s,t,o,t.twoTone?a:l),t.id==="omoji-z"?(omojiCrownWindows(s,t,o),omojiCrownSide(s,t,a,l)):(Yb(s,t,o,t.chrome?ce.chrome:ce.seal),Qb(s,t,a,l));let{lampGeometry:u}=t.id==="omoji-z"?omojiCrownFascia(s,t,a,l,h,p):Kb(s,t,a,l,h,p);Hd(s),Hd(u);if(optical)omojiCarGlass(s,reflection,!!e.beam);let d=[],m=[];for(let f of[!1,!0])for(let v of[-1,1]){let g=Zb(t,v,f,a,i);r.add(g),f&&m.push(g),d.push(g)}e.beam&&e.lights!==!1&&ex(r,t);let y=u.children;return r.userData={data:t,wheels:d,frontWheels:m,tailLights:y.filter(f=>f.material===p),headlights:y.filter(f=>f.material===h),animate({steering:f=0,speed:v=0,dt:g=0,brake:b=!1}={}){for(let w of m)w.rotation.y=f;let x=v*g/t.wheel[0];for(let w of d)w.userData.roll.rotation.x=(w.userData.roll.rotation.x+x)%(Math.PI*2);p.emissiveIntensity=(b?1.9:.53)*(1-(r.userData.omojiWear?.rearLight||0)*.72)},omojiBodyGroup:s},e.damageKey&&omojiApplyCarAppearance(r,e.damageKey),r}function ra(n){let e=new Set(Object.values(ce)),t=new Set,i=new Set;n.traverse(r=>{if(r.isMesh){const glass=r.userData.omojiGlassBase;glass&&t.add(glass);Vd.has(r.geometry)||i.add(r.geometry);for(let s of Array.isArray(r.material)?r.material:[r.material])e.has(s)||t.add(s)}});for(let r of i)r.dispose();for(let r of t)r.dispose()}var H0=new Map,Yc=new Map,V0=Math.PI*2,qc=new B,Xc=new B,W0=new ze;function q0(n,e,t,i){return n.set(e,t),n.size>i&&n.delete(n.keys().next().value),t}function tx(n){let e=Yc.get(n);return e?(Yc.delete(n),Yc.set(n,e),e):null}function nx(n,e){if(typeof OffscreenCanvas<"u")return new OffscreenCanvas(n,e);let t=document.createElement("canvas");return t.width=n,t.height=e,t}function j0(n){let e=n.clone().convertLinearToSRGB();return[e.r*255,e.g*255,e.b*255]}function ix(n,e,t,damageKey=0,detail=false){let i=typeof n=="object"&&n?.id?n:Wi(n);if(omojiRollsIsCar(i)){const imported=omojiRollsSoftware(i,e);if(imported)return imported;}let r=t==="race"&&!detail?"low":"medium",s=i.id+":"+(e??i.paint)+":"+r+(damageKey?":damage-"+damageKey:""),a=H0.get(s);if(a)return a;let o=fr(i,{color:e,quality:r,showroom:t!=="race",damageKey:damageKey}),l=new Set(o.userData.tailLights.map(h=>h.material));o.updateMatrixWorld(!0);let c=[];return o.traverse(h=>{if(!h.isMesh)return;W0.getNormalMatrix(h.matrixWorld);let p=h.geometry,u=p.attributes.position,d=p.attributes.normal,m=new Float32Array(u.count*6);for(let b=0;b<u.count;b++){qc.fromBufferAttribute(u,b).applyMatrix4(h.matrixWorld),Xc.fromBufferAttribute(d,b).applyNormalMatrix(W0);let x=b*6;m[x++]=qc.x,m[x++]=qc.y,m[x++]=qc.z,m[x++]=Xc.x,m[x++]=Xc.y,m[x]=Xc.z}let y=p.index?.array,f=Array.isArray(h.material)?h.material:[h.material],v=f.length===1?[{start:0,count:y?.length??u.count,materialIndex:0}]:p.groups,g=f.map(b=>({rgb:j0(b.color),metal:b.metalness,roughness:b.roughness,glow:b.emissiveIntensity,glowColor:j0(b.emissive),tail:l.has(b),rearLight:o.userData.omojiWear?.rearLight||0,glass:b===ce.glass||b===ce.glassEdge||!!o.userData.omojiGlassBase}));c.push({vertices:m,indexes:y,ranges:v,paints:g,projected:new Float32Array(u.count*5)})}),ra(o),q0(H0,s,{key:s,batches:c,dimensions:i.dimensions},11)}function rx(n,e,t,i,r,s,a){let{vertices:o,projected:l}=n,c=Math.sin(r),h=Math.cos(r),p=Math.sin(a),u=Math.cos(a),d=c*u,m=p,y=h*u,f=-c*p,v=-h*p,g=s==="race"?10:8.6,b=-.3+d,x=.77+m,w=.56+y,M=Math.hypot(b,x,w),E=b/M,T=x/M,P=w/M;for(let A=0,_=0;A<o.length;A+=6,_+=5){let S=o[A],R=o[A+1],C=o[A+2],L=o[A+3],F=o[A+4],z=o[A+5],j=g-(d*S+m*R+y*C),$=i*g/j;l[_]=e+(h*S-c*C)*$,l[_+1]=t-(f*S+u*R+v*C)*$,l[_+2]=1/j,l[_+3]=.40+Math.max(0,-.28*L+.76*F+.59*z)*.66+Math.max(0,.78*L+.34*F-.42*z)*.18+Math.max(0,-.36*L+.63*F-.52*z)*.09;let ie=Math.max(0,E*L+T*F+P*z);ie*=ie,ie*=ie,l[_+4]=ie*ie+.23*Math.pow(Math.max(0,(-.54*L+.65*F+.53*z)),5)}}function sx(n,e,t,i,r,s,a){if(n.albedo){omojiRollsRaster(n,e,t,i,r,s,a);return;}let{projected:o,indexes:l,ranges:c,paints:h}=n,p=a==="race";for(let u of c){let d=h[u.materialIndex],[m,y,f]=d.rgb,v=d.tail?(s?.92:.19)*(1-d.rearLight*.87):Math.min(d.glow,.86)*.72,[g,b,x]=d.glowColor.map(E=>E*v),w=11+(d.metal||0)*118*(1.06-(d.roughness||.65)),M=p?.96:1,glass=d.glass,reflect=(d.metal||0)*Math.max(0,.72-(d.roughness||.55));for(let E=u.start,T=E+u.count;E<T;E+=3){let P=(l?l[E]:E)*5,A=(l?l[E+1]:E+1)*5,_=(l?l[E+2]:E+2)*5,S=o[P],R=o[P+1],C=o[A],L=o[A+1],F=o[_],z=o[_+1],j=C-S,$=L-R,ie=F-S,Q=z-R,he=j*Q-$*ie;if(he>=-.025)continue;let ne=Math.max(0,Math.floor(Math.min(S,C,F))),se=Math.min(i-1,Math.ceil(Math.max(S,C,F))),oe=Math.max(0,Math.floor(Math.min(R,L,z))),ue=Math.min(r-1,Math.ceil(Math.max(R,L,z)));if(ne>se||oe>ue)continue;let pe=Q/he,k=-$/he,D=o[P+2],q=o[A+2]-D,G=o[_+2]-D,I=o[P+3],U=o[A+3]-I,X=o[_+3]-I,V=o[P+4],H=o[A+4]-V,N=o[_+4]-V,W=ne+.5-S;for(let J=oe;J<=ue;J++){let K=J+.5-R,te=(W*Q-K*ie)/he,me=(j*K-$*W)/he,xe=ne+J*i;for(let le=ne;le<=se;le++,xe++,te+=pe,me+=k){if(te<0||me<0||te+me>1)continue;let be=D+te*q+me*G;if(be<=t[xe])continue;t[xe]=be;let Ee=(I+te*U+me*X)*M,Ce=(V+te*H+me*N)*w,ve=xe*4;const horizon=glass?Math.max(0,1-Math.abs(J/r-.44)*3.6):0;
+function fr(n,e={}){let t=typeof n=="object"&&n?.id?n:Wi(n);const operator=omojiOperatorModel(t);if(operator?.asset)return omojiOperatorMesh(t,e,operator);if(t.id==="omoji-z")t=omojiCrownVisual(t);let i=N0[e.quality]||N0[e.opponent?"low":"medium"],r=new Tt;r.name=t.code;let s=new Tt;s.userData.detail=i,r.add(s);let optical=i!==N0.low&&!e.opponent,reflection=optical&&!e.showroom?omojiCarReflection(!!e.beam):null;
+let a=new Ws({color:e.color||t.paint,metalness:optical?(e.showroom?.39:.31):(e.showroom?.54:.39),roughness:t.id==="omoji-z"?.172:optical?.205:.24,envMap:reflection,envMapIntensity:optical?(e.showroom?1.19:e.beam?.86:1.07):(e.showroom?1.1:.87),clearcoat:optical?.96:.78,clearcoatRoughness:optical?.095:.11}),o=t.twoTone?a.clone():a;t.twoTone&&o.color.set(t.twoTone);let l=xt(t.accent,{roughness:.47,metalness:.33}),c=t.coachwork==="flagship",h=optical?omojiPhysicalLamp(c?"#c8dce8":"#dcd6c3",true,e.lights!==!1,reflection,t.front||"flagship"):xt(c?"#dcecff":"#f1e5bf",{roughness:.28,metalness:.09,emissive:c?"#dbeaff":"#fff0bb",emissiveIntensity:e.lights===!1?.14:1.2}),p=optical?omojiPhysicalLamp("#9e0d26",false,e.lights!==!1,reflection,t.rear||"flagship"):xt("#ce203b",{roughness:.34,metalness:.17,emissive:"#ff133a",emissiveIntensity:.48});Xb(s,t,o,t.twoTone?a:l),t.id==="omoji-z"?(omojiCrownWindows(s,t,o),omojiCrownSide(s,t,a,l)):(Yb(s,t,o,t.chrome?ce.chrome:ce.seal),Qb(s,t,a,l));let{lampGeometry:u}=t.id==="omoji-z"?omojiCrownFascia(s,t,a,l,h,p):Kb(s,t,a,l,h,p);Hd(s),Hd(u);if(optical)omojiCarGlass(s,reflection,!!e.beam);let d=[],m=[];for(let f of[!1,!0])for(let v of[-1,1]){let g=Zb(t,v,f,a,i);r.add(g),f&&m.push(g),d.push(g)}e.beam&&e.lights!==!1&&ex(r,t);let y=u.children;return r.userData={data:t,wheels:d,frontWheels:m,tailLights:y.filter(f=>f.material===p),headlights:y.filter(f=>f.material===h),animate({steering:f=0,speed:v=0,dt:g=0,brake:b=!1}={}){for(let w of m)w.rotation.y=f;let x=v*g/t.wheel[0];for(let w of d)w.userData.roll.rotation.x=(w.userData.roll.rotation.x+x)%(Math.PI*2);p.emissiveIntensity=(b?1.9:.53)*(1-(r.userData.omojiWear?.rearLight||0)*.72)},omojiBodyGroup:s},e.damageKey&&omojiApplyCarAppearance(r,e.damageKey),r}function ra(n){let e=new Set(Object.values(ce)),t=new Set,i=new Set;n.traverse(r=>{if(r.isMesh){const glass=r.userData.omojiGlassBase;glass&&t.add(glass);Vd.has(r.geometry)||i.add(r.geometry);for(let s of Array.isArray(r.material)?r.material:[r.material])e.has(s)||t.add(s)}});for(let r of i)r.dispose();for(let r of t)r.dispose()}var H0=new Map,Yc=new Map,V0=Math.PI*2,qc=new B,Xc=new B,W0=new ze;function q0(n,e,t,i){return n.set(e,t),n.size>i&&n.delete(n.keys().next().value),t}function tx(n){let e=Yc.get(n);return e?(Yc.delete(n),Yc.set(n,e),e):null}function nx(n,e){if(typeof OffscreenCanvas<"u")return new OffscreenCanvas(n,e);let t=document.createElement("canvas");return t.width=n,t.height=e,t}function j0(n){let e=n.clone().convertLinearToSRGB();return[e.r*255,e.g*255,e.b*255]}function ix(n,e,t,damageKey=0,detail=false){let i=typeof n=="object"&&n?.id?n:Wi(n);const operator=omojiOperatorModel(i);if(operator?.asset)return omojiOperatorSoftware(i,e,operator);let r=t==="race"&&!detail?"low":"medium",s=i.id+":"+(e??i.paint)+":"+r+(damageKey?":damage-"+damageKey:""),a=H0.get(s);if(a)return a;let o=fr(i,{color:e,quality:r,showroom:t!=="race",damageKey:damageKey}),l=new Set(o.userData.tailLights.map(h=>h.material));o.updateMatrixWorld(!0);let c=[];return o.traverse(h=>{if(!h.isMesh)return;W0.getNormalMatrix(h.matrixWorld);let p=h.geometry,u=p.attributes.position,d=p.attributes.normal,m=new Float32Array(u.count*6);for(let b=0;b<u.count;b++){qc.fromBufferAttribute(u,b).applyMatrix4(h.matrixWorld),Xc.fromBufferAttribute(d,b).applyNormalMatrix(W0);let x=b*6;m[x++]=qc.x,m[x++]=qc.y,m[x++]=qc.z,m[x++]=Xc.x,m[x++]=Xc.y,m[x]=Xc.z}let y=p.index?.array,f=Array.isArray(h.material)?h.material:[h.material],v=f.length===1?[{start:0,count:y?.length??u.count,materialIndex:0}]:p.groups,g=f.map(b=>({rgb:j0(b.color),metal:b.metalness,roughness:b.roughness,glow:b.emissiveIntensity,glowColor:j0(b.emissive),tail:l.has(b),rearLight:o.userData.omojiWear?.rearLight||0,glass:b===ce.glass||b===ce.glassEdge||!!o.userData.omojiGlassBase}));c.push({vertices:m,indexes:y,ranges:v,paints:g,projected:new Float32Array(u.count*5)})}),ra(o),q0(H0,s,{key:s,batches:c,dimensions:i.dimensions},11)}function rx(n,e,t,i,r,s,a){let{vertices:o,projected:l}=n,c=Math.sin(r),h=Math.cos(r),p=Math.sin(a),u=Math.cos(a),d=c*u,m=p,y=h*u,f=-c*p,v=-h*p,g=s==="race"?10:8.6,b=-.3+d,x=.77+m,w=.56+y,M=Math.hypot(b,x,w),E=b/M,T=x/M,P=w/M;for(let A=0,_=0;A<o.length;A+=6,_+=5){let S=o[A],R=o[A+1],C=o[A+2],L=o[A+3],F=o[A+4],z=o[A+5],j=g-(d*S+m*R+y*C),$=i*g/j;l[_]=e+(h*S-c*C)*$,l[_+1]=t-(f*S+u*R+v*C)*$,l[_+2]=1/j,l[_+3]=.40+Math.max(0,-.28*L+.76*F+.59*z)*.66+Math.max(0,.78*L+.34*F-.42*z)*.18+Math.max(0,-.36*L+.63*F-.52*z)*.09;let ie=Math.max(0,E*L+T*F+P*z);ie*=ie,ie*=ie,l[_+4]=ie*ie+.23*Math.pow(Math.max(0,(-.54*L+.65*F+.53*z)),5)}}function sx(n,e,t,i,r,s,a){if(n.albedo){omojiRollsRaster(n,e,t,i,r,s,a);return;}let{projected:o,indexes:l,ranges:c,paints:h}=n,p=a==="race";for(let u of c){let d=h[u.materialIndex],[m,y,f]=d.rgb,v=d.tail?(s?.92:.19)*(1-d.rearLight*.87):Math.min(d.glow,.86)*.72,[g,b,x]=d.glowColor.map(E=>E*v),w=11+(d.metal||0)*118*(1.06-(d.roughness||.65)),M=p?.96:1,glass=d.glass,reflect=(d.metal||0)*Math.max(0,.72-(d.roughness||.55));for(let E=u.start,T=E+u.count;E<T;E+=3){let P=(l?l[E]:E)*5,A=(l?l[E+1]:E+1)*5,_=(l?l[E+2]:E+2)*5,S=o[P],R=o[P+1],C=o[A],L=o[A+1],F=o[_],z=o[_+1],j=C-S,$=L-R,ie=F-S,Q=z-R,he=j*Q-$*ie;if(he>=-.025)continue;let ne=Math.max(0,Math.floor(Math.min(S,C,F))),se=Math.min(i-1,Math.ceil(Math.max(S,C,F))),oe=Math.max(0,Math.floor(Math.min(R,L,z))),ue=Math.min(r-1,Math.ceil(Math.max(R,L,z)));if(ne>se||oe>ue)continue;let pe=Q/he,k=-$/he,D=o[P+2],q=o[A+2]-D,G=o[_+2]-D,I=o[P+3],U=o[A+3]-I,X=o[_+3]-I,V=o[P+4],H=o[A+4]-V,N=o[_+4]-V,W=ne+.5-S;for(let J=oe;J<=ue;J++){let K=J+.5-R,te=(W*Q-K*ie)/he,me=(j*K-$*W)/he,xe=ne+J*i;for(let le=ne;le<=se;le++,xe++,te+=pe,me+=k){if(te<0||me<0||te+me>1)continue;let be=D+te*q+me*G;if(be<=t[xe])continue;t[xe]=be;let Ee=(I+te*U+me*X)*M,Ce=(V+te*H+me*N)*w,ve=xe*4;const horizon=glass?Math.max(0,1-Math.abs(J/r-.44)*3.6):0;
             const clearcoat=reflect*Math.max(0,Ee-.40)*Math.max(0,.52-Math.abs(J/r-.46)*.91);
             e[ve]=m*Ee+Ce*.96+g+clearcoat*34+horizon*8;
             e[ve+1]=y*Ee+Ce*1.03+b+clearcoat*46+horizon*19;
@@ -6718,11 +6755,14 @@ key(e,t){if(this.status==="idle"||this.status==="finished"||e.altKey||e.ctrlKey|
 omojiPayTechnique(this.omojiTechnique,true);this.omojiTechnique=null;
 
 if (this.player?.omojiDamageRole === "local") omojiCommitVehicleDamage();
-if(this.animationId!=null&&cancelAnimationFrame(this.animationId),this.animationId=null,this.padFrame!=null&&cancelAnimationFrame(this.padFrame),this.padFrame=null,this.clearInputs(),this.padButtons=null,this.gamepadSuspended=!1,this.status="idle",this.world){this.effects?.dispose();for(let e of[this.playerCar,this.rivalCar,...Array.from(this.opponents.values(),t=>t.car)])e&&(e.removeFromParent(),ra(e));for(let e of[this.playerShadow,this.rivalShadow,...Array.from(this.opponents.values(),t=>t.shadow)])e&&$x(e);this.world.dispose?.(),this.renderer?.renderLists?.dispose()}this.world=null,this.grandPrix=null,this.gpSettlement=null,this.gpTimePenalty=0,this.multiplayer=null,this.opponents.clear(),this.rival=null,this.player=null,this.rivalCar=this.playerCar=this.rivalShadow=this.playerShadow=this.effects=null}refreshRollsModel(model, vehicle, opponent) {
-    if (!model || !omojiRollsIsCar(vehicle?.stats) || model.children.some(part => part.name === "Rolls-Royce GLB")) return model;
+if(this.animationId!=null&&cancelAnimationFrame(this.animationId),this.animationId=null,this.padFrame!=null&&cancelAnimationFrame(this.padFrame),this.padFrame=null,this.clearInputs(),this.padButtons=null,this.gamepadSuspended=!1,this.status="idle",this.world){this.effects?.dispose();for(let e of[this.playerCar,this.rivalCar,...Array.from(this.opponents.values(),t=>t.car)])e&&(e.removeFromParent(),ra(e));for(let e of[this.playerShadow,this.rivalShadow,...Array.from(this.opponents.values(),t=>t.shadow)])e&&$x(e);this.world.dispose?.(),this.renderer?.renderLists?.dispose()}this.world=null,this.grandPrix=null,this.gpSettlement=null,this.gpTimePenalty=0,this.multiplayer=null,this.opponents.clear(),this.rival=null,this.player=null,this.rivalCar=this.playerCar=this.rivalShadow=this.playerShadow=this.effects=null}refreshOperatorModel(model, vehicle, opponent) {
+    const operator = omojiOperatorModel(vehicle?.stats);
+    if (!model || !operator?.asset) return model;
     const quality = opponent || this.rendererMode === "software" ? "low" :
         this.selected?.quality === "auto" ? (window.matchMedia?.("(pointer: coarse)")?.matches ? "low" : "high") :
         this.selected?.quality;
+    const target = omojiOperatorVisualLevel(vehicle.stats, quality);
+    if (model.userData.importedQuality === target) return model;
     const replacement = fr(vehicle.stats, {opponent, beam:!opponent && this.world.track.dark, quality});
     replacement.position.copy(model.position);
     replacement.quaternion.copy(model.quaternion);
@@ -6731,16 +6771,16 @@ if(this.animationId!=null&&cancelAnimationFrame(this.animationId),this.animation
     this.world.scene.add(replacement);
     return replacement;
 }
-refreshRollsPlayer() {
-    const replacement = this.refreshRollsModel(this.playerCar, this.player, false);
+refreshOperatorPlayer() {
+    const replacement = this.refreshOperatorModel(this.playerCar, this.player, false);
     if (replacement === this.playerCar) return false;
     this.playerCar = replacement;
     this.updateTransforms(0, true);
     this.render();
     return true;
 }
-refreshRollsOpponents() {
-    for (const entry of this.opponents.values()) entry.car = this.refreshRollsModel(entry.car, entry.vehicle, true);
+refreshOperatorOpponents() {
+    for (const entry of this.opponents.values()) entry.car = this.refreshOperatorModel(entry.car, entry.vehicle, true);
 }
 updateMultiplayer(e){if(!this.multiplayer||!this.world)return;let t=performance.now();for(let i of e){if(i.id===this.multiplayer.selfId)continue;let{distance:r,offset:s}=Qd(i.slot,this.world.width),a=this.opponents.get(i.id);if(!a){let o=Wi(i.car),l=/^#[a-f\d]{6}$/i.test(i.color)?i.color:o.paint,c={...o,paint:l},h=ah(c,r,s),p=fr(c,{opponent:!0,beam:!1,quality:"low"}),u=Jd();a={vehicle:h,car:p,shadow:u,point:{},target:{}},this.opponents.set(i.id,a),this.world.scene.add(p,u);for(let d of No)Number.isFinite(i[d])&&(h[d]=i[d])}for(let o of No)a.target[o]=Number.isFinite(i[o])?i[o]:a.vehicle[o];a.connected=i.connected!==!1,a.vehicle.finishTime=Number.isFinite(i.finishTime)?i.finishTime:null,a.receivedAt=t}}getMultiplayerState(){return!this.multiplayer||!this.player?null:{...Object.fromEntries(No.map(e=>[e,this.player[e]])),distance:Math.min(this.world.length,this.player.distance),finishTime:this.player.finishTime}}destroy(){this.exit(),this.renderer?.dispose(),this.renderer=null,this.softwareCanvas?.remove(),this.softwareCanvas=null,this.canvas.hidden=!1,window.removeEventListener("keydown",this.onKeyDown),window.removeEventListener("keyup",this.onKeyUp),window.removeEventListener("blur",this.onBlur),document.removeEventListener("visibilitychange",this.onVisibility),this.canvas.removeEventListener("webglcontextlost",this.onContextLost)}step(e){if(this.status==="gp-settling"){this.advanceGrandPrixSettlement(e);return}if(this.status==="countdown"){this.startClock=this.multiplayer?(this.multiplayer.startAt-Date.now())/1e3:this.startClock-e;let i=this.input(),r=i.throttle;this.player.transmission==="mt"&&O1(this.player,i,e,0,!1),this.player.rpm=lt(this.player.rpm,920+r*3e3,un(8,e)),this.player.throttle=r,this.startClock<=0&&(this.status="running");return}if(this.status!=="running")return;
 this.omojiDamageClock = (this.omojiDamageClock ?? 0) + e;
@@ -8954,17 +8994,24 @@ function ss(n=!0){let e=Ht(ye.car);k2.select(e.id);let t=ga(e),i=mp(e),r=Math.ro
         <small>${l.name}${c}</small></div><div class="record-actions"><b>${h}</b>
         ${ii(o.id)?`<button type="button" class="quiet" data-replay-track="${o.id}" data-replay-car="${l.id}"
           data-replay-mode="${i}" data-replay-difficulty="${Object.hasOwn(Sa,a)?a:"normal"}"
-          aria-label="${o.name}\u306E${br[i].label}\u3092\u9078\u3076">\u518D\u6311\u6226</button>`:"<small>旧収録コース</small>"}</div></div>`}).filter(Boolean).slice(0,10);Y("record-list").innerHTML=n.length?n.join(""):"<p>\u5B8C\u8D70\u3059\u308B\u3068\u3053\u306E\u7AEF\u672B\u306B\u30D9\u30B9\u30C8\u8A18\u9332\u304C\u4FDD\u5B58\u3055\u308C\u307E\u3059\u3002</p>"}function vw({replayTrack:n,replayCar:e,replayMode:t,replayDifficulty:i}){let r=ii(n),s=Ht(e);if(!(!r||!Object.hasOwn(br,t))){ye.track=r.id,ye.mode=t,Object.hasOwn(Sa,i)&&(ye.difficulty=i),s&&_r(s)&&(ye.car=s.id);for(let a of["track-search","track-filter","track-type"])Y(a).value="";Kt[0].resetPreferenceFilter({silent:!0}),Kt[0].applyFilters(),Ei(),ss(),Mr?.refresh(),Ti.write()}}var xr,Ma,an,qo=.53,Dh=!1,Xo,Xp=!1,mn=Y("car-canvas"),Yp=new B(0,.52,0);function yw(){try{let n=mn.getContext("webgl2",{alpha:!0,antialias:!0,powerPreference:"low-power"});if(!n){an=mn.getContext("2d"),an?new ResizeObserver(rs).observe(mn):Y("garage-error").hidden=!1;return}let e=new na({canvas:mn,context:n,alpha:!0,antialias:!0,powerPreference:"low-power"});e.setPixelRatio(Math.min(window.devicePixelRatio||1,1.55)),e.outputColorSpace=Dt,e.toneMapping=Ys,e.toneMappingExposure=1.16;let t=new Bi,i;try{i=G0(e),t.environment=i.texture}catch{}t.add(new Nr("#e4ecf6","#68554e",1.22));let r=new Gi("#fff2e6",2.6);r.position.set(3.7,6,4.5);let s=new Gi("#adc6e3",1.72);s.position.set(-5,2.2,-4.5),t.add(r,s);let a=new Fe(new Us(3.34,72),new hr({color:"#20201f",roughness:.87,metalness:.12}));a.rotation.x=-Math.PI/2,a.position.y=-.025,t.add(a);let o=new Fe(new lr(3.14,3.155,72),new ft({color:"#b88965",transparent:!0,opacity:.36}));o.rotation.x=-Math.PI/2,o.position.y=-.02,t.add(o);let l=document.createElement("canvas");l.width=l.height=64;let c=l.getContext("2d"),h=c.createRadialGradient(32,32,4,32,32,32);h.addColorStop(0,"rgba(0,0,0,.85)"),h.addColorStop(1,"rgba(0,0,0,0)"),c.fillStyle=h,c.fillRect(0,0,64,64);let p=new Fe(new en(3.4,6.5),new ft({map:new Dn(l),transparent:!0,opacity:.7,depthWrite:!1}));p.rotation.x=-Math.PI/2,p.position.y=-.012,t.add(p),xr={renderer:e,scene:t,environment:i,camera:new Zt(34,1,.1,65)},new ResizeObserver(rs).observe(mn)}catch{Y("garage-error").hidden=!1}}function nf(n){n=omojiShowroomCar(n);const status=Y("rolls-model-status");if(status&&!omojiRollsIsCar(n)) status.hidden=true;omojiRollsRefreshShowroom(n);if(!xr){rs();return}Ma&&(Ma.removeFromParent(),ra(Ma));if(omojiRollsIsCar(n)&&!omojiRollsAsset){Ma=null;rs();return;}let e=matchMedia("(pointer: coarse)").matches?"medium":"high";Ma=fr(n,{color:omojiShowroomPaint(n),lights:!1,quality:e,showroom:!0,damageKey:omojiAppearanceKey(omojiRaceGetDamage(n.id))}),xr.scene.add(Ma),rs()}function rs(){!xr&&!an||!Dh||Pt.open||Xp||(Xp=!0,requestAnimationFrame(()=>{if(Xp=!1,!Dh||Pt.open)return;let n=mn.clientWidth||1,e=mn.clientHeight||1,t=omojiShowroomCar(Ht(ye.car)),[i,r,s]=t.dimensions;if(an){if(omojiRollsIsCar(t)&&!omojiRollsAsset){omojiRollsRefreshShowroom(t);an.clearRect(0,0,mn.width,mn.height);return;}let d=Math.min(2.35,Math.max(1.35,(window.devicePixelRatio||1)*1.20));mn.width=Math.round(n*d),mn.height=Math.round(e*d),an.setTransform(d,0,0,d,0,0);let m=Math.min(n*.29,e*.57,n*.8*r/i,e*.48*r/s),y=e*.67,f=an.createRadialGradient(n/2,y,5,n/2,y,m*1.56);f.addColorStop(0,"#0b100ccb"),f.addColorStop(1,"#0b100c00"),an.save(),an.translate(n/2,y),an.scale(1,.29),an.translate(-n/2,-y),an.fillStyle=f,an.fillRect(0,y-m*1.6,n,m*3.2),an.restore(),sa(an,t,{x:n/2,y,width:m,angle:qo,view:"garage",detail:true,color:omojiShowroomPaint(t),damage:omojiRaceGetDamage(t.id)});return}let{renderer:a,scene:o,camera:l}=xr,c=Math.max(1,i/4.55,s/1.58),h=n/e,p=i*.64/(Math.tan(vd.degToRad(l.fov/2))*Math.min(1,h))+r*.65,u=Math.max((h<1.5?7.7:7.05)*c,p);Yp.y=s*.4,l.position.set(Math.sin(qo)*u,2.55+Yp.y-.52,Math.cos(qo)*u),l.aspect=h,l.lookAt(Yp),l.updateProjectionMatrix(),a.setSize(n,e,!1),a.render(o,l)}))}new IntersectionObserver(([n],e)=>{Dh=n.isIntersecting,Dh&&(!xr&&!an&&Y("garage-error").hidden&&yw(),xr&&!Ma&&nf(Ht(ye.car)),rs(),!xr&&!an&&e.disconnect())},{rootMargin:"170px"}).observe(mn);mn.addEventListener("pointerdown",n=>{Xo={id:n.pointerId,x:n.clientX,angle:qo},mn.setPointerCapture(n.pointerId)});mn.addEventListener("pointermove",n=>{Xo?.id===n.pointerId&&(qo=Xo.angle+(n.clientX-Xo.x)*.012,rs())});for(let n of["pointerup","pointercancel","lostpointercapture"])mn.addEventListener(n,()=>{Xo=null});function O2(n){let e=ye.paints[n.id],t=wr(n);Y("paint").value=t,Y("paint").style.setProperty("--selected-paint",t),wa(Y("paint-swatches"),"data-paint-color",e),Y("reset-paint").setAttribute("aria-pressed",String(!e));let i=e?P2.get(e)??"\u30AB\u30B9\u30BF\u30E0 "+e.toUpperCase():"\u8ECA\u4E21\u6A19\u6E96\u8272",r=Y("paint-status");r.textContent!==i&&(r.textContent=i)}function rf(n){let e=Ht(ye.car),t=wr(e);(ye.paints[e.id]??null)!==n&&(n?ye.paints[e.id]=n:delete ye.paints[e.id],Ti.write()),O2(e);let i=wr(e);i!==t&&(Y("car-list").querySelector('[data-car="'+e.id+'"]')?.style.setProperty("--paint",i),nf(e))}function bw(n){if(!n||!E2)return;let e=E2,{width:t,height:i}=D2,r=([s,a],o,l)=>{e.fillStyle=o,e.beginPath(),e.arc(8+s*(t-16),7+a*(i-14),l,0,Math.PI*2),e.fill()};e.clearRect(0,0,t,i),e.beginPath();for(let[s,[a,o]]of n.points.entries())e[s?"lineTo":"moveTo"](8+a*(t-16),7+o*(i-14));e.strokeStyle="#bfc3b2",e.lineWidth=3,e.lineJoin="round",e.lineCap="round",e.stroke(),n.rival&&r(n.rival,"#ff694e",4.4);for(let s of n.opponents??[])r(s,"#ff694e",3.9);r(n.player,"#e7f84e",5.1)}function zn(n,e){let t=Cn[n],i=String(e);t.textContent!==i&&(t.textContent=i)}function xw(n){Ve||Ct?.grandPrix||C2.sample(n,Ct),zn("race-track-name",n.track.name),zn("race-time",is(n.time));let e=n.mode==="drift"?Number.isFinite(n.driftBest)?"BEST "+qt.format(n.driftBest)+" PTS":"":Number.isFinite(n.best)?"BEST "+is(n.best):"";zn("race-best",e),omojiCompactSpeed(n.speed),omojiNitroLevelHud(n),zn("race-speed",n.speed),zn("race-gear",n.gear<0?"R":n.gear||"N"),zn("race-transmission",n.transmission==="mt"?"MT":"AT"),zn("race-rev-count",qt.format(Math.round(n.rpm/100)*100)+" RPM");let t=Cn["race-shift-tip"],i=n.limiter?"UP \u2191":n.shifting?"SHIFT":n.shiftPrompt==="up"?"UP \u2191":n.shiftPrompt==="down"?"DOWN \u2193":"";t.hidden=n.transmission!=="mt"||!i,zn("race-shift-tip",i),zn("race-position",Ve||Ct?.grandPrix?n.position+" / "+n.totalPlayers:n.mode==="duel"?n.position+" / 2":n.mode==="drift"?qt.format(n.driftScore):T2(n.progress)+"%");let r=n.status==="gp-settling"?["CPUのゴールを集計中 · "+n.gpCpuFinished+" / 7台"]:[],s=Y("race-endurance-progress");if(s.hidden=!(n.track.endurance||n.track.longStraight),!s.hidden){let p=Math.min(n.track.length,Math.max(0,n.playerDistance)),u=(Math.floor(p/100)/10).toFixed(1)+" / "+n.track.length/1e3+" km";s.textContent!==u&&(s.textContent=u);const sectors=n.track.sectors;for(let index=(sectors?.length??0)-1;index>=0;index--){if(sectors[index].start<=p){r.push(sectors[index].name);break}}}n.mode==="duel"&&!Ct?.grandPrix&&r.push(n.rivalGap>=0?"+"+Math.round(n.rivalGap)+" m":Math.round(n.rivalGap)+" m"),n.mode==="drift"&&r.push("PTS",...n.driftChain>0?["+"+qt.format(n.driftChain)+" CHAIN"]:[]),n.assist&&r.push("\u30A2\u30B7\u30B9\u30C8"),Ve?.failures>=2&&r.push("\u518D\u63A5\u7D9A\u4E2D"),zn("race-context",r.join(" \xB7 ")),Cn["race-progress"].style.transform="scaleX("+n.progress+")",Cn["race-progress"].parentElement.setAttribute("aria-valuenow",T2(n.progress));let a=Math.min(1,n.rpm/(n.redline||8e3));Cn["race-rpm"].style.transform="scaleX("+a+")",Cn["race-rpm"].classList.toggle("near-redline",a>=.9);let o=Cn["nitro-hud"],l=Math.ceil((n.nitroRemaining??0)*100),c=Cn["race-nitro-meter"];o.hidden=Cn["touch-nitro"].hidden=Cn["nitro-tip"].hidden=!n.nitroAvailable,o.classList.toggle("nitro-active",n.nitroActive),Cn["touch-nitro"].classList.toggle("nitro-empty",l===0),Cn["race-nitro-bar"].style.transform="scaleX("+(n.nitroRemaining??0)+")",c.getAttribute("aria-valuenow")!==String(l)&&c.setAttribute("aria-valuenow",l),zn("race-nitro-label",l+"%");let h=Cn.countdown;h.hidden=n.countdown==null,h.hidden||zn("countdown",n.countdown===0?"GO":n.countdown),Y("race-tip").hidden=n.status!=="countdown",bw(n.map)
+          aria-label="${o.name}\u306E${br[i].label}\u3092\u9078\u3076">\u518D\u6311\u6226</button>`:"<small>旧収録コース</small>"}</div></div>`}).filter(Boolean).slice(0,10);Y("record-list").innerHTML=n.length?n.join(""):"<p>\u5B8C\u8D70\u3059\u308B\u3068\u3053\u306E\u7AEF\u672B\u306B\u30D9\u30B9\u30C8\u8A18\u9332\u304C\u4FDD\u5B58\u3055\u308C\u307E\u3059\u3002</p>"}function vw({replayTrack:n,replayCar:e,replayMode:t,replayDifficulty:i}){let r=ii(n),s=Ht(e);if(!(!r||!Object.hasOwn(br,t))){ye.track=r.id,ye.mode=t,Object.hasOwn(Sa,i)&&(ye.difficulty=i),s&&_r(s)&&(ye.car=s.id);for(let a of["track-search","track-filter","track-type"])Y(a).value="";Kt[0].resetPreferenceFilter({silent:!0}),Kt[0].applyFilters(),Ei(),ss(),Mr?.refresh(),Ti.write()}}var xr,Ma,an,qo=.53,Dh=!1,Xo,Xp=!1,mn=Y("car-canvas"),Yp=new B(0,.52,0);function yw(){try{let n=mn.getContext("webgl2",{alpha:!0,antialias:!0,powerPreference:"low-power"});if(!n){an=mn.getContext("2d"),an?new ResizeObserver(rs).observe(mn):Y("garage-error").hidden=!1;return}let e=new na({canvas:mn,context:n,alpha:!0,antialias:!0,powerPreference:"low-power"});e.setPixelRatio(Math.min(window.devicePixelRatio||1,1.55)),e.outputColorSpace=Dt,e.toneMapping=Ys,e.toneMappingExposure=1.16;let t=new Bi,i;try{i=G0(e),t.environment=i.texture}catch{}t.add(new Nr("#e4ecf6","#68554e",1.22));let r=new Gi("#fff2e6",2.6);r.position.set(3.7,6,4.5);let s=new Gi("#adc6e3",1.72);s.position.set(-5,2.2,-4.5),t.add(r,s);let a=new Fe(new Us(3.34,72),new hr({color:"#20201f",roughness:.87,metalness:.12}));a.rotation.x=-Math.PI/2,a.position.y=-.025,t.add(a);let o=new Fe(new lr(3.14,3.155,72),new ft({color:"#b88965",transparent:!0,opacity:.36}));o.rotation.x=-Math.PI/2,o.position.y=-.02,t.add(o);let l=document.createElement("canvas");l.width=l.height=64;let c=l.getContext("2d"),h=c.createRadialGradient(32,32,4,32,32,32);h.addColorStop(0,"rgba(0,0,0,.85)"),h.addColorStop(1,"rgba(0,0,0,0)"),c.fillStyle=h,c.fillRect(0,0,64,64);let p=new Fe(new en(3.4,6.5),new ft({map:new Dn(l),transparent:!0,opacity:.7,depthWrite:!1}));p.rotation.x=-Math.PI/2,p.position.y=-.012,t.add(p),xr={renderer:e,scene:t,environment:i,camera:new Zt(34,1,.1,65)},new ResizeObserver(rs).observe(mn)}catch{Y("garage-error").hidden=!1}}function nf(n){n=omojiShowroomCar(n);omojiRefreshOperatorShowroom(n);const e=omojiOperatorShowroomQuality();mn.dataset.vehicleId=n.id;mn.dataset.vehicleModel=omojiOperatorModel(n)?omojiOperatorVisualLevel(n,xr?e:'low'):'generated';if(!xr){rs();return}Ma&&(Ma.removeFromParent(),ra(Ma));Ma=fr(n,{color:omojiShowroomPaint(n),lights:!1,quality:e,showroom:!0,damageKey:omojiAppearanceKey(omojiRaceGetDamage(n.id))}),xr.scene.add(Ma),rs()}function rs(){!xr&&!an||!Dh||Pt.open||Xp||(Xp=!0,requestAnimationFrame(()=>{if(Xp=!1,!Dh||Pt.open)return;let n=mn.clientWidth||1,e=mn.clientHeight||1,t=omojiShowroomCar(Ht(ye.car)),[i,r,s]=t.dimensions;if(an){let d=Math.min(2.35,Math.max(1.35,(window.devicePixelRatio||1)*1.20));mn.width=Math.round(n*d),mn.height=Math.round(e*d),an.setTransform(d,0,0,d,0,0);let m=Math.min(n*.29,e*.57,n*.8*r/i,e*.48*r/s),y=e*.67,f=an.createRadialGradient(n/2,y,5,n/2,y,m*1.56);f.addColorStop(0,"#0b100ccb"),f.addColorStop(1,"#0b100c00"),an.save(),an.translate(n/2,y),an.scale(1,.29),an.translate(-n/2,-y),an.fillStyle=f,an.fillRect(0,y-m*1.6,n,m*3.2),an.restore(),sa(an,t,{x:n/2,y,width:m,angle:qo,view:"garage",detail:true,color:omojiShowroomPaint(t),damage:omojiRaceGetDamage(t.id)});return}let{renderer:a,scene:o,camera:l}=xr,c=Math.max(1,i/4.55,s/1.58),h=n/e,p=i*.64/(Math.tan(vd.degToRad(l.fov/2))*Math.min(1,h))+r*.65,u=Math.max((h<1.5?7.7:7.05)*c,p);Yp.y=s*.4,l.position.set(Math.sin(qo)*u,2.55+Yp.y-.52,Math.cos(qo)*u),l.aspect=h,l.lookAt(Yp),l.updateProjectionMatrix(),a.setSize(n,e,!1),a.render(o,l)}))}new IntersectionObserver(([n],e)=>{Dh=n.isIntersecting,Dh&&(!xr&&!an&&Y("garage-error").hidden&&yw(),xr&&!Ma&&nf(Ht(ye.car)),rs(),!xr&&!an&&e.disconnect())},{rootMargin:"170px"}).observe(mn);mn.addEventListener("pointerdown",n=>{Xo={id:n.pointerId,x:n.clientX,angle:qo},mn.setPointerCapture(n.pointerId)});mn.addEventListener("pointermove",n=>{Xo?.id===n.pointerId&&(qo=Xo.angle+(n.clientX-Xo.x)*.012,rs())});for(let n of["pointerup","pointercancel","lostpointercapture"])mn.addEventListener(n,()=>{Xo=null});function O2(n){let e=ye.paints[n.id],t=wr(n);Y("paint").value=t,Y("paint").style.setProperty("--selected-paint",t),wa(Y("paint-swatches"),"data-paint-color",e),Y("reset-paint").setAttribute("aria-pressed",String(!e));let i=e?P2.get(e)??"\u30AB\u30B9\u30BF\u30E0 "+e.toUpperCase():"\u8ECA\u4E21\u6A19\u6E96\u8272",r=Y("paint-status");r.textContent!==i&&(r.textContent=i)}function rf(n){let e=Ht(ye.car),t=wr(e);(ye.paints[e.id]??null)!==n&&(n?ye.paints[e.id]=n:delete ye.paints[e.id],Ti.write()),O2(e);let i=wr(e);i!==t&&(Y("car-list").querySelector('[data-car="'+e.id+'"]')?.style.setProperty("--paint",i),nf(e))}function bw(n){if(!n||!E2)return;let e=E2,{width:t,height:i}=D2,r=([s,a],o,l)=>{e.fillStyle=o,e.beginPath(),e.arc(8+s*(t-16),7+a*(i-14),l,0,Math.PI*2),e.fill()};e.clearRect(0,0,t,i),e.beginPath();for(let[s,[a,o]]of n.points.entries())e[s?"lineTo":"moveTo"](8+a*(t-16),7+o*(i-14));e.strokeStyle="#bfc3b2",e.lineWidth=3,e.lineJoin="round",e.lineCap="round",e.stroke(),n.rival&&r(n.rival,"#ff694e",4.4);for(let s of n.opponents??[])r(s,"#ff694e",3.9);r(n.player,"#e7f84e",5.1)}function zn(n,e){let t=Cn[n],i=String(e);t.textContent!==i&&(t.textContent=i)}function xw(n){Ve||Ct?.grandPrix||C2.sample(n,Ct),zn("race-track-name",n.track.name),zn("race-time",is(n.time));let e=n.mode==="drift"?Number.isFinite(n.driftBest)?"BEST "+qt.format(n.driftBest)+" PTS":"":Number.isFinite(n.best)?"BEST "+is(n.best):"";zn("race-best",e),omojiCompactSpeed(n.speed),omojiNitroLevelHud(n),zn("race-speed",n.speed),zn("race-gear",n.gear<0?"R":n.gear||"N"),zn("race-transmission",n.transmission==="mt"?"MT":"AT"),zn("race-rev-count",qt.format(Math.round(n.rpm/100)*100)+" RPM");let t=Cn["race-shift-tip"],i=n.limiter?"UP \u2191":n.shifting?"SHIFT":n.shiftPrompt==="up"?"UP \u2191":n.shiftPrompt==="down"?"DOWN \u2193":"";t.hidden=n.transmission!=="mt"||!i,zn("race-shift-tip",i),zn("race-position",Ve||Ct?.grandPrix?n.position+" / "+n.totalPlayers:n.mode==="duel"?n.position+" / 2":n.mode==="drift"?qt.format(n.driftScore):T2(n.progress)+"%");let r=n.status==="gp-settling"?["CPUのゴールを集計中 · "+n.gpCpuFinished+" / 7台"]:[],s=Y("race-endurance-progress");if(s.hidden=!(n.track.endurance||n.track.longStraight),!s.hidden){let p=Math.min(n.track.length,Math.max(0,n.playerDistance)),u=(Math.floor(p/100)/10).toFixed(1)+" / "+n.track.length/1e3+" km";s.textContent!==u&&(s.textContent=u);const sectors=n.track.sectors;for(let index=(sectors?.length??0)-1;index>=0;index--){if(sectors[index].start<=p){r.push(sectors[index].name);break}}}n.mode==="duel"&&!Ct?.grandPrix&&r.push(n.rivalGap>=0?"+"+Math.round(n.rivalGap)+" m":Math.round(n.rivalGap)+" m"),n.mode==="drift"&&r.push("PTS",...n.driftChain>0?["+"+qt.format(n.driftChain)+" CHAIN"]:[]),n.assist&&r.push("\u30A2\u30B7\u30B9\u30C8"),Ve?.failures>=2&&r.push("\u518D\u63A5\u7D9A\u4E2D"),zn("race-context",r.join(" \xB7 ")),Cn["race-progress"].style.transform="scaleX("+n.progress+")",Cn["race-progress"].parentElement.setAttribute("aria-valuenow",T2(n.progress));let a=Math.min(1,n.rpm/(n.redline||8e3));Cn["race-rpm"].style.transform="scaleX("+a+")",Cn["race-rpm"].classList.toggle("near-redline",a>=.9);let o=Cn["nitro-hud"],l=Math.ceil((n.nitroRemaining??0)*100),c=Cn["race-nitro-meter"];o.hidden=Cn["touch-nitro"].hidden=Cn["nitro-tip"].hidden=!n.nitroAvailable,o.classList.toggle("nitro-active",n.nitroActive),Cn["touch-nitro"].classList.toggle("nitro-empty",l===0),Cn["race-nitro-bar"].style.transform="scaleX("+(n.nitroRemaining??0)+")",c.getAttribute("aria-valuenow")!==String(l)&&c.setAttribute("aria-valuenow",l),zn("race-nitro-label",l+"%");let h=Cn.countdown;h.hidden=n.countdown==null,h.hidden||zn("countdown",n.countdown===0?"GO":n.countdown),Y("race-tip").hidden=n.status!=="countdown",bw(n.map)
 ;omojiTechniqueHud(n);
 }function Ea(n){n&&mw.clear(),Pt.querySelectorAll(".race-top, .touch-controls").forEach(e=>{e.inert=n})}async function B2(n,gpPayment=null){let e=Ct?.id,t=Ct?.track,i=t?.bonusStage===!0&&!t?.endurance;const eligible=Number.isFinite(n.time)&&!n.error&&!n.dnf;Ea(!0),Lt.finish(),Y("result-kicker").textContent=n.newRecord?"NEW RECORD":"FINISH";let r=Y("result-title");r.innerHTML=Ye(n.error?"warning":n.won?"trophy":"flag"),r.append(n.error?"\u63A5\u7D9A\u3092\u7D42\u4E86":n.dnf?"\u672A\u5B8C\u8D70":n.won?"\u52DD\u5229":"\u5B8C\u8D70");let s=[["\u30BF\u30A4\u30E0",is(n.time)]],a=Qp.compare({trackId:t?.id,mode:n.mode,seconds:n.time,assisted:It?.usedAssist??Ct?.assist,finished:!n.dnf&&!n.error});a&&s.push(["\u30C1\u30E3\u30EC\u30F3\u30B8",a]),n.total&&n.position?s.push(["\u9806\u4F4D",n.position+" / "+n.total]):n.mode==="duel"&&(s.push(["\u9806\u4F4D",n.position+" / 2"],["CPU\u96E3\u5EA6",Sa[Ct?.difficulty]??Sa.normal]),It?.rival?.stats.name&&s.push(["CPU\u8ECA\u4E21",It.rival.stats.name]),Number.isFinite(n.rivalTime)&&s.push(["CPU\u30BF\u30A4\u30E0",is(n.rivalTime)])),n.mode==="drift"&&s.push(["\u30C9\u30EA\u30D5\u30C8",qt.format(n.driftScore)+" PTS"]),n.medal&&s.push(["\u8A55\u4FA1",String(n.medal).toUpperCase()]),Number.isFinite(n.rating)&&s.push(["\u30EC\u30FC\u30C8",n.rating+(n.ratingDelta?" ("+(n.ratingDelta>0?"+":"")+n.ratingDelta+")":"")]),n.bot&&s.push(["\u5BFE\u6226\u76F8\u624B","CPU"]),n.cpuCars?.length&&s.push(["CPU\u8ECA\u4E21",n.cpuCars.join("\u3001")]),n.mode!=="practice"&&Ct?.assist&&s.push(["\u904B\u8EE2\u30A2\u30B7\u30B9\u30C8","ON"]);let o=Y("result-details");o.replaceChildren(...s.map(([h,p])=>ni(h,p))),qp(Y("tuning-bench-result"),!Ve&&!Ct?.grandPrix&&C2.finish(n,Ct,{usedAssist:It?.usedAssist}));let l=ni(i?"\u7372\u5F97Z\uFF08\u30DC\u30FC\u30CA\u30B9\u8FBC\u307F\uFF09":"\u7372\u5F97Z","\u96C6\u8A08\u4E2D"),c=ni("\u7372\u5F97XP","\u96C6\u8A08\u4E2D");if(eligible&&o.append(l,c),Y("result-note").textContent=n.error||"",Y("result-note").hidden=!n.error,Y("retry-race").innerHTML=Ye(Ve?"exit":"reset"),Y("retry-race").append(Ve?"\u90E8\u5C4B\u306B\u623B\u308B":"\u3082\u3046\u4E00\u5EA6\u8D70\u308B"),Y("result-layer").hidden=!1,(Ct?.grandPrix?null:Y("retry-race").focus({preventScroll:!0})),tf(),Qp.refresh(),X2.refresh(),eligible){!n.error&&!n.dnf&&t&&!Ve&&R2.recordPlayed(t.id);try{let h=xh().level,p=await (gpPayment??mg({id:e,mode:n.mode,time:n.time,won:n.won,medal:n.medal,score:n.driftScore,position:n.position,total:n.total,trackLength:t?.length,wet:t?.wet,snow:t?.snow,difficulty:Ct?.difficulty,dnf:n.dnf,error:n.error,bot:n.bot,cpuCount:n.cpuCars?.length,bonusReward:i?t?.bonusReward:undefined,fixedCourseBonus:i&&t?.id==="bonus-bay-30km",endurance:t?.endurance,xpBonus:t?.xpReward,vehicleId:!n.error&&!n.dnf?Ct?.car?.id:void 0,challengeRace:!n.error&&!n.dnf&&!Ve?{track:t,startedAt:Ct?.startedAt,difficulty:Ct?.difficulty,assist:It?.usedAssist??Ct?.assist}:void 0}));if(Ct?.id===e){if(p.performanceZ)l.after(ni("うちレース結果加算","+"+Rt(p.performanceZ)));if(p.courseZ)l.after(ni("うちコース分のZ","+"+Rt(p.courseZ)));l.lastElementChild.textContent=p.z?"+"+Rt(p.z):"\u53D7\u53D6\u6E08\u307F",p.levelBonusZ&&l.after(ni("\u3046\u3061\u30EC\u30D9\u30EB\u30DC\u30FC\u30CA\u30B9","+"+Rt(p.levelBonusZ))),c.lastElementChild.textContent=p.xp?"+"+qt.format(p.xp)+" XP":"\u53D7\u53D6\u6E08\u307F",p.bonusXP&&c.after(ni("\u3046\u3061\u7D4C\u9A13\u5024\u30B3\u30FC\u30B9\u52A0\u7B97","+"+qt.format(p.bonusXP)+" XP"));for(let d of p.missions??[])o.append(ni("\u30DF\u30C3\u30B7\u30E7\u30F3\u9054\u6210",`${d.label} \xB7 +${Rt(d.z)} \xB7 +${qt.format(d.xp)} XP`));let u=xh().level;if(u>h&&o.append(ni("\u30EC\u30D9\u30EB\u30A2\u30C3\u30D7","Lv. "+u)),p.vehicle?.earnedXP){let{level:d,previousLevel:m,earnedXP:y}=p.vehicle;o.append(ni("\u8ECA\u4E21XP","+"+qt.format(y)+" XP")),d>m&&o.append(ni("\u8ECA\u4E21\u30EC\u30D9\u30EB\u30A2\u30C3\u30D7",`Lv. ${qt.format(d)} \xB7 \u6700\u9AD8\u901F +${qt.format((d-m)*5)} km/h`))}}p.vehicle?.earnedXP?ss(!1):ef.refresh(),Mr.refresh(),p.xp&&N2.updated(),Y2.refresh()}catch{l.lastElementChild.textContent=gpPayment?"次回アクセス時に再試行":"保存できませんでした",c.lastElementChild.textContent=l.lastElementChild.textContent}}}function ni(n,e){let t=document.createElement("div"),i=document.createElement("dt"),r=document.createElement("dd");return Object.hasOwn(w2,n)&&(i.innerHTML=Ye(w2[n])),i.append(n),r.textContent=e,t.append(i,r),t}function _w(n){Y("pause-layer").hidden=!n,Ea(n),n?(Lt.pause(),Y("resume-race").focus({preventScroll:!0})):(Lt.resume(),Y("pause").focus({preventScroll:!0}))}function omojiRaceRenderer(mode) {
     Pt.dataset.renderer = mode;
+    const car = Ct?.car;
+    if (car) {
+        Pt.dataset.vehicleId = car.id;
+        Pt.dataset.vehicleModel = omojiOperatorModel(car) ?
+            (mode === 'software' ? omojiOperatorVisualLevel(car,'low') : It?.playerCar?.userData.importedQuality || 'fallback') :
+            'generated';
+    }
     omojiRaceRenderingNotice();
 }
 
 function omojiRaceRenderingNotice() {
     const node = Y("race-renderer-notice");
     if (!node) return;
-    const message = Ct?.temporaryCarArtwork ? "専用モデルの代わりに簡易車体を表示しています。" :
+    const message = Ct?.temporaryCarArtwork && !omojiOperatorModel(Ct.car)?.asset ? "専用モデルの代わりに簡易車体を表示しています。" :
         Pt.dataset.renderer === "software" ? "互換描画で走行中" : "";
     node.hidden = !message;
     node.textContent = message;
@@ -9077,7 +9124,7 @@ async function G2(options) {
         catch (error) { console.warn("Race audio startup", error); }
         await nextFrame();
         if (Ct !== race || !Pt.open) return false;
-        race.temporaryCarArtwork = !await omojiRollsPrefetchRace(race);
+        race.temporaryCarArtwork = !await omojiOperatorPrefetchRace(race);
         await nextFrame();
         if (Ct !== race || !Pt.open) return false;
         const driver = Zp();

@@ -32,8 +32,8 @@
 <link rel="preload" as="image" href="./assets/pit-night-mobile.webp" media="(max-width: 700px)">
 <link rel="preload" as="image" href="./assets/pit-night.webp" media="(min-width: 701px)">
 <link rel="stylesheet" href="./assets/game.css?v=pit-20261115">
-<link rel="stylesheet" href="./assets/pit.css?v=20261115">
-<script type="module" src="./assets/game.js?v=pit-20261115"></script>
+<link rel="stylesheet" href="./assets/pit.css?v=maybach-20261115">
+<script type="module" src="./assets/game.js?v=maybach-20261115"></script>
 </head>
 <body class="simple-menu theme-midnight theme-reel theme-pit">
 <a class="skip" href="#setup">レース設定へ</a>
@@ -44,7 +44,7 @@
     <div class="header-actions"><span class="gp-header-title" id="gp-header-title" data-ui-icon="trophy" hidden><bdi id="gp-header-driver"></bdi><bdi id="gp-header-title-text"></bdi></span><div class="wallet-badge"><span data-ui-icon="wallet">所持Z</span><strong data-wallet-total>— Z</strong></div></div>
   </div>
   <aside id="announcements" class="announcements" aria-label="お知らせ">
-    <div class="header-inner announcement-inner"><strong data-ui-icon="radio">お知らせ</strong><div class="announcement-window"><p id="announcement-copy">メニューと操作画面を刷新しました。レースの読み込みに失敗した場合は軽量描画で再試行します。</p></div><button type="button" id="announcement-toggle" class="quiet" hidden><span data-announcement-toggle-label>停止</span></button></div>
+    <div class="header-inner announcement-inner"><strong data-ui-icon="radio">お知らせ</strong><div class="announcement-window"><p id="announcement-copy">運営車両のマイバッハを新しい3Dモデルに差し替えました。ガレージの「運営車両」から選べます。</p></div><button type="button" id="announcement-toggle" class="quiet" hidden><span data-announcement-toggle-label>停止</span></button></div>
   </aside>
 </header>
 <main id="top">
@@ -269,13 +269,19 @@
           <button type="submit" class="ghost" data-ui-icon="garage">車両を解放</button>
         </form>
         <p id="operator-status" class="panel-note" role="status"></p>
-        <figure class="operator-studio">
-          <img src="./assets/rolls-royce-studio.webp" alt="黒いロールスロイスを描いたスタジオイラスト" width="1240" height="698" loading="lazy" decoding="async" draggable="false">
-          <figcaption><strong>ロールスロイス</strong><small>運営車両</small></figcaption>
-        </figure>
         <div id="operator-choices" class="operator-choices" aria-label="運営車両を選ぶ" hidden>
           <button class="ghost" type="button" data-car="maybach-classic" data-ui-icon="car">マイバッハ</button>
           <button class="ghost" type="button" data-car="rolls-royce-operator" data-ui-icon="car">ロールスロイス</button>
+        </div>
+        <div class="operator-gallery">
+          <figure class="operator-studio">
+            <img src="./assets/maybach-studio.webp" alt="銀と濃紺のツートーンに仕上げたマイバッハのCGイラスト" width="1240" height="698" loading="lazy" decoding="async" draggable="false">
+            <figcaption><strong>マイバッハ</strong></figcaption>
+          </figure>
+          <figure class="operator-studio">
+            <img src="./assets/rolls-royce-studio.webp" alt="黒いロールスロイスを描いたスタジオイラスト" width="1240" height="698" loading="lazy" decoding="async" draggable="false">
+            <figcaption><strong>ロールスロイス</strong></figcaption>
+          </figure>
         </div>
       </details>
     </section>
