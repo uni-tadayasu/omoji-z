@@ -30,8 +30,8 @@
 <link rel="apple-touch-icon" href="./assets/omoji-icon-192.png">
 <link rel="manifest" href="./manifest.webmanifest">
 <link rel="preload" as="image" href="./assets/hero.webp">
-<link rel="stylesheet" href="./assets/game.css?v=economy-balance-1">
-<script type="module" src="./assets/game.js?v=progression-balance-1"></script>
+<link rel="stylesheet" href="./assets/game.css?v=turbine-level-1">
+<script type="module" src="./assets/game.js?v=turbine-level-1"></script>
 </head>
 <body class="simple-menu">
 <a class="skip" href="#setup">レース設定へ</a>
@@ -42,7 +42,7 @@
     <div class="header-actions"><div class="wallet-badge"><span data-ui-icon="wallet">所持Z</span><strong data-wallet-total>— Z</strong></div></div>
   </div>
   <aside id="announcements" class="announcements" aria-label="お知らせ">
-    <div class="header-inner announcement-inner"><strong data-ui-icon="radio">お知らせ</strong><div class="announcement-window"><p id="announcement-copy">レースで獲得するZを増やし、高レベル部品の強化費を調整しました。</p></div><button type="button" id="announcement-toggle" class="quiet" hidden><span data-announcement-toggle-label>停止</span></button></div>
+    <div class="header-inner announcement-inner"><strong data-ui-icon="radio">お知らせ</strong><div class="announcement-window"><p id="announcement-copy">ガレージに車両別のタービン強化を追加しました。1 Lvにつき最高速度+20 km/h、加速+30ポイント。</p></div><button type="button" id="announcement-toggle" class="quiet" hidden><span data-announcement-toggle-label>停止</span></button></div>
   </aside>
 </header>
 <main id="top">
@@ -200,6 +200,20 @@
         <p id="maintenance-status" class="maintenance-status" role="status"></p>
       </div>
     </details>
+<details class="simple-panel" id="turbine-panel">
+  <summary data-ui-icon="engine"><span>タービン強化</span><span class="turbine-summary" data-turbine="summary">Lv.0 / 24</span></summary>
+  <div class="turbine-panel">
+    <div class="turbine-head"><div><h3 data-turbine="car">タービン</h3><p id="turbine-help">1 Lvにつき最高速度 +20 km/h、加速 +30ポイント。ソロ・フリールームで有効です。</p></div><strong data-turbine="level">Lv.0 / 24</strong></div>
+    <progress data-turbine="progress" max="24" value="0" aria-label="タービンレベル"></progress>
+    <dl class="turbine-stats">
+      <div><dt>タービンの速度加算</dt><dd data-turbine="speed">+0 km/h</dd></div>
+      <div><dt>タービンの加速加算</dt><dd data-turbine="acceleration">+0 pt</dd></div>
+      <div><dt>ソロ時の公称最高速度</dt><dd data-turbine="totalSpeed">—</dd></div>
+    </dl>
+    <div class="turbine-actions"><span>所持Z <strong data-turbine="balance"></strong></span><button type="button" class="primary" data-turbine="buy" aria-describedby="turbine-help turbine-quote" disabled>強化する</button></div>
+    <div class="turbine-messages"><p id="turbine-quote" class="panel-note" data-turbine="quote"></p><p class="panel-note" role="status" data-turbine="status"></p></div>
+  </div>
+</details>
 <details class="simple-panel" id="tuning-panel"><summary data-ui-icon="tuning">チューニング</summary>      <div id="garage-tuning"></div></details>
       <details id="operator-garage" class="operator-garage">
         <summary data-ui-icon="tuning">運営車両</summary>
