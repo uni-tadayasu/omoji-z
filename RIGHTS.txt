@@ -1,3 +1,9 @@
+4.3 追加: ユーザー提供モデル
+assets/models/grand-saloon.glbはユーザーが2026-11-16に提供したluxury_car_under_25MB.glbをそのまま収録しています。
+本モデルと、その描画画像grand-saloon.webp / saloon-sprites.webpは、以下の旧版にある「全車両を独自生成」の説明の対象外です。
+提供ファイルにライセンス文書は含まれていません。来歴と元ファイルSHA-256はassets/models/grand-saloon-provenance.jsonに記載しています。
+その他のライブラリー・フォント・音源の既存ライセンス表記は維持します。
+
 尾文字Z / OMOJI Z — v3追記
 
 現行音楽は9手作曲テーマ・33実音源です。旧128IDは保存互換のエイリアスで、

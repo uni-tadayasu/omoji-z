@@ -1,0 +1,21 @@
+{
+  "source": "User-uploaded luxury_car_under_25MB.glb",
+  "receivedDate": "2026-11-16",
+  "vehicleId": "rolls-royce-operator",
+  "file": "assets/models/grand-saloon.glb",
+  "bytes": 24970372,
+  "sha256": "730254e6e74205c927bb2da14abe97419406df5ea09bc4e284eabec71e3743cd",
+  "originalBinaryPreserved": true,
+  "geometry": {
+    "vertices": 344326,
+    "triangles": 551070
+  },
+  "runtimeTransforms": "Uniform scale to 5.419 metres long, centre X/Z and ground minY. No recolour or geometry simplification. Original front is +Z.",
+  "textures": "Original base color, metallic/roughness and normal textures retained.",
+  "licenseSource": "User-supplied file; no separate model licence text supplied.",
+  "derivedViews": [
+    "assets/models/saloon-sprites.webp",
+    "assets/art/grand-saloon.webp"
+  ],
+  "verificationLimits": "Blender CPU views and automated data/integration tests; physical mobile devices and browser GPU pixels unverified."
+}

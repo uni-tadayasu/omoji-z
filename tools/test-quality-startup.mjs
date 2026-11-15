@@ -30,5 +30,5 @@ function fixture(early=false) {
 {
  const f=fixture(true);assert.equal(f.tasks.size,0);assert(f.d.getElementById('startup-status').hidden);f.dom.window.close();
 }
-assert(html.includes('game.js?v=classic-remaster-v4.2'));
+assert(html.includes('game.js?v=saloon-4.3'));
 console.log('Startup: real readiness, delayed/failed/offline recovery, no premature start, focus restoration and cleanup passed.');

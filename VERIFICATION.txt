@@ -1,3 +1,12 @@
+CLASSIC REMASTER 4.3 — 提供グランドサルーン
+
+追加検査: npm run test:saloon（実GLB/ローダー/状態表示/ゲーム本体の車体生成/24方向画像）
+全テスト: npm test。元GLBのSHA-256完全一致を確認。
+見た目: 元モデルのBlender CPU画像を確認。実ブラウザGPU・実スマホは未確認。
+詳細: docs/GRAND_SALOON_4_3.md
+
+以下は過去の検証記録です。
+
 CLASSIC REMASTER 4.2 — 品質更新
 
 基準: 0c30dafde41abdab8a6243f104036b6be1543c6d

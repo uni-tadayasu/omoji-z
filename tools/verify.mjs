@@ -339,7 +339,7 @@ check('local HTML, CSS and manifest asset links', () => {
             for(const match of content.matchAll(/new\s+URL\(\s*(["'])([^"'\n]+)\1\s*,\s*import\.meta\.url\s*\)/g))verifyReference(file,match[2]);
             continue;
         }
-        for(const match of content.matchAll(/["']([^"'\n<>]{1,150}\.(?:webp|jpg|png|svg|mp3|bin|json)(?:\?[^"'\n<>]*)?)["']/g)) {
+        for(const match of content.matchAll(/["']([^"'\n<>]{1,150}\.(?:webp|jpg|png|svg|mp3|bin|glb|json)(?:\?[^"'\n<>]*)?)["']/g)) {
             const reference=match[1];
             if(reference.includes('${')||reference.includes(' + '))continue;
             const owner=reference.endsWith('.mp3')?path.join(root,'assets/audio/source.js'):reference==='./announcements.json'?path.join(root,'index.html'):file;
@@ -382,14 +382,14 @@ check('33 original audio files, 8 race themes and 128 saved-ID aliases agree', (
     return `${hashes.size} distinct recording hashes; ${themes.size} race themes × 4 mixes + menu; all 128 saved IDs resolve`;
 });
 
-check('license notices retained and unverified imported meshes removed', () => {
+check('license notices retained and obsolete imported meshes removed', () => {
     for(const file of ['assets/THREE-LICENSE.txt','assets/peerjs-LICENSE.txt','assets/fonts/OFL.txt']) assert(fs.statSync(path.join(root,file)).size>400,`Missing license notice: ${file}`);
     const forbidden=['maybach-model.bin','rolls-royce.bin','century-royal.bin','operator-glass-panes.json'];
     for(const name of forbidden) {
         assert(!files.some(file=>path.basename(file)===name),`Unverified asset still distributed: ${name}`);
         assert(!source.includes(name),`Obsolete model loader reference remains: ${name}`);
     }
-    return 'Three.js MIT, PeerJS MIT, font OFL retained; imported manufacturer meshes absent';
+    return 'Three.js MIT, PeerJS MIT, font OFL retained; obsolete binary imports absent; new user-supplied GLB has separate provenance';
 });
 
 const report={checkedAt:new Date().toISOString(),baseCommit:baseline.baseCommit,browserQA:'not performed: this verifier checks source, data and geometry in Node.js',passed:results.every(result=>result.status==='passed'),results};

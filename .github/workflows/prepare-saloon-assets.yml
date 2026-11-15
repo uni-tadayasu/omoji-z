@@ -1,0 +1,63 @@
+name: Restore and verify supplied Grand Saloon
+
+on:
+  push:
+    branches: [codex/saloon-quality-20261116]
+    paths: ['.saloon-transfer/**']
+
+permissions:
+  contents: write
+  actions: write
+
+concurrency:
+  group: supplied-grand-saloon-assets
+  cancel-in-progress: false
+
+jobs:
+  restore:
+    if: github.ref == 'refs/heads/codex/saloon-quality-20261116'
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      EXPECTED_BRANCH: codex/saloon-quality-20261116
+    steps:
+      - name: Check out the exact transfer revision
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+      - name: Assert isolated work branch and unchanged remote
+        run: |
+          set -euo pipefail
+          test "$GITHUB_REF" = "refs/heads/$EXPECTED_BRANCH"
+          test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
+          test "$(git ls-remote origin "refs/heads/$EXPECTED_BRANCH" | cut -f1)" = "$GITHUB_SHA"
+          test -f .saloon-transfer/manifest.json
+          git switch -c "$EXPECTED_BRANCH"
+      - name: Use Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install locked test dependencies
+        run: npm ci --ignore-scripts
+      - name: Restore exact model and rendered images
+        run: python3 tools/prepare-saloon-assets.py
+      - name: Verify complete game and model integration
+        run: npm test
+      - name: Verify public staging
+        run: python3 tools/build-site.py --out "$RUNNER_TEMP/omoji-public"
+      - name: Commit assets only to the isolated work branch
+        run: |
+          set -euo pipefail
+          test "$(git branch --show-current)" = "$EXPECTED_BRANCH"
+          test "$(git ls-remote origin "refs/heads/$EXPECTED_BRANCH" | cut -f1)" = "$GITHUB_SHA"
+          test ! -e .saloon-transfer
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add --all -- assets/models/grand-saloon.glb assets/models/saloon-sprites.webp assets/art/grand-saloon.webp assets/asset-inventory.json tools/verification-report.json .saloon-transfer
+          git commit -m 'Restore verified supplied Grand Saloon production assets'
+          git push origin "HEAD:refs/heads/$EXPECTED_BRANCH"
+      - name: Dispatch normal verification and automatic publication
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api --method POST "repos/$GITHUB_REPOSITORY/actions/workflows/auto-merge.yml/dispatches" -f ref=main -f "inputs[branch]=$EXPECTED_BRANCH"
