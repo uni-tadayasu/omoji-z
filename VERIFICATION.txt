@@ -1,3 +1,13 @@
+REBORN 4.0 verification scope
+
+New engine: deterministic fixed-step physics and 6 full-course laps, input releases, pause/resume, nitro, collision, AI, lap results, bounded economy, separate legacy migration, duplicate reward prevention, audio lifecycle, renderer mesh/material/camera checks, and DOM application integration.
+
+Structural rendering tests use actual vendored Three.js geometry. GPU image correctness and real-device FPS are not verified by those tests.
+
+The managed browser reported WebGL disabled (GL_VENDOR Disabled) during QA. Therefore new WebGL scene screenshots and mobile-device visual/performance QA remain unverified. The application displayed its intended unavailable-WebGL message and classic-edition link.
+
+Classic edition verification retained below:
+
 尾文字Z / OMOJI Z — Driving Studio v3 検証記録
 
 改修元: 93733a076aa15f437793452d6aa270f39a01b48e（前回納品v2）

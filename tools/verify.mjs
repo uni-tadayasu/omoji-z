@@ -246,7 +246,8 @@ check('772 useful static pages have canonical metadata, JSON-LD and crawlable li
                 assert(visible.includes(question.name)&&visible.includes(question.acceptedAnswer?.text),`FAQ structured data does not match visible content: ${relative}`);
             }
         }
-        assert(html.includes('assets/site.css')&&!html.includes('theme-catalog.css'),`Unified site theme not applied: ${relative}`);
+        const expectedTheme=relative==='index.html'?'assets/remake/style.css':'assets/site.css';
+        assert(html.includes(expectedTheme)&&!html.includes('theme-catalog.css'),`Expected page theme not applied: ${relative}`);
     }
     const carsHTML=fs.readFileSync(path.join(root,'cars.html'),'utf8'),coursesHTML=fs.readFileSync(path.join(root,'courses.html'),'utf8');
     for(const [id,relative]of Object.entries(routes.cars)) {
@@ -258,6 +259,15 @@ check('772 useful static pages have canonical metadata, JSON-LD and crawlable li
         assert(coursesHTML.includes(`href="./${relative}"`),`Course detail is not linked from catalog: ${id}`);
     }
     return '512 car details + 256 course details + 4 hubs; unique titles/descriptions; original-code canonicals; sitemap reachability';
+});
+
+check('classic edition is accessible without competing with the remake canonical', () => {
+    const html=fs.readFileSync(path.join(root,'legacy.html'),'utf8');
+    assert(/<meta[^>]+name=["']robots["'][^>]+content=["'][^"']*noindex/i.test(html),'Classic edition must be noindexed.');
+    assert(html.includes('<link rel="canonical" href="https://omoji-z.com/">'),'Classic edition must point to the main game canonical.');
+    assert(html.includes('./assets/game.js'),'Classic edition must retain its game engine.');
+    assert(fs.readFileSync(path.join(root,'index.html'),'utf8').includes('./legacy.html'),'Classic edition must remain reachable from the remake.');
+    return 'Classic edition remains playable and linked; noindex with root canonical';
 });
 
 check('static car diagrams and road maps match the current playable geometry', () => {
@@ -306,6 +316,22 @@ check('local HTML, CSS and manifest asset links', () => {
     // are exercised by the core geometry checks and the soundtrack production manifest.
     for(const file of files.filter(file=>file.startsWith(path.join(root,'assets')+path.sep)&&file.endsWith('.js'))) {
         const content=fs.readFileSync(file,'utf8');
+        if(file.startsWith(path.join(root,'assets/remake')+path.sep)) {
+            // ES modules declare their dependencies explicitly. Download filenames and
+            // MIME accept strings are generated UI data, not files to request from disk.
+            const imports=[
+                /\b(?:import|export)\s*(?:\*\s*(?:as\s+\w+\s*)?|\{[^}]*\}|[A-Za-z_$][\w$]*(?:\s*,\s*(?:\*\s*as\s+\w+|\{[^}]*\}))?)\s*from\s*(["'])([^"'\n]+)\1/g,
+                /(?:^|[;\n])\s*import\s*(["'])([^"'\n]+)\1/g,
+                /\bimport\s*\(\s*(["'])([^"'\n]+)\1\s*\)/g
+            ];
+            for(const pattern of imports)for(const match of content.matchAll(pattern)) {
+                const reference=match[2];
+                assert(/^(?:\.{1,2}\/|\/|[a-z]+:)/i.test(reference),`Unresolved bare module import: ${path.relative(root,file)} → ${reference}`);
+                verifyReference(file,reference);
+            }
+            for(const match of content.matchAll(/new\s+URL\(\s*(["'])([^"'\n]+)\1\s*,\s*import\.meta\.url\s*\)/g))verifyReference(file,match[2]);
+            continue;
+        }
         for(const match of content.matchAll(/["']([^"'\n<>]{1,150}\.(?:webp|jpg|png|svg|mp3|bin|json)(?:\?[^"'\n<>]*)?)["']/g)) {
             const reference=match[1];
             if(reference.includes('${')||reference.includes(' + '))continue;

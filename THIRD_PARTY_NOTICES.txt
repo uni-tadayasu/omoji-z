@@ -36,3 +36,9 @@ Independent assets introduced in this revision
 GitHub Actions fetch their own implementation when workflows run; they are
 not bundled with the game. Python/Node/ffmpeg and optional art tools are
 development tools, not browser runtime dependencies.
+
+REBORN 4.0 runtime additions
+- Three.js 0.180.0 (MIT), locally vendored in assets/remake/vendor.
+  Full license: assets/remake/vendor/THREE-LICENSE.txt
+- jsdom 26.1.0 and transitive packages are development-only test dependencies;
+  their licenses are distributed by npm and are not shipped in the public game.
