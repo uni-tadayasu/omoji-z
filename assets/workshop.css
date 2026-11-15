@@ -1,0 +1,30 @@
+.workshop { color:var(--paper,#f0f1f2); margin-block:1rem; }
+.workshop-heading,.workshop-summary,.workshop-actions,.workshop-presets { display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:.75rem; }
+.workshop-heading { padding-block:0 1rem; border-bottom:1px solid var(--line,#34383e); }
+.workshop h3,.workshop h4,.workshop h5,.workshop p { margin:0; }
+.workshop-heading h3 { font-size:1.5rem; line-height:1.25; }
+.workshop-eyebrow { color:var(--accent,#e45b43); font-size:.72rem; letter-spacing:.13em; font-weight:800; }
+.workshop-heading p:last-child,.workshop-mastery,.workshop-tradeoff,.workshop-legacy { color:var(--sub,#a9adb4); font-size:.85rem; line-height:1.7; }
+.workshop-summary { margin-block:1rem .6rem; justify-content:flex-start; gap:1rem 2rem; }
+.workshop-summary span { display:grid; gap:.15rem; color:var(--sub,#a9adb4); font-size:.78rem; }
+.workshop-summary strong { color:var(--paper,#f0f1f2); font-size:1rem; }
+.workshop-layout { display:grid; grid-template-columns:minmax(0,1.2fr) minmax(16rem,.8fr); gap:1.25rem; margin-block:1.25rem; }
+.workshop h4 { font-size:1rem; margin-block:0 .8rem; }
+.workshop-parts { display:grid; gap:.5rem; }
+.workshop-parts article { display:grid; grid-template-columns:minmax(0,1fr) auto; align-items:center; gap:.7rem; border:1px solid var(--line,#34383e); background:var(--panel,#191c20); border-radius:var(--radius,8px); padding:.8rem; }
+.workshop-parts h5 { font-size:.95rem; }.workshop-parts p { color:var(--sub,#a9adb4); font-size:.78rem; line-height:1.5; margin-block:.2rem; }
+.workshop-parts span { font-size:.75rem; font-variant-numeric:tabular-nums; }
+.workshop button,.workshop select { min-height:44px; border:1px solid var(--line,#34383e); border-radius:6px; background:var(--bg,#101214); color:inherit; padding:.55rem .7rem; font:inherit; font-size:.8rem; }
+.workshop button.primary { background:var(--accent,#e45b43); color:#101214; font-weight:800; }
+.workshop button:disabled { opacity:.5; cursor:not-allowed; }.workshop button:focus-visible,.workshop :is(select,input):focus-visible { outline:2px solid var(--accent,#e45b43); outline-offset:3px; }
+.workshop-settings { border:1px solid var(--line,#34383e); border-radius:var(--radius,8px); padding:1rem; align-self:start; }
+.workshop-settings [data-workshop-settings] { display:grid; gap:.9rem; }.workshop-settings label { display:grid; gap:.3rem; font-size:.85rem; }
+.workshop-range-label { display:flex; justify-content:space-between; gap:1rem; font-size:.75rem; color:var(--sub,#a9adb4); }.workshop input[type=range] { width:100%; min-height:44px; accent-color:var(--accent,#e45b43); }
+.workshop-tradeoff { margin-block:1rem!important; }.workshop-actions,.workshop-presets { justify-content:flex-start; margin-block:.8rem; }.workshop-presets label { display:flex; align-items:center; gap:.5rem; }
+.workshop-comparison,.workshop-review { border:1px solid var(--line,#34383e); border-radius:var(--radius,8px); padding:1rem; margin-block:1rem; }
+.workshop-comparison summary { min-height:44px; cursor:pointer; }.workshop table { width:100%; border-collapse:collapse; font-size:.85rem; font-variant-numeric:tabular-nums; }.workshop th,.workshop td { text-align:start; padding:.6rem; border-bottom:1px solid var(--line,#34383e); }
+.workshop-review p { margin-block:.6rem; line-height:1.6; }.workshop-review button { margin:.4rem .4rem 0 0; }.workshop-notice { padding:.8rem; background:#e45b431c; border-left:3px solid var(--accent,#e45b43); line-height:1.6; }
+.workshop-status { min-height:1.6rem; color:var(--accent,#e45b43); line-height:1.6; }.workshop-legacy { margin-block:.8rem!important; }
+@media (max-width:850px) { .workshop-layout { grid-template-columns:1fr; }.workshop-parts article { grid-template-columns:minmax(0,1fr) minmax(7.5rem,.45fr); } }
+@media (max-width:420px) { .workshop-parts article { grid-template-columns:1fr; }.workshop-parts button { width:100%; }.workshop-summary { gap:.8rem; }.workshop-heading { align-items:start; }.workshop th,.workshop td { padding:.45rem .25rem; } }
+@media (prefers-reduced-motion:reduce) { .workshop * { scroll-behavior:auto!important; } }

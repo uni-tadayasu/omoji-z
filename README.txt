@@ -1,20 +1,16 @@
-尾文字Z / OMOJI Z — Original Design Edition
+尾文字Z / OMOJI Z — Driving Studio v3
 
-公開・更新・差分ダウンロードの詳しい手順は README.md に記載しています。
-プレイとGitHub Pages公開にはビルド・npm installは不要です。
-index.htmlを公開ルート直下へ置いてください。
+512公開車＋3運営車、256コース、手作曲9テーマ・33実音源。
+操作プリセット、スライドハンドル、実走練習、9系統の強化、
+報酬とCPU性能の公平化、実データ由来の768詳細ページを実装しています。
 
-公開車512台・運営車3台・256ステージ・新規合成BGM128曲。
-旧ID・所有車・強化・主要セーブキーを維持しました。
-旧記録と新しいコースのタイム条件は異なります。
+既存セーブの所持/所有/強化履歴は保持し、旧条件のタイムは別枠へ保存。
+サイトの配置・更新ZIPの削除反映・検証手順はREADME.mdを参照してください。
+公開にはビルドやnpm installは不要です。
 
-今回の差分元:
-d56dadaef293b97f88d9f017d8e65701be98e721
+Artifacts: omoji-z-full（完全版）/ omoji-z-update（更新だけ）
+上書きだけでは古いファイルの削除は完了しません。
+_update/manifest.jsonのbaseCommitとdeletedを確認してください。
 
-更新ZIPは変更ファイルと削除対象一覧を含みます。
-上書きだけでは旧素材の削除はできません。
-適用ツールは旧リポジトリとは別の場所から実行してください。
-
-RIGHTS.txt                 素材の来歴・権利に関する確認範囲
-THIRD_PARTY_NOTICES.txt    第三者ライセンス
-VERIFICATION.txt          実施検査・未実施の実ブラウザー確認
+npm testで運転・報酬・保存・音楽・SEO・幾何の検査を再実行できます。
+RIGHTS.txt、THIRD_PARTY_NOTICES.txt、VERIFICATION.txtも同梱しています。

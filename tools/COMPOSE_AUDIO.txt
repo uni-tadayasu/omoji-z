@@ -1,29 +1,73 @@
-OMOJI Z オリジナル合成BGM
+OMOJI Z v3 — テーマを中心にしたオリジナルBGM
 
-assets/audio/parapara-000.mp3〜parapara-127.mp3 は、この版で
-新たに生成した128個のスコアです。000はメニュー、001〜127はレース用です。
-既存曲の録音、旋律、MIDI、サンプル素材を取り込まず、tools/compose-audio.py の
-数式波形とシード別スコアから音を合成しています。以前の同名音源は使用しません。
+実際の音源は33個です。
+・メニュー用1テーマ／1ミックス。
+・レース用8テーマ／各4ミックス（Drive・Night・Focus・Peak）。
+・以前の全128個の選曲IDは保存データの互換性のために残しています。
+  互換IDは33音源のいずれかへ解決され、別の128曲を収録したという意味ではありません。
 
-構成
-・各32小節。テーマ提示、応答、中間部、フルパートへの復帰。
-・スケール、キー、和音進行、旋律、音色、打楽器パターンをスコアごとに設定。
-・リード、パッド、アルペジオ、ベース、キック、スネア、ハイハットを合成。
-・ステレオ配置、循環ディレイ、短い反射音、サイドチェイン処理。
-・MP3 / ステレオ / 32 kHz / 96 kb/s。再生時の合成負荷はありません。
+制作方針
+前版の乱数ベースのメロディ生成をやめ、tools/soundtrack_score.py に
+各テーマの8小節Aメロ、8小節Bメロ、和声、コードの実音、ベースの進行を
+音符ごとに記述しました。各曲は32小節で、導入→A→B→余白→再提示と展開します。
+32小節の同じ楽曲をむやみに別名で増やさず、4つの編曲の違いを明示しています。
 
-音源作成の記録
-assets/audio/original-score.json にBPM、長さ、シード、スケール、和音進行、
-旋律の基礎パターン、ファイルのSHA-256を保存しています。
-ソース長は小節に揃え、音の余韻を先頭へ循環させています。
-MP3の完全な隙間なしループ可否はブラウザーの実装に依存します。
+4ミックスの違い
+Drive：主旋律、伴奏、リズムの釣り合いを取った標準版。
+Night：主旋律の音域を下げ、キック／ハット／伴奏を間引いた静かな版。
+Focus：主旋律を短い応答だけに減らし、ベースと伴奏で走行を支える版。
+Peak：後半の応答フレーズとドラムのフィルを増やした版。
 
-再生成（制作時だけ必要）
-Python 3、NumPy、ffmpeg（libmp3lame対応）を用意し、リポジトリのルートで実行します。
+9テーマ
+Blue Hour：92 BPM、D major。静かな鍵盤と余白のあるメニューテーマ。
+Glass Vector：130 BPM、D minor。曲線を走るための軽快なブレイクビート。
+Static Bloom：136 BPM、E minor。ミュート弦と主旋律を重ねたシンセロック。
+Night Relay：118 BPM、F# minor。夜景向けの控えめなエレクトロ。
+Aerial Current：128 BPM、G dorian。明るさと陰影を交互に見せるハウス。
+Copper Run：144 BPM、B minor。細かなアクセントのある高速ブロークンビート。
+Rain Geometry：122 BPM、C# minor。雨のコース向けに余白を広く取った鍵盤曲。
+Northern Lights：126 BPM、A major。白夜をイメージした開放的なシンセロック。
+Red Meridian：138 BPM、A minor。落ち着いた弦の推進力を持つレーステーマ。
+
+音色とミックス
+鍵盤、FMプラック、減衰する弦の倍音、丸いリード、パッド、ベース、
+キック／スネア／ハットを数式から合成しています。既存の曲、録音、MIDI、
+音源サンプル、学習済みモデルは読み込みません。
+前版の硬いsquare／sawの重ね方を避け、音の立ち上がりと余韻を調整しています。
+サブソニック成分を除去し、低域をモノラルへ寄せ、高域を穏やかにしています。
+メニュー／Nightは−19 LUFS、その他は−17.5 LUFSを制作時の目標にし、
+FFmpegの2回解析で調整しています。圧縮音源の実測値は目標から少し変わります。
+技術測定だけで音楽の好みや完成度を保証することはできません。
+
+ループ
+余韻と反射音を小節長のバッファ内で循環させています。
+MP3にはLAMEの遅延／パディング情報を残しています。
+完全な隙間なし再生の可否はブラウザーのHTMLAudio実装に依存します。
+再生は事前生成済みMP3を使い、端末側での音楽合成は行いません。
+preload=noneを維持し、全33曲を起動時に読み込まないでください。
+
+ファイルと公開
+assets/audio/v3-{themeId}-{mixId}.mp3（MP3、44.1 kHz、ステレオ、128 kb/s）。
+assets/audio/original-score.json：33実ファイルの検証情報、128互換ID、テーマ／ミックス情報。
+assets/soundtrack.js：ゲーム用の互換ID、33個の選択項目、ID正規化関数。
+tools/obsolete-audio-files.json：公開すべき33ファイルの一覧と旧IDファイル名。
+
+再生成（制作時／GitHub Actionsのみ必要）
+Python 3、NumPy、ffmpeg（libmp3lame対応）を用意してルートから実行します。
   python tools/compose-audio.py --jobs 4
-一部だけ生成する場合：
-  python tools/compose-audio.py --track 0 --track 80
-ゲームを公開・プレイするためにこれらの制作ツールを導入する必要はありません。
+フル生成は旧parapara-000.mp3〜127.mp3を含め、assets/audio直下にある
+33個の期待ファイル以外のMP3を削除し、全33曲とメタデータを更新します。
+新しい曲をこのフォルダーに手動追加した場合も、期待一覧に含めないと削除対象です。
+フル生成後はファイル数、ハッシュ、全長デコード、保存ID解決を検証します。
+  python tools/compose-audio.py --verify
 
-スコアの長さやタイトルを変えた場合は、assets/soundtrack.js の一覧も
-original-score.json の値へ合わせ、assets/game.js の音源キャッシュ版Kxを更新してください。
+代表3曲の試作（他のMP3を削除しません）
+  python tools/compose-audio.py --preview --jobs 3
+音源を作らずモジュールと期待一覧だけ更新する場合：
+  python tools/compose-audio.py --metadata-only
+全長デコード、LUFS、ピーク、スペクトルの確認：
+  python tools/analyze-audio.py assets/audio/v3-glass-vector-drive.mp3 --report audio-report.json
+任意の --figure audio-report.png はmatplotlibも必要です。通常の生成とゲーム再生には不要です。
+
+GitHub Actionsではmainへ直接書き込まず、作業ブランチを指定して生成・検証・commitしてください。
+ゲームを遊ぶためにPython／NumPy／ffmpegを導入する必要はありません。

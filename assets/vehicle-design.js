@@ -1,5 +1,5 @@
 /**
- * OMOJI independent vehicle design system, version 2.
+ * OMOJI independent vehicle design system, version 3.
  * Fictional coachwork is generated from an ID and a broad vehicle category.
  * No manufacturer blueprint, scanned mesh, logo, photo, or protected texture is used.
  * Mechanical game statistics and save IDs are retained.
@@ -11,7 +11,7 @@ export function vehicleDesignSeed(value) {
 }
 
 export function originalVehicleVisual(car) {
-    if(!car || car.originalDesignVersion===2) return car;
+    if(!car || car.originalDesignVersion===3) return car;
     const seed=vehicleDesignSeed(car.id);
     let state=seed;
     const random=()=>{
@@ -48,8 +48,8 @@ export function originalVehicleVisual(car) {
     const tailDrop=family==='sport'?.082:family==='fastback'?.118:.095;
     const noseWidth=family==='sport'?.769:family==='fastback'?.804:family==='van'?.874:.842;
     const tailWidth=family==='sport'?.854:family==='compact'?.853:.872;
-    const profile=Array.from({length:25},(_,i)=>{
-        const z=-1+i/12;
+    const profile=Array.from({length:41},(_,i)=>{
+        const z=-1+i/20;
         const tip=z>0?Math.pow(z,4.2)*noseDrop:Math.pow(-z,4.7)*tailDrop;
         const archBulge=.017*Math.exp(-(((z-archFront)/.19)**2))+.013*Math.exp(-(((z-archRear)/.20)**2));
         const sideWaist=.014*Math.exp(-((z/.27)**2));
@@ -76,7 +76,7 @@ export function originalVehicleVisual(car) {
     const styleIndex=styles.indexOf(chosenStyle);
     return {
         ...car,
-        originalDesignVersion:2,originalDesignFamily:family,originalDesignSeed:seed,
+        originalDesignVersion:3,originalDesignFamily:family,originalDesignSeed:seed,
         originalLampStyle:styles[styleIndex],originalRimStyle:seed%3,
         dimensions,profile,cab,axle:[archRear,archFront],
         wheel:[wheelRadius,family==='sport'?.239+random()*.027:.191+random()*.032,6+seed%6],

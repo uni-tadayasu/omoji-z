@@ -17,7 +17,7 @@ import tempfile
 import zipfile
 from pathlib import Path, PurePosixPath
 
-DEFAULT_BASE = 'd56dadaef293b97f88d9f017d8e65701be98e721'
+DEFAULT_BASE = '93733a076aa15f437793452d6aa270f39a01b48e'
 EXCLUDED_PARTS = {'.git', '.openai', 'node_modules', '__pycache__', '.pytest_cache',
                   '.mypy_cache', '.venv', 'venv', 'work', 'output', 'dist', 'build',
                   '_site', '_update', '.omoji-backups', '.DS_Store'}

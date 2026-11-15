@@ -25,9 +25,12 @@ Barlow Condensed, assets/fonts/barlow-condensed-latin-*.woff2
 Independent assets introduced in this revision
   Vehicle design: assets/vehicle-design.js and assets/vehicles.js
   Procedural art: assets/art/ and tools/generate-art.py
-  Concept cover: assets/art/hero-photo.webp and hero-provenance.json
+  v3 game-rendered cover: assets/art/hero-v3.webp and hero-v3.json
+  Original fictional landscapes/foliage: assets/art/*-v3-*.webp, foliage-v3.webp
+  Landscape provenance: assets/art/panorama-v3-provenance.json
+  Historical v2 concept cover: assets/art/hero-photo.webp and hero-provenance.json
   Icons: assets/ui-icons.svg and tools/generate-icons.py
-  Original synthesized score: assets/audio/ and tools/compose-audio.py
+  Original composed/synthesized score (v3, 33 files): assets/audio/, tools/compose-audio.py and tools/soundtrack_score.py
   Provenance and review limits: RIGHTS.txt
 
 GitHub Actions fetch their own implementation when workflows run; they are

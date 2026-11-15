@@ -1,0 +1,22 @@
+.driving-touch { position:relative; display:block; inline-size:clamp(118px,22vw,220px); }
+.touch-main > [role="group"] { position:relative; }
+.driving-slider { --steer: 0; position: relative; block-size: 64px; border: 1px solid #727980; border-radius: 12px; background: #171b21e8; touch-action: none; user-select: none; color: #f0f1f2; cursor: ew-resize; }
+.driving-slider:focus-visible { outline: 3px solid #e45b43; outline-offset: 3px; }
+.driving-slider-line { position:absolute; inset-inline:12px; inset-block-start:25px; border-block-start:2px solid #6a737e; }
+.driving-slider-line::after { content:''; position:absolute; inset-inline-start:50%; block-size:14px; inset-block-start:-8px; border-inline-start:2px solid #c7ccd2; }
+.driving-slider-thumb { position:absolute; inline-size:32px; block-size:32px; border-radius:50%; inset-block-start:9px; inset-inline-start:calc(50% - 16px + var(--steer) * (50% - 22px)); background:#e45b43; box-shadow:0 2px 8px #0007; }
+.driving-slider small { position:absolute; inset-inline:0; inset-block-end:4px; text-align:center; font-size:10px; letter-spacing:.07em; color:#d5d9de; }
+.driving-touch-mode { position:absolute; inset-inline-start:0; inset-block-end:calc(100% + 4px); min-block-size:44px; min-inline-size:66px; padding:5px 8px; font-size:11px; border-radius:8px; }
+[data-steer-mode="analog"] > :is([data-action="left"],[data-action="right"]) { display:none !important; }
+[data-steer-mode="buttons"] .driving-slider { display:none; }
+[data-steer-mode="buttons"] .driving-touch { position:absolute; inline-size:0; block-size:0; inset-inline-start:0; inset-block-start:0; }
+.driving-coach { position:absolute; z-index:7; inset-inline-start:max(12px,env(safe-area-inset-left)); inset-block-start:108px; inline-size:min(300px,calc(100% - 24px)); padding:12px 14px; border:1px solid #676d76; border-radius:10px; background:#171b21ed; color:#f0f1f2; box-shadow:0 7px 24px #0005; }
+.driving-coach[hidden] { display:none !important; }
+.driving-coach strong { display:block; padding-inline-end:52px; font-size:14px; }
+.driving-coach p { margin:7px 0 10px; color:#d3d7dd; font-size:12px; line-height:1.65; }
+.driving-coach progress { inline-size:100%; block-size:5px; accent-color:#e45b43; }
+.driving-coach button { position:absolute; inset-inline-end:8px; inset-block-start:5px; min-block-size:44px; min-inline-size:44px; padding:5px; background:transparent; color:#f0f1f2; border:0; font-size:11px; }
+@media (max-width:700px) { .driving-coach { inset-block-start:98px; inline-size:min(250px,calc(100% - 24px)); padding:10px 12px; } }
+@media (max-width:360px) { .driving-touch { inline-size:94px; } #race .touch-main button[data-action] { min-inline-size:44px; inline-size:44px; } #race .touch-main > [role="group"] { gap:5px; } }
+@media (max-height:520px) and (orientation:landscape) { .driving-coach { inset-block-start:66px; inline-size:230px; padding:8px 11px; } .driving-coach p { font-size:11px; margin:4px 0; } .driving-touch { inline-size:150px; } .driving-slider { block-size:54px; } }
+@media (prefers-reduced-motion:reduce) { .driving-slider-thumb { transition:none; } }

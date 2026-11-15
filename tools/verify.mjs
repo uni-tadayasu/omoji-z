@@ -6,6 +6,8 @@ import vm from 'node:vm';
 import { pathToFileURL, fileURLToPath } from 'node:url';
 import { execFileSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
+import * as balanceV3 from '../assets/balance.js';
+import * as musicV3 from '../assets/soundtrack.js';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const baseline = JSON.parse(fs.readFileSync(path.join(root, 'tools/compatibility-baseline.json'), 'utf8'));
@@ -26,14 +28,14 @@ const files = allFiles(root);
 let source = fs.readFileSync(path.join(root, 'assets/game.js'), 'utf8');
 const coreImports = {};
 for (const match of source.matchAll(/^import\s+\{([^}]+)\}\s+from\s+['"]([^'"]+)['"];?/gm)) {
-    const module = await import(pathToFileURL(path.resolve(root, 'assets', match[2])));
+    const module = await import(pathToFileURL(path.resolve(root, 'assets', match[2].split('?')[0])));
     for (const item of match[1].split(',')) {
         const [exported, local=exported] = item.trim().split(/\s+as\s+/);
         coreImports[local] = module[exported];
     }
 }
 for (const match of source.matchAll(/^import\s+([\w$]+)\s+from\s+['"]([^'"]+)['"];?/gm)) {
-    const module = await import(pathToFileURL(path.resolve(root, 'assets', match[2])));
+    const module = await import(pathToFileURL(path.resolve(root, 'assets', match[2].split('?')[0])));
     coreImports[match[1]] = module.default;
 }
 const coreSource = source.replace(/^import\s+[^\n]+\n/gm, '')
@@ -66,18 +68,29 @@ check('JavaScript syntax', () => {
     return `${scripts.length} scripts`;
 });
 
-check('vehicle identities and save-compatible statistics', () => {
+check('v3 performance, drivetrain identities and legacy save namespaces', () => {
     assert(game,'Game core did not load.');
-    assert(game.cars.filter(car=>!car.operatorOnly).length === 512,'Public vehicle count must remain 512.');
-    assert(game.cars.filter(car=>car.operatorOnly).length === 3,'Operator vehicle count must remain 3.');
-    const cars = new Map(game.cars.map(car=>[car.id,car]));
+    const publicCars=game.cars.filter(car=>!car.operatorOnly);
+    assert(publicCars.length===512,'Public vehicle count must remain 512.');
+    assert(game.cars.filter(car=>car.operatorOnly).length===3,'Operator vehicle count must remain 3.');
+    const cars=new Map(game.cars.map(car=>[car.id,car]));
     assert(cars.size===515,'Vehicle IDs must be unique.');
-    for (const expected of baseline.cars) {
-        const car=cars.get(expected.id); assert(car,`Missing legacy vehicle ID: ${expected.id}`);
-        for (const [key,value] of Object.entries(expected)) assert(car[key]===value,`Changed compatibility value: ${expected.id}.${key}`);
+    for(const expected of baseline.cars) {
+        const car=cars.get(expected.id);assert(car,`Missing legacy vehicle ID: ${expected.id}`);
+        assert(car.drive===expected.drive,`Legacy drivetrain identity changed: ${car.id}`);
+        assert(car.balanceVersion===3,`Runtime stock balance was not applied: ${car.id}`);
+        assert(Number.isFinite(car.power)&&car.power>=30&&car.power<=1000,`Stock output outside road-car envelope: ${car.id}`);
+        assert(Number.isFinite(car.topSpeed)&&car.topSpeed>=100&&car.topSpeed<=360,`Stock speed outside road-car envelope: ${car.id}`);
+        assert(Number.isFinite(car.mass)&&car.mass>=500&&car.mass<=3000,`Invalid stock mass: ${car.id}`);
+        assert(Number.isFinite(car.accel)&&car.accel>=3&&car.accel<=16,`Invalid stock acceleration: ${car.id}`);
+        assert(car.pp===balanceV3.performancePoints(car),`Runtime PP mismatch: ${car.id}`);
+        assert(car.performanceClass===balanceV3.classForPP(car.pp),`Runtime PP class mismatch: ${car.id}`);
     }
-    for (const key of baseline.saveKeys) assert(source.includes(key),`Missing legacy save namespace: ${key}`);
-    return '515 IDs, original mechanical values and primary save namespaces retained';
+    const free=publicCars.filter(car=>car.shopPrice===0).map(car=>car.id).sort();
+    assert(JSON.stringify(free)===JSON.stringify([...balanceV3.STARTER_IDS].sort()),'New-player free selection must contain exactly the three starters.');
+    for(const car of publicCars.filter(car=>car.shopPrice>0))assert(car.shopPrice>=1200&&car.shopPrice<=200000,`Invalid game-currency price: ${car.id}`);
+    for(const key of baseline.saveKeys)assert(source.includes(key),`Missing legacy save namespace: ${key}`);
+    return '515 legacy IDs/drivetrains; bounded stock performance; 3 starters; normalized PP/prices';
 });
 
 check('independent vehicle designs and finite low-quality meshes', () => {
@@ -85,7 +98,7 @@ check('independent vehicle designs and finite low-quality meshes', () => {
     const fingerprints = new Set(); let meshes=0, vertices=0;
     for (const car of game.cars) {
         const visual=coreImports.originalVehicleVisual ? coreImports.originalVehicleVisual(car) : car;
-        assert(visual.originalDesignVersion===2,`Original design marker missing: ${car.id}`);
+        assert(typeof visual.originalDesignFamily==='string'&&visual.originalDesignFamily.length>0,`Design family missing: ${car.id}`);
         assert(visual.dimensions.every(value=>Number.isFinite(value)&&value>0),`Invalid dimensions: ${car.id}`);
         const fingerprint=JSON.stringify([visual.dimensions,visual.profile,visual.cab,visual.axle]);
         assert(!fingerprints.has(fingerprint),`Duplicate complete coachwork: ${car.id}`); fingerprints.add(fingerprint);
@@ -188,6 +201,7 @@ check('catalog entries agree with playable vehicle and course data', () => {
         assert(attrs['data-title']===car.name,`Vehicle catalog name mismatch: ${id}`);
         for(const [attribute,key]of [['data-power','power'],['data-speed','topSpeed'],['data-year','year']])assert(Number(attrs[attribute])===car[key],`Vehicle catalog ${key} mismatch: ${id}`);
         assert(attrs['data-drive']===car.drive,`Vehicle catalog drive mismatch: ${id}`);
+        assert(Number(attrs['data-pp'])===car.pp&&Number(attrs['data-price'])===car.shopPrice,`Vehicle catalog PP/price mismatch: ${id}`);
     }
     for(const match of fs.readFileSync(path.join(root,'courses.html'),'utf8').matchAll(/<li id="course-([^"]+)"\s+([^>]+)>/g)) {
         const [id,attrs]=[match[1],attributes(match[2])],track=tracks.get(id);
@@ -197,6 +211,77 @@ check('catalog entries agree with playable vehicle and course data', () => {
     }
     assert(seenCars.size===512&&seenTracks.size===256,'Catalog entries missing.');
     return '512 vehicle names/specifications and 256 course names/distances match runtime data';
+});
+
+check('772 useful static pages have canonical metadata, JSON-LD and crawlable links', () => {
+    const routes=JSON.parse(fs.readFileSync(path.join(root,'assets/catalog-routes.json'),'utf8'));
+    assert(Object.keys(routes.cars).length===512&&Object.keys(routes.courses).length===256,'Canonical route map is incomplete.');
+    const pages=['index.html','cars.html','courses.html','guide.html',...Object.values(routes.cars),...Object.values(routes.courses)];
+    assert(new Set(pages).size===772,'Canonical paths must be unique.');
+    const sitemap=fs.readFileSync(path.join(root,'sitemap.xml'),'utf8');
+    const urls=[...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map(match=>match[1]);
+    assert(urls.length===772&&new Set(urls).size===772,'Sitemap must contain exactly 772 unique content URLs.');
+    const titles=new Set(),descriptions=new Set();
+    for(const relative of pages) {
+        const file=path.join(root,relative);assert(fs.existsSync(file),`Missing static detail page: ${relative}`);
+        const html=fs.readFileSync(file,'utf8');
+        const canonical='https://omoji-z.com/'+(relative==='index.html'?'':relative);
+        assert(urls.includes(canonical),`Page not present in sitemap: ${relative}`);
+        const canonicalLinks=[...html.matchAll(/<link[^>]+rel=["']canonical["'][^>]+href=["']([^"']+)["']/g)];
+        assert(canonicalLinks.length===1&&canonicalLinks[0][1]===canonical,`Wrong/duplicate canonical URL: ${relative}`);
+        const title=html.match(/<title>([^<]+)<\/title>/)?.[1];
+        const description=html.match(/<meta[^>]+name=["']description["'][^>]+content=["']([^"']+)["']/)?.[1];
+        assert(title&&!titles.has(title),`Missing/duplicate document title: ${relative}`);titles.add(title);
+        assert(description&&description.length>=45&&!descriptions.has(description),`Thin/duplicate meta description: ${relative}`);descriptions.add(description);
+        assert((html.match(/<h1\b/g)||[]).length===1,`Page must have one visible main heading: ${relative}`);
+        assert(!/<meta[^>]+name=["']robots["'][^>]+content=["'][^"']*noindex/i.test(html),`Public content is noindexed: ${relative}`);
+        const jsonld=[...html.matchAll(/<script[^>]+type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/g)];
+        assert(jsonld.length===1,`One coherent JSON-LD graph is required: ${relative}`);
+        const schema=JSON.parse(jsonld[0][1]);assert(schema['@context']==='https://schema.org'&&Array.isArray(schema['@graph']),`Invalid JSON-LD graph: ${relative}`);
+        assert(!/"(?:aggregateRating|priceCurrency)"/.test(jsonld[0][1]),`Unsupported rating/real-currency offer: ${relative}`);
+        const visible=html.replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi,'').replace(/<[^>]+>/g,' ').replace(/\s+/g,' ');
+        for(const item of schema['@graph']) {
+            const types=Array.isArray(item['@type'])?item['@type']:[item['@type']];
+            if(types.includes('FAQPage'))for(const question of item.mainEntity??[]) {
+                assert(visible.includes(question.name)&&visible.includes(question.acceptedAnswer?.text),`FAQ structured data does not match visible content: ${relative}`);
+            }
+        }
+        assert(html.includes('assets/site.css')&&!html.includes('theme-catalog.css'),`Unified site theme not applied: ${relative}`);
+    }
+    const carsHTML=fs.readFileSync(path.join(root,'cars.html'),'utf8'),coursesHTML=fs.readFileSync(path.join(root,'courses.html'),'utf8');
+    for(const [id,relative]of Object.entries(routes.cars)) {
+        assert(/^cars\/oz-\d{3}\.html$/.test(relative),`Vehicle canonical must use an original code: ${id}`);
+        assert(carsHTML.includes(`href="./${relative}"`),`Vehicle detail is not linked from catalog: ${id}`);
+    }
+    for(const [id,relative]of Object.entries(routes.courses)) {
+        assert(/^courses\/stage-\d{3}\.html$/.test(relative),`Stage canonical must use an independent stage code: ${id}`);
+        assert(coursesHTML.includes(`href="./${relative}"`),`Course detail is not linked from catalog: ${id}`);
+    }
+    return '512 car details + 256 course details + 4 hubs; unique titles/descriptions; original-code canonicals; sitemap reachability';
+});
+
+check('static car diagrams and road maps match the current playable geometry', () => {
+    assert(game,'Game core did not load.');
+    const routes=JSON.parse(fs.readFileSync(path.join(root,'assets/catalog-routes.json'),'utf8'));
+    for(const car of game.cars.filter(car=>!car.operatorOnly)) {
+        const visual=coreImports.originalVehicleVisual(car);
+        const hash=createHash('sha256').update(JSON.stringify([visual.dimensions,visual.profile,visual.cab,visual.axle,visual.wheel])).digest('hex');
+        assert(routes.vehicleGeometry[car.id]===hash,`Stale vehicle diagram metadata: ${car.id}`);
+        const html=fs.readFileSync(path.join(root,routes.cars[car.id]),'utf8');
+        assert(html.includes(`data-design-sha256="${hash}"`),`Vehicle detail is not based on current coachwork: ${car.id}`);
+    }
+    for(const track of game.tracks) {
+        const road=game.Kc(track.id),geometry=[];
+        for(let index=0;index<=256;index++) {
+            const p=road.sample(road.length*index/256,{});
+            geometry.push([p.x,p.y,p.z].map(value=>value.toFixed(6)).join(','));
+        }
+        const hash=createHash('sha256').update(geometry.join('\n')).digest('hex');
+        assert(routes.roadGeometry[track.id]===hash,`Stale road geometry metadata: ${track.id}`);
+        const html=fs.readFileSync(path.join(root,routes.courses[track.id]),'utf8');
+        assert((html.match(new RegExp(`data-road-sha256="${hash}"`,'g'))||[]).length===2,`Route/elevation figures do not match current game road: ${track.id}`);
+    }
+    return '512 side-profile fingerprints and 256 road/elevation fingerprints agree with runtime geometry';
 });
 
 check('local HTML, CSS and manifest asset links', () => {
@@ -233,27 +318,35 @@ check('local HTML, CSS and manifest asset links', () => {
     return `${checked} local links`;
 });
 
-check('128 newly composed audio files match their production manifest', () => {
-    const manifestPath=path.join(root,'assets/audio/original-score.json');
-    assert(fs.existsSync(manifestPath),'Original soundtrack production manifest is missing.');
-    const manifest=JSON.parse(fs.readFileSync(manifestPath,'utf8'));
-    const tracks=Array.isArray(manifest)?manifest:manifest.tracks;
-    assert(Array.isArray(tracks)&&tracks.length===128,'Soundtrack manifest must contain 128 tracks.');
-    const hashes=new Set();
-    for(let index=0;index<128;index++) {
-        const expected=`parapara-${String(index).padStart(3,'0')}.mp3`;
-        const track=tracks.find(track=>(track.file??track.filename)===expected);
-        assert(track,`Soundtrack metadata missing: ${expected}`);
-        const data=fs.readFileSync(path.join(root,'assets/audio',expected));
-        assert(data.length>10000,`Empty or incomplete soundtrack: ${expected}`);
-        const hash=createHash('sha256').update(data).digest('hex');
-        assert(!hashes.has(hash),`Duplicate audio: ${expected}`);hashes.add(hash);
-        if(track.sha256)assert(track.sha256===hash,`Audio hash mismatch: ${expected}`);
-        assert(track.duration>20,`Track duration missing/too short: ${expected}`);
+check('33 original audio files, 8 race themes and 128 saved-ID aliases agree', () => {
+    const manifest=JSON.parse(fs.readFileSync(path.join(root,'assets/audio/original-score.json'),'utf8'));
+    assert(Array.isArray(manifest.files)&&manifest.files.length===33,'Production manifest must describe 33 real audio files.');
+    assert(musicV3.selectableSoundtrack.length===33&&musicV3.soundtrack.length===128,'Selectable recordings and saved IDs must remain distinct.');
+    const expected=[...musicV3.expectedAudioFiles].sort();
+    const actual=files.filter(file=>file.endsWith('.mp3')).map(file=>path.basename(file)).sort();
+    assert(JSON.stringify(expected)===JSON.stringify(actual),'Missing/unreferenced MP3s remain in the release.');
+    const hashes=new Set(),themes=new Map();
+    for(const track of manifest.files) {
+        const bytes=fs.readFileSync(path.join(root,'assets/audio',track.file));
+        assert(bytes.length>10000&&bytes.length===track.bytes,`Incomplete audio: ${track.file}`);
+        const hash=createHash('sha256').update(bytes).digest('hex');
+        assert(hash===track.sha256,`Production audio SHA-256 mismatch: ${track.file}`);
+        assert(!hashes.has(hash),`Duplicate real recording: ${track.file}`);hashes.add(hash);
+        assert(track.duration>20&&track.duration<150,`Invalid score duration: ${track.file}`);
+        if(track.scene!=='menu') {
+            if(!themes.has(track.themeId))themes.set(track.themeId,new Set());
+            themes.get(track.themeId).add(track.mixId);
+        }
     }
-    const remaining=files.filter(file=>file.endsWith('.mp3')).map(file=>path.basename(file));
-    assert(remaining.length===128,'Unused legacy MP3 files remain in the release.');
-    return `${hashes.size} unique MP3 hashes`;
+    assert(themes.size===8,'There must be eight race themes.');
+    for(const [theme,mixes]of themes)assert(['drive','night','focus','peak'].every(mix=>mixes.has(mix)),`Incomplete theme mixes: ${theme}`);
+    for(let index=0;index<128;index++) {
+        const id=`parapara-${String(index).padStart(3,'0')}`,score=musicV3.scoreForId(id);
+        assert(score&&expected.includes(score.file),`Unresolved legacy song selection: ${id}`);
+        const alias=musicV3.soundtrack.find(track=>track.id===id);
+        assert(alias&&score.id===musicV3.canonicalSongId(id)&&alias.file===score.file,`Saved song alias does not match actual audio: ${id}`);
+    }
+    return `${hashes.size} distinct recording hashes; ${themes.size} race themes × 4 mixes + menu; all 128 saved IDs resolve`;
 });
 
 check('license notices retained and unverified imported meshes removed', () => {

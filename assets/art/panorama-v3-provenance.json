@@ -1,0 +1,108 @@
+{
+  "edition": "OMOJI Z v3",
+  "date": "2026-11-15",
+  "purpose": "Trace the original visual resources used by the renderer and site hero.",
+  "useScope": "These project-generated art resources are included for use and distribution with this game and its documentation. No third-party stock-photo, manufacturer model, map, or music license is relied on for these listed images. This record states provenance and intended project use; it is not a warranty of universal legal clearance or a declaration that generated material has statutory copyright protection in every jurisdiction. Existing code/font/library notices remain governed by their own licenses in THIRD_PARTY_NOTICES.txt.",
+  "runtime": "Panoramas and foliage load asynchronously once and are reused by CPU/GPU rendering. Missing or undecodable images retain the procedural fallback and do not alter collision/road sampling. Generated landscapes serve as distant scenery only.",
+  "verification": "All four panorama files were decoded successfully, capped to 1280 by 640 in the Node GPU-material binding check, and bound to sky uniforms. A simulated decode failure retained the procedural fallback. The actual browser GPU shader/render path and physical mobile-device frame rate were not observed in this environment.",
+  "assets": [
+    {
+      "file": "assets/art/sky-v3-forest.webp",
+      "role": "original distant landscape texture",
+      "biome": "forest",
+      "dimensions": [
+        1774,
+        887
+      ],
+      "bytes": 146058,
+      "sha256": "c572cfd4087d803db7001bab562aa89e7622fd7651fe02972b1723bcd456cecc",
+      "origin": "Generated for this project with OpenAI image generation during the 2026-11-15 revision. No external source photograph, licensed map, vehicle brand, or specified real landmark was supplied.",
+      "processing": "Converted/resized to WebP for browser delivery; decoded images are capped at 1280px wide on desktop and 768px on coarse-pointer devices."
+    },
+    {
+      "file": "assets/art/sky-v3-alpine.webp",
+      "role": "original distant landscape texture",
+      "biome": "alpine",
+      "dimensions": [
+        1774,
+        887
+      ],
+      "bytes": 260824,
+      "sha256": "151f496dcd52fb7f5093d5cbba326046bcfacdb50f7f5fb49ad6530f1e712750",
+      "origin": "Generated for this project with OpenAI image generation during the 2026-11-15 revision. No external source photograph, licensed map, vehicle brand, or specified real landmark was supplied.",
+      "processing": "Converted/resized to WebP for browser delivery; decoded images are capped at 1280px wide on desktop and 768px on coarse-pointer devices."
+    },
+    {
+      "file": "assets/art/sky-v3-coast.webp",
+      "role": "original distant landscape texture",
+      "biome": "coast",
+      "dimensions": [
+        1774,
+        887
+      ],
+      "bytes": 220318,
+      "sha256": "c8ed762d2a64b775efb2ac43a16d507ec28420cbf1a658ec9c68a3e45afb091e",
+      "origin": "Generated for this project with OpenAI image generation during the 2026-11-15 revision. No external source photograph, licensed map, vehicle brand, or specified real landmark was supplied.",
+      "processing": "Converted/resized to WebP for browser delivery; decoded images are capped at 1280px wide on desktop and 768px on coarse-pointer devices."
+    },
+    {
+      "file": "assets/art/sky-v3-snow.webp",
+      "role": "original distant landscape texture",
+      "biome": "snow",
+      "dimensions": [
+        1774,
+        887
+      ],
+      "bytes": 225564,
+      "sha256": "ed3dea5642b9a64ac6d717d919c056058b914203179aa567f477798576a3d749",
+      "origin": "Generated for this project with OpenAI image generation during the 2026-11-15 revision. No external source photograph, licensed map, vehicle brand, or specified real landmark was supplied.",
+      "processing": "Converted/resized to WebP for browser delivery; decoded images are capped at 1280px wide on desktop and 768px on coarse-pointer devices."
+    },
+    {
+      "file": "assets/art/foliage-v3.webp",
+      "role": "original transparent 2 by 2 foliage billboard atlas",
+      "cells": [
+        "conifer",
+        "broadleaf",
+        "snow conifer",
+        "autumn broadleaf"
+      ],
+      "dimensions": [
+        512,
+        768
+      ],
+      "bytes": 203462,
+      "sha256": "2399ac3bc74733c8794b36a678a3ff652f7c878166e2f88328e902d093a5b358",
+      "origin": "Generated from a new text-only prompt with OpenAI image generation. Generation reference: exec-afcb5910-a20f-43d6-b796-fc8664def5f9.",
+      "processing": "Original 1024 by 1536 RGBA atlas resized to 512 by 768 and encoded as WebP. Runtime clears only almost-transparent export haze, crops the appropriate cell and updates shared billboard textures once after decoding. No stock/tree photograph was used."
+    },
+    {
+      "file": "assets/art/hero-v3.webp",
+      "role": "site hero from actual game renderer",
+      "dimensions": [
+        1600,
+        900
+      ],
+      "bytes": 72542,
+      "sha256": "c0fda23abd38fc3a5fe95ca688e2c555c599d5d4505e9500d23f731bae84690f",
+      "origin": "Rendered by tools/render-preview.mjs from assets/game.js, the current playable vehicle definitions, actual Kc road geometry and the original panorama/foliage assets listed above.",
+      "capture": {
+        "track": "shiramine",
+        "distance": 700,
+        "width": 1600,
+        "height": 900,
+        "carCode": "OZ-323",
+        "panorama": "snow",
+        "panoramaReady": true,
+        "mode": "actual game software renderer",
+        "composition": "Left crop of a 2400 px game viewport; car on the right half",
+        "source": "assets/game.js + assets/vehicles.js",
+        "externalReferences": false,
+        "originalGeneratedBackdrop": "assets/art/sky-v3-snow.webp",
+        "originalGeneratedFoliage": "assets/art/foliage-v3.webp"
+      },
+      "reproduce": "npm install --no-save @napi-rs/canvas@0.1.100; node tools/render-preview.mjs --track shiramine --distance 700 --output assets/art/hero-v3.webp",
+      "verificationLimit": "This is the game software/Canvas renderer executed with Node and @napi-rs/canvas. It is not a browser screenshot, an independent promotional car illustration, or verification of a physical-device GPU frame."
+    }
+  ]
+}

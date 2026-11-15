@@ -1,9 +1,13 @@
 {
-  "name": "omoji-z-original-design-edition",
-  "version": "2.0.0",
+  "name": "omoji-z-driving-studio",
+  "version": "3.0.0",
   "private": true,
   "type": "module",
   "description": "Buildless browser racing game with independent designs",
-  "scripts": { "test": "node tools/verify.mjs" },
-  "engines": { "node": ">=20" }
+  "scripts": {
+    "test": "node tools/test-balance.mjs && node tools/test-economy-integration.mjs && node tools/verify-driving.mjs && node tools/verify-network.mjs && node tools/verify-challenges.mjs && node tools/test-soundtrack.mjs && node tools/verify.mjs --report tools/verification-report.json"
+  },
+  "engines": {
+    "node": ">=20"
+  }
 }

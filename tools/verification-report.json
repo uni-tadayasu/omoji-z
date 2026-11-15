@@ -1,5 +1,5 @@
 {
-  "checkedAt": "2026-11-15T07:05:57.343Z",
+  "checkedAt": "2026-11-15T08:34:35.270Z",
   "baseCommit": "d56dadaef293b97f88d9f017d8e65701be98e721",
   "browserQA": "not performed: this verifier checks source, data and geometry in Node.js",
   "passed": true,
@@ -12,22 +12,22 @@
     {
       "name": "JavaScript syntax",
       "status": "passed",
-      "detail": "9 scripts"
+      "detail": "22 scripts"
     },
     {
-      "name": "vehicle identities and save-compatible statistics",
+      "name": "v3 performance, drivetrain identities and legacy save namespaces",
       "status": "passed",
-      "detail": "515 IDs, original mechanical values and primary save namespaces retained"
+      "detail": "515 legacy IDs/drivetrains; bounded stock performance; 3 starters; normalized PP/prices"
     },
     {
       "name": "independent vehicle designs and finite low-quality meshes",
       "status": "passed",
-      "detail": "515 unique coachworks, 20594 meshes, 17458212 finite vertices"
+      "detail": "515 unique coachworks, 19049 meshes, 14243278 finite vertices"
     },
     {
       "name": "representative high-detail coachworks remain finite",
       "status": "passed",
-      "detail": "8 body families, 3459944 finite high-detail vertices"
+      "detail": "8 body families, 2748312 finite high-detail vertices"
     },
     {
       "name": "all 256 stages sample finite road geometry",
@@ -45,14 +45,24 @@
       "detail": "512 vehicle names/specifications and 256 course names/distances match runtime data"
     },
     {
-      "name": "local HTML, CSS and manifest asset links",
+      "name": "772 useful static pages have canonical metadata, JSON-LD and crawlable links",
       "status": "passed",
-      "detail": "2157 local links"
+      "detail": "512 car details + 256 course details + 4 hubs; unique titles/descriptions; original-code canonicals; sitemap reachability"
     },
     {
-      "name": "128 newly composed audio files match their production manifest",
+      "name": "static car diagrams and road maps match the current playable geometry",
       "status": "passed",
-      "detail": "128 unique MP3 hashes"
+      "detail": "512 side-profile fingerprints and 256 road/elevation fingerprints agree with runtime geometry"
+    },
+    {
+      "name": "local HTML, CSS and manifest asset links",
+      "status": "passed",
+      "detail": "22552 local links"
+    },
+    {
+      "name": "33 original audio files, 8 race themes and 128 saved-ID aliases agree",
+      "status": "passed",
+      "detail": "33 distinct recording hashes; 8 race themes × 4 mixes + menu; all 128 saved IDs resolve"
     },
     {
       "name": "license notices retained and unverified imported meshes removed",

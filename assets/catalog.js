@@ -18,7 +18,7 @@
       element, index, title: element.dataset.title || element.querySelector('h3').textContent,
       text: normalize(element.textContent), facts: element.querySelector('.facts').textContent.trim(),
       speed: asNumber(element.dataset.speed), power: asNumber(element.dataset.power),
-      price: asNumber(element.dataset.price), distance: asNumber(element.dataset.distance),
+      price: asNumber(element.dataset.price), pp: asNumber(element.dataset.pp), mass: asNumber(element.dataset.mass), distance: asNumber(element.dataset.distance),
       drive: element.dataset.drive, surface: element.dataset.surface,
       link: element.querySelector('a[href*="?car="], a[href*="?course="]')
     }));
@@ -56,7 +56,7 @@
     const value = params.get(key) || '';
     if ([...element.options].some(option => option.value === value)) element.value = value;
   }
-  const modes = {speed: ['speed', -1], power: ['power', -1], price: ['price', 1], distance: ['distance', 1], 'distance-desc': ['distance', -1]};
+  const modes = {speed: ['speed', -1], power: ['power', -1], price: ['price', 1], pp: ['pp', 1], distance: ['distance', 1], 'distance-desc': ['distance', -1]};
   function orderRows() {
     const mode = modes[sort.value];
     for (const {list, rows} of groups) {
@@ -177,11 +177,12 @@
     thead.append(header); table.append(thead);
     const tbody = document.createElement('tbody');
     const fields = isCars ? [
+      ['PP', row => row.pp === null ? '—' : formats.format(row.pp)],
       ['駆動方式', row => row.drive],
+      ['車重', row => row.mass === null ? '—' : formats.format(row.mass) + ' kg'],
       ['最高速度', row => row.speed === null ? '—' : formats.format(row.speed) + ' km/h'],
       ['最高出力', row => row.power === null ? '—' : formats.format(row.power) + ' PS'],
       ['価格', row => row.price === 0 ? '初期車両' : row.price === null ? '—' : formats.format(row.price) + ' Z'],
-      ['設計年', row => row.element.dataset.year],
       ['特徴', row => row.element.querySelector('.facts + p')?.textContent || '']
     ] : [
       ['走行距離', row => row.distance === null ? '—' : formats.format(row.distance) + ' km'],
