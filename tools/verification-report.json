@@ -1,0 +1,63 @@
+{
+  "checkedAt": "2026-11-15T07:05:57.343Z",
+  "baseCommit": "d56dadaef293b97f88d9f017d8e65701be98e721",
+  "browserQA": "not performed: this verifier checks source, data and geometry in Node.js",
+  "passed": true,
+  "results": [
+    {
+      "name": "game core loads without a browser",
+      "status": "passed",
+      "detail": "515 vehicles / 256 stages"
+    },
+    {
+      "name": "JavaScript syntax",
+      "status": "passed",
+      "detail": "9 scripts"
+    },
+    {
+      "name": "vehicle identities and save-compatible statistics",
+      "status": "passed",
+      "detail": "515 IDs, original mechanical values and primary save namespaces retained"
+    },
+    {
+      "name": "independent vehicle designs and finite low-quality meshes",
+      "status": "passed",
+      "detail": "515 unique coachworks, 20594 meshes, 17458212 finite vertices"
+    },
+    {
+      "name": "representative high-detail coachworks remain finite",
+      "status": "passed",
+      "detail": "8 body families, 3459944 finite high-detail vertices"
+    },
+    {
+      "name": "all 256 stages sample finite road geometry",
+      "status": "passed",
+      "detail": "8448 road positions and grip samples"
+    },
+    {
+      "name": "driving simulation accelerates, brakes and responds to wet grip",
+      "status": "passed",
+      "detail": "10 s acceleration 164.5 km/h; stop from 90 km/h: dry 23.1 m, wet 32.2 m"
+    },
+    {
+      "name": "catalog entries agree with playable vehicle and course data",
+      "status": "passed",
+      "detail": "512 vehicle names/specifications and 256 course names/distances match runtime data"
+    },
+    {
+      "name": "local HTML, CSS and manifest asset links",
+      "status": "passed",
+      "detail": "2157 local links"
+    },
+    {
+      "name": "128 newly composed audio files match their production manifest",
+      "status": "passed",
+      "detail": "128 unique MP3 hashes"
+    },
+    {
+      "name": "license notices retained and unverified imported meshes removed",
+      "status": "passed",
+      "detail": "Three.js MIT, PeerJS MIT, font OFL retained; imported manufacturer meshes absent"
+    }
+  ]
+}

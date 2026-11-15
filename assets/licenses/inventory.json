@@ -1,0 +1,222 @@
+{
+  "formatVersion": 1,
+  "checkedDate": "2026-11-15",
+  "scope": "PeerJS browser vendor asset and its actual bundled dependencies; optional MessagePack dependency documented separately. Other retained project licenses are outside this inventory scope.",
+  "officialReleaseTag": "https://github.com/peers/peerjs/tree/v1.5.5",
+  "officialReleaseCommit": "2d4605470188777e15be4ea47354cf9732b5c394",
+  "officialLockfile": "https://github.com/peers/peerjs/blob/v1.5.5/package-lock.json",
+  "officialLockfileGitBlob": "62d4b416b74f60d47d14f2817409b4d2383ebbce",
+  "sourceMap": {
+    "archiveUrl": "https://registry.npmjs.org/peerjs/-/peerjs-1.5.5.tgz",
+    "member": "package/dist/peerjs.min.js.map",
+    "sha256": "54dafcd86388aa76a6e58525462e5d1a6941cf24e559123425d614a293b1af76",
+    "dependencySourcesCompared": 15,
+    "allComparedSourcesExact": true
+  },
+  "noticesFile": "assets/licenses/peerjs-dependencies.txt",
+  "packages": [
+    {
+      "name": "peerjs",
+      "version": "1.5.5",
+      "spdx": "MIT",
+      "bundled": true,
+      "upstream": "https://github.com/peers/peerjs",
+      "licenseSource": {
+        "archiveUrl": "https://registry.npmjs.org/peerjs/-/peerjs-1.5.5.tgz",
+        "member": "package/LICENSE",
+        "sha256": "9407807dba7f47a79bfb3ac55759d63d77c9371ebd0616d5a093e97d3e810397"
+      },
+      "registryArchive": {
+        "sha256": "6fa731967a78df79e6f6a94b5e4339765e2eebadd911b3d981c9606d0a8903d0",
+        "integrity": "sha512-viMUCPDL6CSfOu0ZqVcFqbWRXNHIbv2lPqNbrBIjbFYrflebOjItJ4hPfhjnuUCstqciHVu9vVJ7jFqqKi/EuQ==",
+        "matchesOfficialLock": true
+      },
+      "matchedSourceFiles": [],
+      "artifact": {
+        "path": "assets/peerjs-1.5.5.min.js",
+        "npmMember": "package/dist/peerjs.min.js",
+        "sha256": "7604d8c31bec4f134b0d15c2d80b1d095ea18af005354f439f14291fcd7b4168",
+        "exactNpmArtifactMatch": true
+      }
+    },
+    {
+      "name": "peerjs-js-binarypack",
+      "version": "2.1.0",
+      "spdx": "MIT",
+      "bundled": true,
+      "upstream": "https://github.com/peers/js-binarypack",
+      "licenseSource": {
+        "archiveUrl": "https://registry.npmjs.org/peerjs-js-binarypack/-/peerjs-js-binarypack-2.1.0.tgz",
+        "member": "package/LICENSE",
+        "sha256": "9517e6f46b30231a62407f94a8c7adf8b4d14038c01807cd769f1d4de5911ba4"
+      },
+      "registryArchive": {
+        "sha256": "9bb45c6209600184ede5844fe9d24ced4cac633d913f18abafdf33b8821d18d8",
+        "integrity": "sha512-YIwCC+pTzp3Bi8jPI9UFKO0t0SLo6xALnHkiNt/iUFmUUZG0fEEmEyFKvjsDKweiFitzHRyhuh6NvyJZ4nNxMg==",
+        "matchesOfficialLock": true
+      },
+      "matchedSourceFiles": [
+        {
+          "path": "node_modules/peerjs-js-binarypack/dist/binarypack.mjs",
+          "sha256": "c41fc69bfc3f2476c60532286c64df4a861d9549dbf76dd4e675e7b8ea357cc2",
+          "exactSourceMatch": true
+        },
+        {
+          "path": "node_modules/peerjs-js-binarypack/lib/binarypack.ts",
+          "sha256": "a2be11ee1e1b45ed1356c275d2afa6cc988e6375d28a1344dbbebde1325f0f93",
+          "exactSourceMatch": true
+        },
+        {
+          "path": "node_modules/peerjs-js-binarypack/lib/bufferbuilder.ts",
+          "sha256": "eda0a8c75288c83f571f86e807e75c4203ab0cafd5098e1e101838de0e9a9ecb",
+          "exactSourceMatch": true
+        }
+      ]
+    },
+    {
+      "name": "eventemitter3",
+      "version": "4.0.7",
+      "spdx": "MIT",
+      "bundled": true,
+      "upstream": "https://github.com/primus/eventemitter3",
+      "licenseSource": {
+        "archiveUrl": "https://registry.npmjs.org/eventemitter3/-/eventemitter3-4.0.7.tgz",
+        "member": "package/LICENSE",
+        "sha256": "3aecc12b1cb28832b5f65ab64291de96568c3f236a74d646281b4491f7bcadbf"
+      },
+      "registryArchive": {
+        "sha256": "703cdecfa6951d9ad258f615ab96895750add3cb2d95e3727837b78709975de8",
+        "integrity": "sha512-8guHBZCwKnFhYdHr2ysuRWErTwhoN2X8XELRlrRwpmfeY2jjuUN4taQMsULKUVo1K4DvZl+0pgfyoysHxvmvEw==",
+        "matchesOfficialLock": true
+      },
+      "matchedSourceFiles": [
+        {
+          "path": "node_modules/eventemitter3/index.js",
+          "sha256": "1560f251de5d28d2c15ff070215d2c5c0fa06f1a92e8d6522bbee37e06d2a6b5",
+          "exactSourceMatch": true
+        }
+      ]
+    },
+    {
+      "name": "webrtc-adapter",
+      "version": "9.0.1",
+      "spdx": "BSD-3-Clause",
+      "bundled": true,
+      "upstream": "https://github.com/webrtchacks/adapter",
+      "licenseSource": {
+        "archiveUrl": "https://registry.npmjs.org/webrtc-adapter/-/webrtc-adapter-9.0.1.tgz",
+        "member": "package/LICENSE.md",
+        "sha256": "00a46c6cfc219593b97586398b477e188391556e70487225d3ff9d60ccda6dce"
+      },
+      "registryArchive": {
+        "sha256": "a129a9ffe714e23a281dc476ea083ad54471f8047f28b93d7fc4fa41165f62d3",
+        "integrity": "sha512-1AQO+d4ElfVSXyzNVTOewgGT/tAomwwztX/6e3totvyyzXPvXIIuUUjAmyZGbKBKbZOXauuJooZm3g6IuFuiNQ==",
+        "matchesOfficialLock": true
+      },
+      "matchedSourceFiles": [
+        {
+          "path": "node_modules/webrtc-adapter/src/js/adapter_core.js",
+          "sha256": "02b0cbf812fbea90fd70d6ae33f5ab507ea6685ed01f465154d12da7c7053427",
+          "exactSourceMatch": true
+        },
+        {
+          "path": "node_modules/webrtc-adapter/src/js/adapter_factory.js",
+          "sha256": "0972bbb1d00e1999f2181ea15d69aaadde117d0aa3d6e4063b0ba16f37b1cf41",
+          "exactSourceMatch": true
+        },
+        {
+          "path": "node_modules/webrtc-adapter/src/js/utils.js",
+          "sha256": "e1528f21fc0d9daab96dcf4b54fbd0a2181592b0d8161cc629f7cba0f8101e02",
+          "exactSourceMatch": true
+        },
+        {
+          "path": "node_modules/webrtc-adapter/src/js/chrome/chrome_shim.js",
+          "sha256": "f81ff53c992329e1d3534cbc176e0c800e76ff9e2dbffda20cd798d0f549d9d9",
+          "exactSourceMatch": true
+        },
+        {
+          "path": "node_modules/webrtc-adapter/src/js/chrome/getusermedia.js",
+          "sha256": "5bc0f82ff482f45eda833988b761c11cd989cce5f161516641b5c9953201b05b",
+          "exactSourceMatch": true
+        },
+        {
+          "path": "node_modules/webrtc-adapter/src/js/firefox/firefox_shim.js",
+          "sha256": "6ee0f00e84b2ac5ed10a7cb4bbb92976b0259dc55b413b7400d96cdb9f4eb892",
+          "exactSourceMatch": true
+        },
+        {
+          "path": "node_modules/webrtc-adapter/src/js/firefox/getusermedia.js",
+          "sha256": "ff41593ec19785ec7605e2b221a83477224d05c74e0fcb1f32c64d08d48e8439",
+          "exactSourceMatch": true
+        },
+        {
+          "path": "node_modules/webrtc-adapter/src/js/firefox/getdisplaymedia.js",
+          "sha256": "22504d7fcdb036c30b3f968c7b7ad488a71c6730932825c6cae28f5e0e80bf51",
+          "exactSourceMatch": true
+        },
+        {
+          "path": "node_modules/webrtc-adapter/src/js/safari/safari_shim.js",
+          "sha256": "48db039ea3610c125be0c0d363f79964ad5acf6443e73eb1ebef05d012a34aaa",
+          "exactSourceMatch": true
+        },
+        {
+          "path": "node_modules/webrtc-adapter/src/js/common_shim.js",
+          "sha256": "f47a493eb4acc75a6c7317b4955665860e9f97e0154993c21ff687a0751713a6",
+          "exactSourceMatch": true
+        }
+      ]
+    },
+    {
+      "name": "sdp",
+      "version": "3.2.0",
+      "spdx": "MIT",
+      "bundled": true,
+      "upstream": "https://github.com/fippo/sdp",
+      "licenseSource": {
+        "archiveUrl": "https://registry.npmjs.org/sdp/-/sdp-3.2.0.tgz",
+        "member": "package/LICENSE",
+        "sha256": "798e82590af6a84bfbde3d6bb0fb9162c519edf16122404fea00acefdc55cbd9"
+      },
+      "registryArchive": {
+        "sha256": "9247f994658fea4d6660856a9c4bc98d6ffa71fccc45daa78522edc5671a98e0",
+        "integrity": "sha512-d7wDPgDV3DDiqulJjKiV2865wKsJ34YI+NDREbm+FySq6WuKOikwyNQcm+doLAZ1O6ltdO0SeKle2xMpN3Brgw==",
+        "matchesOfficialLock": true
+      },
+      "matchedSourceFiles": [
+        {
+          "path": "node_modules/sdp/sdp.js",
+          "sha256": "5e652588a192f583df6bdb515cdca5693adf2f91cc8ba7f476c3890b29887efb",
+          "exactSourceMatch": true
+        }
+      ]
+    },
+    {
+      "name": "@msgpack/msgpack",
+      "version": "2.8.0",
+      "spdx": "ISC",
+      "bundled": false,
+      "upstream": "https://github.com/msgpack/msgpack-javascript",
+      "licenseSource": {
+        "archiveUrl": "https://registry.npmjs.org/@msgpack/msgpack/-/msgpack-2.8.0.tgz",
+        "member": "package/LICENSE",
+        "sha256": "d95a411bcdadac85d678a99367ff51719e53539fa5ee9994943cd760c4ae64e4"
+      },
+      "registryArchive": {
+        "sha256": "58502da6fabb0ae780dd5521bf770ee23274ed2ee87d8807f033410bfbf77608",
+        "integrity": "sha512-h9u4u/jiIRKbq25PM+zymTyW6bhTzELvOoUd+AvYriWOAKpLGnIamaET3pnHYoI5iYphAHBI4ayx0MehR+VVPQ==",
+        "matchesOfficialLock": true
+      },
+      "matchedSourceFiles": [],
+      "reason": "Declared dependency for separate optional serializer.msgpack.mjs. The distributed peerjs.min.js source map contains no @msgpack/msgpack source; game uses serialization raw."
+    }
+  ],
+  "unchangedExistingNotices": [
+    "assets/peerjs-LICENSE.txt",
+    "assets/THREE-LICENSE.txt",
+    "assets/fonts/OFL.txt"
+  ],
+  "limitations": [
+    "This is an attribution and provenance audit of the identified software assets, not a legal warranty for the complete site.",
+    "Build tools and development-only dependencies not present in the distributed runtime bundle were not inventoried."
+  ]
+}

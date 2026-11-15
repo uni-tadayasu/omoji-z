@@ -1,0 +1,47 @@
+name: Download full and changed-files ZIPs
+
+on:
+  workflow_dispatch:
+    inputs:
+      base_ref:
+        description: 'Commit SHA, tag, or branch of the version currently installed'
+        required: true
+        default: 'd56dadaef293b97f88d9f017d8e65701be98e721'
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  package:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out source and history
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Create full and changed-files ZIPs
+        env:
+          BASE_REF: ${{ inputs.base_ref }}
+          RELEASE_DIR: ${{ runner.temp }}/omoji-release
+        run: python3 tools/package-release.py --base-ref "$BASE_REF" --out "$RELEASE_DIR"
+      - name: Prepare separate full and changed-files downloads
+        run: |
+          python3 -m zipfile -e "$RUNNER_TEMP/omoji-release/omoji-z-full.zip" "$RUNNER_TEMP/omoji-full"
+          python3 -m zipfile -e "$RUNNER_TEMP/omoji-release/omoji-z-update.zip" "$RUNNER_TEMP/omoji-update"
+      - name: Download complete game
+        uses: actions/upload-artifact@v4
+        with:
+          name: omoji-z-full
+          path: ${{ runner.temp }}/omoji-full
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 14
+      - name: Download changed files only
+        uses: actions/upload-artifact@v4
+        with:
+          name: omoji-z-update
+          path: ${{ runner.temp }}/omoji-update
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 14

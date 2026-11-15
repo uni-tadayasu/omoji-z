@@ -354,7 +354,7 @@ html { scroll-padding-top: var(--pit-offset); }
 .theme-pit #shop .crown-shop-heading {
   border-color: #46626c;
   border-radius: 10px;
-  background: linear-gradient(90deg,#101d2af2,#14253276),url("./crown-omoji.webp") center 54%/cover;
+  background: linear-gradient(90deg,#101d2af2,#14253276),url("./art/operator-c.svg") center 54%/cover;
 }
 .theme-pit #shop .crown-shop-heading p { color: #c7d8e4; }
 .theme-pit #operator-garage .operator-choices button,

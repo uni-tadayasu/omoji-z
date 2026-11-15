@@ -1,0 +1,10 @@
+{
+  "asset": "hero-photo.webp",
+  "purpose": "New concept art for this game cover; not a runtime game screenshot.",
+  "creationMethod": "Generated from an original text brief with OpenAI image generation; no source or reference images supplied.",
+  "brief": "An unbranded original fastback with diagonal segmented lights on an entirely fictional mountain road after rain. No logo, real car model, real track, or real landmark requested.",
+  "encoding": "Same generated composition encoded to WebP for browser delivery.",
+  "sizeBytes": 334104,
+  "sha256": "c746e9e094a65335267df1da1d7d8afb940eebcc42278bb3dd88482ff1af13c9",
+  "rightsNote": "No claim of exclusive copyright or legal guarantee of non-similarity."
+}

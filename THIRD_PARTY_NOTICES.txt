@@ -1,0 +1,35 @@
+OMOJI Z — Third-party software and fonts
+
+These notices apply to the named third-party components, not to the rest of
+the game or its name, original artwork and music. Retain the full licenses.
+
+Three.js revision 180, bundled into assets/game.js
+  Copyright 2010-2025 Three.js Authors. MIT License.
+  Full text: assets/THREE-LICENSE.txt
+  The @license header remains in the bundle.
+  https://github.com/mrdoob/three.js
+
+PeerJS 1.5.5, assets/peerjs-1.5.5.min.js
+  Copyright (c) 2015 Michelle Bu and Eric Zhang. MIT License.
+  Full text: assets/peerjs-LICENSE.txt
+  Bundled dependencies: assets/licenses/peerjs-dependencies.txt
+  Upstream verification: assets/licenses/inventory.json
+  https://github.com/peers/peerjs
+
+Barlow Condensed, assets/fonts/barlow-condensed-latin-*.woff2
+  Copyright 2017 The Barlow Project Authors.
+  SIL Open Font License 1.1. Full statements: assets/fonts/OFL.txt
+  Font files and reserved names are not modified in this revision.
+  https://github.com/jpt/barlow
+
+Independent assets introduced in this revision
+  Vehicle design: assets/vehicle-design.js and assets/vehicles.js
+  Procedural art: assets/art/ and tools/generate-art.py
+  Concept cover: assets/art/hero-photo.webp and hero-provenance.json
+  Icons: assets/ui-icons.svg and tools/generate-icons.py
+  Original synthesized score: assets/audio/ and tools/compose-audio.py
+  Provenance and review limits: RIGHTS.txt
+
+GitHub Actions fetch their own implementation when workflows run; they are
+not bundled with the game. Python/Node/ffmpeg and optional art tools are
+development tools, not browser runtime dependencies.
