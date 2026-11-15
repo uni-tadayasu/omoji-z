@@ -25,13 +25,23 @@ jobs:
           BASE_REF: ${{ inputs.base_ref }}
           RELEASE_DIR: ${{ runner.temp }}/omoji-release
         run: python3 tools/package-release.py --base-ref "$BASE_REF" --out "$RELEASE_DIR"
-      - name: Downloadable release files
+      - name: Prepare separate full and changed-files downloads
+        run: |
+          python3 -m zipfile -e "$RUNNER_TEMP/omoji-release/omoji-z-full.zip" "$RUNNER_TEMP/omoji-full"
+          python3 -m zipfile -e "$RUNNER_TEMP/omoji-release/omoji-z-update.zip" "$RUNNER_TEMP/omoji-update"
+      - name: Download complete game
         uses: actions/upload-artifact@v4
         with:
-          name: omoji-z-release-${{ github.run_number }}
-          path: |
-            ${{ runner.temp }}/omoji-release/omoji-z-full.zip
-            ${{ runner.temp }}/omoji-release/omoji-z-update.zip
-            ${{ runner.temp }}/omoji-release/release-summary.json
+          name: omoji-z-full
+          path: ${{ runner.temp }}/omoji-full
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 14
+      - name: Download changed files only
+        uses: actions/upload-artifact@v4
+        with:
+          name: omoji-z-update
+          path: ${{ runner.temp }}/omoji-update
+          include-hidden-files: true
           if-no-files-found: error
           retention-days: 14

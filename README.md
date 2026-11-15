@@ -44,9 +44,9 @@ Web画面だけで更新する場合は、変更ファイルを同じパスへ�
 
 ## 次回から差分だけをダウンロードする
 
-今回のドラフトPRでは **Checks → Verify game and download ZIPs** の実行完了後、実行ページのArtifactsにある `omoji-z-full-and-update` から完全版と差分版を取得できます。mainへのマージや公開は不要です。
+今回のドラフトPRでは **Checks → Verify game and download ZIPs** の実行完了後、実行ページのArtifactsから、完全版は `omoji-z-full`、変更ファイルだけなら `omoji-z-update` をそれぞれ個別に取得できます。ダウンロードしたZIPを開くと直接ファイルが入っています。mainへのマージや公開は不要です。
 
-**Actions → Download full and changed-files ZIPs → Run workflow** で、更新前のコミットSHAまたはタグを `base_ref` に指定します。実行のArtifactsから完全版・差分ZIPをダウンロードできます。ワークフローはリポジトリへ書き込みません。
+**Actions → Download full and changed-files ZIPs → Run workflow** で、更新前のコミットSHAまたはタグを `base_ref` に指定します。実行のArtifactsから `omoji-z-full` または `omoji-z-update` を個別にダウンロードできます。ワークフローはリポジトリへ書き込みません。
 
 ローカルでも生成できます。
 

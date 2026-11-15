@@ -25,5 +25,5 @@ Python 3、NumPy、ffmpeg（libmp3lame対応）を用意し、リポジトリの
   python tools/compose-audio.py --track 0 --track 80
 ゲームを公開・プレイするためにこれらの制作ツールを導入する必要はありません。
 
-スコアの長さやタイトルを変えた場合は、assets/game.js 内のZrとQnも
-original-score.json の値へ合わせ、音源のキャッシュ版Kxを更新してください。
+スコアの長さやタイトルを変えた場合は、assets/soundtrack.js の一覧も
+original-score.json の値へ合わせ、assets/game.js の音源キャッシュ版Kxを更新してください。
