@@ -15,7 +15,7 @@ const read = name => fs.readFileSync(new URL(name, root), 'utf8');
 const errors = [], calls = [];
 const virtualConsole = new VirtualConsole();
 virtualConsole.on('jsdomError', error => errors.push(error));
-const dom = new JSDOM(read('index.html'), {
+const dom = new JSDOM(read('reborn.html'), {
   url: 'https://omoji-z.example/', runScripts: 'outside-only', pretendToBeVisual: true, virtualConsole
 });
 const { window } = dom, { document } = window;

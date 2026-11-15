@@ -1,0 +1,254 @@
+/* Classic Remaster: the original game's complete interface, rebuilt as a driving hub. */
+body.classic-remastered {
+  --bg:#0c1014;
+  --panel:#151b22;
+  --panel-raised:#1b242e;
+  --paper:#f5f3ef;
+  --sub:#a2adb9;
+  --line:#b5cad329;
+  --accent:#ff8659;
+  --yellow:var(--accent);
+  --radius:12px;
+  --page-gutter:clamp(18px,3vw,46px);
+  background:radial-gradient(ellipse at 65% 0,#25384655,transparent 48%),#0c1014;
+  color:var(--paper);
+}
+.classic-remastered::selection{background:#ff8659;color:#161a20}
+.classic-remastered .wrap{width:min(1420px,calc(100% - 2 * var(--page-gutter)))}
+.classic-remastered .content{padding-top:28px}
+.classic-remastered :is(button,input,select,textarea,summary,a):focus-visible{outline-color:#ffd3b0;outline-width:2px;outline-offset:4px}
+.classic-remastered :is(input,select,textarea){background:#0c141c;border:1px solid #738b9d50;border-radius:7px;box-shadow:inset 0 1px 2px #0003}
+.classic-remastered :is(input,select,textarea):focus{border-color:#ffbc94}
+.classic-remastered .primary{background:linear-gradient(115deg,#ff9568,#f4794a);border-color:#ffb68f;color:#201710;box-shadow:0 6px 20px #ef704420}
+.classic-remastered .primary:not(:disabled):hover{background:#ffad80;border-color:#ffd4b6;color:#201710}
+.classic-remastered :is(.quiet,.ghost){background:#a9c5d408;border-color:#9db9cc42;border-radius:7px;color:#dce7eb}
+.classic-remastered :is(.quiet,.ghost):hover{background:#bdd5df13;border-color:#bad0dc7a}
+.classic-remastered .site-header{background:#10171eee;border-color:#8eabbd22;box-shadow:0 10px 45px #0002;backdrop-filter:blur(22px)}
+.classic-remastered .header-inner{width:calc(100% - 2 * var(--page-gutter));max-width:none;min-height:76px}
+.classic-remastered .brand{font-size:24px;gap:12px;letter-spacing:-.055em}
+.classic-remastered .brand img{width:37px;height:37px;filter:none;opacity:1}
+.classic-remastered .brand small{font-size:9px;letter-spacing:.24em;color:#99b3c3;margin-top:7px}
+.classic-remastered .wallet-badge{border-color:#9cbacb36;padding:8px 14px;gap:12px;background:#b9d4df07;border-radius:8px}
+.classic-remastered .wallet-badge strong{font-size:24px;color:#ffbe96;letter-spacing:.03em}
+.classic-remastered .wallet-badge span{font-size:10px;color:#b4c4cc}
+.classic-remastered .announcements{background:#0c131a;border-color:#9ab4c51a}
+.classic-remastered .announcement-inner{min-height:35px}
+.classic-remastered .announcement-inner>strong{color:#ffb58d;font:700 10px var(--en);letter-spacing:.07em}
+.classic-remastered .announcement-window p{font-size:11px;color:#98aebd}
+.classic-remastered .simple-nav a{color:#aabcc9;transition:background .18s,color .18s,border-color .18s}
+.classic-remastered .simple-nav a[aria-current]{color:#ffe9d9;background:#ff865911;border-bottom-color:#ff9366}
+.classic-remastered .simple-nav a:hover{color:#fff;background:#b4ccd310}
+.classic-remastered .remaster-nav-caption{display:none}
+.classic-remastered .session-hero{grid-template-columns:minmax(0,1.6fr) minmax(290px,1fr);min-height:420px;border:1px solid #a8c0d139;border-radius:15px;background:#111b24;box-shadow:0 24px 60px #0004;isolation:isolate}
+.classic-remastered .session-visual{min-height:420px;background:#1b2b38}
+.classic-remastered .apex-hero-art img{filter:saturate(.95) brightness(.91);object-position:59% 56%;transform:scale(1.015)}
+.classic-remastered .session-visual::after{background:linear-gradient(90deg,#07111bdc,transparent 90%),linear-gradient(0deg,#0a1421b5,transparent 72%)}
+.classic-remastered .session-heading{padding:clamp(30px,3.4vw,52px);max-width:none}
+.classic-remastered .session-heading .kicker{display:inline-flex;align-items:center;gap:10px;font:500 11px var(--en);letter-spacing:.2em;color:#e1e8ec;margin-bottom:30px}
+.classic-remastered .session-heading .kicker::before{content:'';display:block;width:24px;height:2px;background:#ffad7e}
+.classic-remastered .session-heading h1{font-size:clamp(38px,4.4vw,67px);line-height:1.24;letter-spacing:.025em;margin-bottom:23px;text-shadow:0 2px 24px #0003}
+.classic-remastered .session-heading>p:last-child{color:#c7d4df;font-size:13px;line-height:2;letter-spacing:.04em;max-width:26ch}
+.classic-remastered .session-image-label{padding:6px 10px;background:#0b141e82;border:1px solid #d4e5ed2b;border-radius:4px;color:#b5c7d0;font-size:9px;bottom:20px;right:22px;backdrop-filter:blur(8px)}
+.classic-remastered .session-console{padding:28px 30px;gap:20px;background:radial-gradient(ellipse at top right,#49616f22,transparent 70%),linear-gradient(155deg,#18252f,#101820);border-left:1px solid #a6c4d028}
+.classic-remastered .session-console-heading{border-bottom:1px solid #9fbac324;padding-bottom:16px;gap:9px}
+.classic-remastered .session-console-heading .kicker{font-size:11px;color:#cad6dc;letter-spacing:.17em}
+.classic-remastered .status-dot{background:#9bd6b8;box-shadow:0 0 10px #9bd6b844}
+.classic-remastered .session-status{color:#9bd6b8;font-size:9px}
+.classic-remastered .selection-summary{gap:8px}
+.classic-remastered .selection-summary>span{font-size:9px;letter-spacing:.15em;color:#8eabbc;text-transform:uppercase}
+.classic-remastered .selection-summary>strong{font-size:clamp(20px,2vw,28px);font-weight:700;line-height:1.35;letter-spacing:.03em}
+.classic-remastered .selection-summary>p{font-size:11px;line-height:1.65;color:#afc3d2}
+.classic-remastered .remaster-selected-brief{display:grid;grid-template-columns:116px minmax(0,1fr);gap:15px;align-items:center;margin-top:-5px}
+.classic-remastered .remaster-course-preview{position:relative;margin:0;overflow:hidden;border:1px solid #9ab7c72c;border-radius:6px;aspect-ratio:16/10;background:linear-gradient(130deg,#1c3040,#0e1b28);isolation:isolate}
+.classic-remastered .remaster-course-preview img{width:100%;height:100%;object-fit:cover;opacity:.83}
+.classic-remastered .remaster-course-preview.has-route{background:radial-gradient(ellipse at 40% 30%,#2d4451,#12202b)}
+.classic-remastered .remaster-course-preview.has-route img{opacity:.12;filter:saturate(.3)}
+.classic-remastered .remaster-route-outline{position:absolute;inset:2px 3px 12px;width:calc(100% - 6px);height:calc(100% - 14px);overflow:visible}
+.classic-remastered .remaster-route-outline path{fill:none;stroke:#f4d4bd;stroke-width:2.7;stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke}
+.classic-remastered .remaster-route-outline .remaster-route-edge{stroke:#030c18;stroke-width:5.5;opacity:.9}
+.classic-remastered .remaster-route-start{fill:#a2e8bf;stroke:#102a26;stroke-width:1.5}
+.classic-remastered .remaster-route-distance{position:absolute;bottom:5px;right:6px;z-index:2;color:#ffccaa;font:500 8px var(--en);letter-spacing:.02em}
+.classic-remastered .remaster-course-preview figcaption{position:absolute;inset:auto 0 0;padding:13px 6px 5px;background:linear-gradient(transparent,#06121adb);font:500 7px var(--en);letter-spacing:.06em;color:#cedee5}
+.classic-remastered .remaster-session-meta{display:grid;gap:6px;margin:0}
+.classic-remastered .remaster-session-meta>div{display:flex;justify-content:space-between;gap:8px;align-items:baseline}
+.classic-remastered .remaster-session-meta dt{font:500 9px var(--en);letter-spacing:.12em;color:#7892a5}
+.classic-remastered .remaster-session-meta dd{font-size:10px;color:#d5e2e9;text-align:right;line-height:1.4;overflow-wrap:anywhere}
+.classic-remastered .launch{min-height:60px;padding:16px 19px;gap:12px;font-size:15px;letter-spacing:.06em;border-radius:7px;box-shadow:0 10px 30px #f67e4d20}
+.classic-remastered .launch .button-arrow{font-size:26px;font-weight:400}
+.classic-remastered .session-console-links{gap:10px;justify-content:space-between;margin-top:-5px}
+.classic-remastered .session-console-links a{font-size:10px;min-height:30px;display:inline-flex;align-items:center;gap:5px;color:#bfd0da}
+.classic-remastered .session-console-links a:hover{color:#ffc09a}
+.classic-remastered .session-device-note{color:#7e99a9;font:500 10px var(--en);letter-spacing:.035em;margin-top:-9px}
+.classic-remastered .quick-start{background:linear-gradient(115deg,#18242c,#111a22);border-color:#9ab5c628;border-radius:12px;padding:25px;margin-top:20px;gap:20px}
+.classic-remastered .quick-start-heading .kicker{font-size:10px;color:#ffae82;letter-spacing:.17em}
+.classic-remastered .quick-start-heading h3{font-size:20px;line-height:1.45;margin-block:9px}
+.classic-remastered .quick-start-heading>p:last-child{color:#91a8b9;font-size:11px}
+.classic-remastered .driving-presets{gap:10px}
+.classic-remastered .driving-presets button{background:#0d1720;border:1px solid #7699b03b;border-radius:8px;min-height:98px;padding:17px 15px;transition:background .18s,border-color .18s}
+.classic-remastered .driving-presets button[aria-pressed=true]{background:linear-gradient(145deg,#332b28,#1d252a);border-color:#ffa978a3;box-shadow:inset 0 0 0 1px #ffc09c12}
+.classic-remastered .driving-presets button[aria-pressed=true] .preset-index{color:#ffbc94}
+.classic-remastered .driving-presets strong{font-size:14px;color:#eff3f3}
+.classic-remastered .driving-presets small{font-size:10px;color:#8ea7bb}
+.classic-remastered .preset-index{font:500 17px var(--en);letter-spacing:.1em;color:#627f94}
+.classic-remastered .quick-start-footer{border-top-color:#9ab5c622;padding-top:15px}
+.classic-remastered .quick-start-footer p{font-size:10px;color:#92a9bb}
+.classic-remastered :is(.driver-brief,.simple-panel,.simple-race-details){border-color:#9db7c82c;border-radius:10px;background:#121c24;box-shadow:0 5px 20px #0001}
+.classic-remastered :is(.driver-brief,.simple-panel,.simple-race-details)>summary{padding:17px 20px;color:#dce6eb}
+.classic-remastered :is(.driver-brief,.simple-panel,.simple-race-details)[open]>summary{border-bottom:1px solid #9db7c822;background:#adc5ce05}
+.classic-remastered :is(.driver-brief,.simple-panel,.simple-race-details)>summary::after{color:#ffb990}
+.classic-remastered .simple-race-details{margin-top:16px}
+.classic-remastered .setup-grid{padding:24px;gap:26px}
+.classic-remastered .selection-heading{font-size:16px;color:#e2edf2;margin-bottom:20px}
+.classic-remastered .catalog-tools{background:#0c151d;border:1px solid #81a7bf24;border-radius:8px;padding:15px;gap:12px}
+.classic-remastered .catalog-label{font-size:10px;color:#a3bbcb;letter-spacing:.03em}
+.classic-remastered .catalog-status{padding-block:14px}
+.classic-remastered .track-list{gap:10px;padding-right:6px;scrollbar-color:#506879 #0c151d;scrollbar-width:thin}
+.classic-remastered .track-card{min-height:120px;border-color:#93aebd39;border-radius:8px;padding:18px 15px;background:linear-gradient(90deg,#0b1822ed,#0d1b24a6),var(--track-image) center/cover;box-shadow:inset 0 0 0 1px #d1e5ec04}
+.classic-remastered .track-card:hover{border-color:#a7c5d581;background:linear-gradient(90deg,#162d3be6,#1828347d),var(--track-image) center/cover}
+.classic-remastered .track-card[aria-pressed=true]{border-color:#ffb288aa;background:linear-gradient(90deg,#2a2523eb,#2b2b2c88),var(--track-image) center/cover;box-shadow:inset 0 0 0 1px #ffb28820}
+.classic-remastered .track-card[aria-pressed=true]::before{border-left-color:#ffb288}
+.classic-remastered .track-badge{color:#a3c0d3;font-size:9px}
+.classic-remastered .track-name{font-size:13px;font-weight:700;line-height:1.5}
+.classic-remastered .track-detail{font:500 11px/1.6 var(--en);letter-spacing:.04em;color:#b2c5d3;margin-top:6px}
+.classic-remastered .mode-card{background:#0b1720;border-color:#93aebd35;border-radius:7px;min-height:84px}
+.classic-remastered .mode-card[aria-pressed=true]{background:#362c28;border-color:#ffb184;color:#ffe4d3}
+.classic-remastered .mode-icon{color:#ffba91}
+.classic-remastered .mode-options{background:#0c151d;padding:16px;border:1px solid #81a7bf24;border-radius:8px}
+.classic-remastered .session-next-heading{margin-top:32px;margin-bottom:18px;display:flex;align-items:center;justify-content:space-between;gap:15px}
+.classic-remastered .session-next-heading h3{font-size:21px;letter-spacing:.03em}
+.classic-remastered .session-next-heading .kicker{font-size:10px;color:#8ca7b8}
+.classic-remastered .reel-shortcuts{gap:12px}
+.classic-remastered .reel-tile{border-radius:10px;border-color:#86a7bb33;background:radial-gradient(ellipse at 0 100%,#64859a16,transparent 75%),#141f28;padding:22px 18px;min-height:118px;box-shadow:0 8px 30px #0002}
+.classic-remastered .reel-tile:hover{border-color:#b3cbd766;background:#1c2b36}
+.classic-remastered .route-icon{color:#ffc09a;background:#ffb08a0a;border:1px solid #ffb08a23;border-radius:8px;padding:8px;inline-size:42px;block-size:42px;font-size:23px}
+.classic-remastered .reel-tile{grid-template-columns:42px minmax(0,1fr) 18px;gap:14px}
+.classic-remastered .reel-tile-text strong{font-size:14px}
+.classic-remastered .reel-tile-text small{font-size:10px;color:#91adbf;margin-top:7px;line-height:1.7}
+.classic-remastered .reel-arrow{color:#7898ac}
+.classic-remastered .apex-hero-counts{background:#101a22;border:1px solid #8caaba27;border-radius:10px;overflow:hidden;margin-top:24px}
+.classic-remastered .apex-hero-counts a{padding:22px;gap:15px;border-color:#8caaba22}
+.classic-remastered .apex-hero-counts strong{font:500 39px/1 var(--en);letter-spacing:.01em;color:#ffbe96}
+.classic-remastered .apex-hero-counts span{font-size:10px;letter-spacing:.05em;color:#9db5c5}
+.classic-remastered .reel-utility{padding-block:22px;gap:25px;color:#8ca7b8;font-size:11px}
+.classic-remastered .game-about{border-top-color:#8caaba22;color:#8ca2b2}
+.classic-remastered .game-about h2{font-size:20px;color:#c3d3dd}
+.classic-remastered .game-about>p{font-size:11px;line-height:1.9}
+.classic-remastered .section-heading{border-bottom:1px solid #8eaaba28;padding-bottom:24px;margin-bottom:24px;align-items:center}
+.classic-remastered .section-heading h2{font-size:clamp(29px,3vw,41px);letter-spacing:.035em}
+.classic-remastered .theme-intro{font-size:12px;color:#8fa9ba;line-height:1.8;margin-top:12px}
+.classic-remastered :is(.garage-grid,.workshop-grid){overflow:hidden;border-radius:13px;border-color:#93b0c239;box-shadow:0 20px 60px #0003}
+.classic-remastered .car-stage{background:radial-gradient(ellipse at 55% 40%,#304958,#0b1720 75%);min-height:385px;aspect-ratio:1.55}
+.classic-remastered .car-info{padding:32px;background:linear-gradient(140deg,#182732,#101b24);gap:16px;border-color:#93b0c22b}
+.classic-remastered .car-info h3{font-size:32px;letter-spacing:.03em}
+.classic-remastered .car-info .kicker{color:#ffb28c;font-size:10px;letter-spacing:.14em}
+.classic-remastered .car-meta{font:500 12px/1.6 var(--en);letter-spacing:.07em;color:#91aebf}
+.classic-remastered .car-desc{color:#b4c7d4;font-size:11px;line-height:1.8}
+.classic-remastered .car-stats{padding-top:12px;border-top:1px solid #96b2c229;gap:12px}
+.classic-remastered .car-stats meter::-webkit-meter-optimum-value{background:linear-gradient(90deg,#7693a4,#ffb28c)}
+.classic-remastered .car-list{gap:9px;scrollbar-color:#506879 #0c151d;scrollbar-width:thin}
+.classic-remastered .car-choice{background:#101c26;border-color:#87a9bd30;border-radius:7px;min-height:65px;padding:15px 12px;font-size:11px;gap:13px}
+.classic-remastered .car-choice>i{height:17px;width:33px;flex-basis:33px;box-shadow:0 5px 0 -2px #02060a,inset 0 3px #d9efff24,inset 0 -5px #0008}
+.classic-remastered .car-choice[aria-pressed=true]{background:linear-gradient(110deg,#3e2c25,#1a252e);border-color:#ffb28c9c;color:#ffe7d4}
+.classic-remastered :is(.shop-panel,.official-entry,.official-license,.official-awards,.customization-panel,.maintenance-panel){border-radius:11px;border-color:#89a8bc30;background:linear-gradient(145deg,#17232d,#101a23)}
+.classic-remastered .shop-car{background:#0f1b25;border-color:#89a8bc35;border-radius:10px;padding:20px;gap:15px}
+.classic-remastered .shop-car-title h4{font-size:18px;line-height:1.4}
+.classic-remastered .shop-car-price{color:#ffc19a;font:500 28px var(--en)}
+.classic-remastered .shop-car-preview{border:1px solid #89a8bc25;border-radius:8px;overflow:hidden;background:#14232e}
+.classic-remastered .shop-car-details{border-top-color:#89a8bc25}
+.classic-remastered .shop-car-actions .primary{min-height:46px}
+.classic-remastered .workshop-preview{background:radial-gradient(ellipse at 45% 40%,#304958,#0b1720 75%)}
+.classic-remastered .workshop-console{background:#14212b;border-color:#93b0c22b;padding:28px}
+.classic-remastered .workshop-swatches button{border-radius:7px;box-shadow:inset 0 1px 2px #ffffff24}
+.classic-remastered .workshop-swatches button[aria-pressed=true]{outline-color:#ffbe96}
+.classic-remastered .official-entry-card{background:#0b161e;border-color:#8baaba2d;border-radius:8px;padding:21px}
+.classic-remastered .official-grade-line strong{color:#ffd2b3;font:500 40px var(--en)}
+.classic-remastered .official-awards dd{color:#ffd2b3}
+.classic-remastered .gp-card{border-color:#89a8bc30;background:#14212b;border-radius:10px;box-shadow:0 10px 30px #0002}
+.classic-remastered .gp-card-image{opacity:.86;filter:saturate(.85);aspect-ratio:1.85}
+.classic-remastered .gp-card-content{padding:20px;gap:10px}
+.classic-remastered .gp-card-kicker{color:#ffb48a;letter-spacing:.09em;font-size:10px}
+.classic-remastered .gp-card-content strong{font-size:18px}
+.classic-remastered :is(.save-sync,.online-panel,.records-panel){background:#101c26;border-color:#8caaba30;border-radius:11px}
+.classic-remastered .menu-theme{background:linear-gradient(115deg,#243344,#141d28);border-color:#89a8bc30;border-radius:10px}
+.classic-remastered .song-card{background:#111c26;border-color:#89a8bc30;border-radius:8px}
+.classic-remastered footer{border-color:#8baaba23;background:#0a1015}
+.classic-remastered .footer-layout{padding-block:30px;font-size:11px;color:#6f8a9d}
+.classic-remastered .site-copyright strong{font:500 12px var(--en);letter-spacing:.08em;color:#9ab2c2}
+.classic-remastered .site-copyright small{font-size:9px;line-height:1.7}
+.classic-remastered .modal[data-overlay]{background:linear-gradient(140deg,#192a36,#101b24);border:1px solid #9ab9cd66;border-radius:14px;box-shadow:0 40px 130px #000b;padding:30px}
+.classic-remastered .modal-head{border-color:#a3bbca22;padding-bottom:20px}
+.classic-remastered .modal-head h2{font-size:28px}
+.classic-remastered .settings-group{background:#08131c66;border-color:#96b2c233;border-radius:9px;padding:20px}
+.classic-remastered .settings-group legend{color:#ffd1b1;letter-spacing:.04em;font-size:11px}
+.classic-remastered .settings-actions{border-color:#96b2c229;padding-top:20px}
+.classic-remastered .cross{border:1px solid #a1bfce55;border-radius:50%;background:#adc5ce08}
+/* HUD panels deliberately keep the road and all original controls unobstructed. */
+.classic-remastered .race-timing{background:linear-gradient(130deg,#0d1c2be8,#122635bc);backdrop-filter:blur(13px);border:1px solid #c1dce63d;border-left:3px solid #ffb18c;border-radius:10px;box-shadow:0 8px 32px #0003;padding:16px 18px;gap:6px;width:min(100%,285px)}
+.classic-remastered #race-time{font:500 clamp(31px,3.8vw,48px)/1 var(--en);letter-spacing:.02em}
+.classic-remastered .race-track-label{color:#d6e5ed;font-size:10px}
+.classic-remastered .race-car-label{color:#8eacbf;font-size:9px}
+.classic-remastered .race-side strong{color:#ffbf97;font-size:24px}
+.classic-remastered .race-side small{color:#b7cbd8;font-size:10px}
+.classic-remastered .race-map{background:#102434ad;backdrop-filter:blur(10px);border:1px solid #bdd6e23a;border-radius:10px;box-shadow:0 8px 30px #0002;padding:10px}
+.classic-remastered .progress{height:3px;background:#bfd7e322}
+.classic-remastered .progress i{background:#ffb28d}
+.classic-remastered .race-buttons button{background:#122533c9;border-color:#bdd6e257;border-radius:9px;backdrop-filter:blur(12px);box-shadow:0 4px 15px #0002;min-width:44px;min-height:44px}
+.classic-remastered .race-buttons button:hover{background:#294558e6;border-color:#d7e7ef99}
+.classic-remastered .race-buttons button[aria-pressed=true]{background:#704634c9;border-color:#ffb48c}
+.classic-remastered .instrument{background:linear-gradient(135deg,#0d1d2bdf,#122b3acb);border:1px solid #c5dfea5e;border-radius:12px;padding:16px 18px;width:225px;box-shadow:0 12px 35px #0004;backdrop-filter:blur(15px)}
+.classic-remastered .race-speed-row>strong{font-size:77px;letter-spacing:-.01em;font-weight:700}
+.classic-remastered .race-speed-row>b{font-size:35px;color:#ffd1b3;background:#ffc29d0a;border-color:#ffd1b344;border-radius:6px;min-width:42px;padding:5px}
+.classic-remastered .rpm{height:5px;background:#afd0e126}
+.classic-remastered .rpm i{background:linear-gradient(90deg,#abd5dc,#ffd2ad)}
+.classic-remastered .rpm i.near-redline{background:#ff7954}
+.classic-remastered .transmission-hud{color:#9dbccc;font-size:10px;letter-spacing:.08em}
+.classic-remastered .nitro-meter{height:4px;background:#b5d3e123}
+.classic-remastered .nitro-meter i{background:#8cdbeb}
+.classic-remastered .nitro-hud{color:#a8dce5}
+.classic-remastered .countdown{text-shadow:0 5px 40px #0008;color:#ffd0b0;font-family:var(--en)}
+.classic-remastered .race-overlay{background:#0710188c;backdrop-filter:blur(10px)}
+.classic-remastered .race-panel,.classic-remastered .race-loading-card{background:linear-gradient(145deg,#1b3040f5,#0c1a26f5);border:1px solid #bed9e569;border-radius:15px;box-shadow:0 30px 100px #0008;padding:30px}
+.classic-remastered .race-panel h2,.classic-remastered .race-loading-card h2{font-size:30px;color:#f3f6f6;letter-spacing:.03em}
+.classic-remastered .race-panel .kicker{color:#ffb58c;font-size:12px;letter-spacing:.2em}
+.classic-remastered .result-details{background:#0917227d;border:1px solid #99bfd132;border-radius:8px;padding:10px 14px}
+.classic-remastered .result-details dd{color:#ffd1b3}
+.classic-remastered .race-loading{background:#071019dc}
+.classic-remastered .race-load-bar{height:5px;accent-color:#ffb38e}
+.classic-remastered .race-orientation-hint{background:#102838e8;border-color:#9ec3da66;border-radius:8px;color:#c7e0ed}
+.classic-remastered .touch-controls button{background:linear-gradient(145deg,#244154c9,#102638d9);border-color:#bddbe56a;border-radius:12px;box-shadow:inset 0 1px 0 #e1f0f112,0 5px 25px #0003;backdrop-filter:blur(9px)}
+.classic-remastered .touch-controls button[data-action="accelerate"]{background:linear-gradient(135deg,#734e3bc9,#3f302ad9);border-color:#ffc29aab;color:#ffe1c9}
+.classic-remastered .touch-controls button.active,.classic-remastered .touch-controls button[aria-pressed=true]{background:#ffb08acc;color:#241a14}
+.classic-remastered .driving-slider{background:linear-gradient(130deg,#172c3cdd,#0b1c2adc);border-color:#b9d6e36b;border-radius:12px;box-shadow:inset 0 2px 8px #0004}
+.classic-remastered .driving-slider-thumb{background:#ffc299;box-shadow:0 3px 15px #ffc29938,inset 0 1px 0 #ffe1ce}
+.classic-remastered .driving-slider-line{border-color:#b2d1df50}
+.classic-remastered .driving-slider small{font:500 9px var(--en);letter-spacing:.15em;color:#b8d1df}
+.classic-remastered .driving-coach{background:#102737ed;border-color:#93bbd276;border-radius:10px;box-shadow:0 12px 35px #0005}
+.classic-remastered .driving-coach progress{accent-color:#ffb996}
+@media(min-width:1180px){
+  .classic-remastered #top,.classic-remastered>footer{padding-inline-start:204px}
+  .classic-remastered .site-header>.header-inner{justify-content:space-between;gap:25px}
+  .classic-remastered .header-actions{margin-left:auto}
+  .classic-remastered .simple-nav{position:fixed;inset:139px auto auto 25px;display:flex;flex-direction:column;align-items:stretch;justify-content:start;gap:7px;width:166px;padding:0;overflow:visible;max-height:calc(100svh - 160px);overflow-y:auto;scrollbar-width:none}
+  .classic-remastered .simple-nav::before{content:'DRIVING HUB';font:500 10px var(--en);letter-spacing:.22em;color:#627e92;margin:0 14px 17px}
+  .classic-remastered .simple-nav a{flex:0 0 auto;min-height:51px;justify-content:start;padding:13px 14px;gap:11px;border:1px solid transparent;border-left:2px solid transparent;border-radius:6px;font-size:12px;white-space:nowrap}
+  .classic-remastered .simple-nav a[aria-current]{border-left-color:#ffb893;border-bottom-color:transparent;background:linear-gradient(90deg,#ffaf8023,transparent);color:#ffe4d1}
+  .classic-remastered .simple-nav a>.ui-icon{height:18px;width:18px;color:#7595ab;margin:0}
+  .classic-remastered .simple-nav a[aria-current]>.ui-icon{color:#ffbe96}
+  .classic-remastered .remaster-nav-caption{display:grid;gap:9px;margin:26px 14px 0;padding-top:17px;border-top:1px solid #8eacbc22;color:#516f85}
+  .classic-remastered .remaster-nav-caption>span{font:500 10px var(--en);letter-spacing:.12em;color:#9cb5c6}
+  .classic-remastered .remaster-nav-caption>small{font:500 8px var(--en);letter-spacing:.05em;line-height:1.8;color:#56788f}
+  .classic-remastered .announcement-inner{padding-inline-start:204px}
+}
+@media(min-width:1500px){.classic-remastered .session-hero{min-height:470px}.classic-remastered .session-visual{min-height:470px}.classic-remastered .session-console{padding:38px;gap:25px}.classic-remastered .session-heading{padding:52px}.classic-remastered .session-heading h1{font-size:68px}}
+@media(max-width:1179px){
+  .classic-remastered .header-inner{min-height:70px}.classic-remastered .site-header>.header-inner{display:grid;grid-template-areas:'brand actions' 'nav nav';grid-template-columns:1fr auto;gap:0 16px;padding-top:12px}.classic-remastered .brand{grid-area:brand}.classic-remastered .header-actions{grid-area:actions}.classic-remastered .simple-nav{grid-area:nav;overflow-x:auto;justify-content:flex-start;gap:3px;margin-top:9px;scrollbar-width:none}.classic-remastered .simple-nav a{min-width:86px;flex:0 0 auto;min-height:48px;padding:9px 13px;border-radius:6px 6px 0 0}.classic-remastered .session-hero{grid-template-columns:minmax(0,1.35fr) minmax(285px,1fr)}.classic-remastered .session-console{padding:25px}.classic-remastered .session-visual{min-height:420px}.classic-remastered .session-heading{padding:32px}.classic-remastered .session-heading h1{font-size:clamp(34px,4.2vw,47px)}.classic-remastered .quick-start{grid-template-columns:minmax(0,1fr)}.classic-remastered .quick-start-heading{display:grid;grid-template-columns:auto 1fr;gap:9px 20px}.classic-remastered .quick-start-heading .kicker{grid-column:1/-1;margin:0}.classic-remastered .quick-start-heading h3{margin:0}.classic-remastered .car-stage{min-height:330px}.classic-remastered .reel-tile{padding:19px 15px;gap:11px;min-height:109px}.classic-remastered .reel-tile-text strong{font-size:13px}
+}
+@media(max-width:800px){
+  .classic-remastered .session-hero{grid-template-columns:minmax(0,1fr)}.classic-remastered .session-visual{min-height:315px}.classic-remastered .session-heading{padding:33px}.classic-remastered .session-heading h1{font-size:47px;max-width:none}.classic-remastered .session-heading .kicker{margin-bottom:20px}.classic-remastered .session-heading>p:last-child{font-size:12px}.classic-remastered .session-console{display:grid;grid-template-columns:minmax(0,1fr) minmax(200px,.8fr);gap:19px 25px;padding:25px;border-left:0;border-top:1px solid #9fbac324}.classic-remastered .session-console-heading{grid-column:1/-1;padding-bottom:13px}.classic-remastered .selection-summary{grid-column:1;grid-row:2}.classic-remastered .remaster-selected-brief{grid-column:1;grid-row:3;grid-template-columns:105px minmax(0,1fr);gap:15px}.classic-remastered .launch{grid-column:2;grid-row:2;align-self:stretch;min-height:74px;font-size:15px}.classic-remastered .session-console-links{grid-column:2;grid-row:3;flex-direction:column;justify-content:center;gap:4px;margin:0;align-items:start}.classic-remastered .session-device-note{grid-column:1/-1;margin-top:0}.classic-remastered .setup-grid{padding:20px;grid-template-columns:minmax(0,1fr);gap:22px}.classic-remastered .mode-options{grid-template-columns:repeat(2,minmax(0,1fr))}.classic-remastered .mode-options>label:last-child{grid-column:1/-1}.classic-remastered .mode-panel{border-left:0;padding-left:0}.classic-remastered .mode-list{grid-template-columns:repeat(4,minmax(0,1fr))}.classic-remastered .mode-card{font-size:11px;min-height:75px}.classic-remastered .garage-grid,.classic-remastered .workshop-grid{grid-template-columns:minmax(0,1fr)}.classic-remastered .car-stage{min-height:330px;aspect-ratio:1.65}.classic-remastered .car-info{border-left:0;border-top:1px solid #93b0c229;padding:25px}.classic-remastered .race-timing{padding:12px 14px;width:min(100%,240px);gap:5px}.classic-remastered #race-time{font-size:36px}.classic-remastered .race-map{padding:7px;width:110px}.classic-remastered .race-top{grid-template-columns:minmax(0,1fr) 110px 94px;gap:8px}.classic-remastered .race-buttons{display:grid;grid-template-columns:repeat(2,44px);gap:6px;max-width:94px}.classic-remastered .instrument{width:185px;padding:12px 14px}.classic-remastered .race-speed-row>strong{font-size:62px}.classic-remastered .race-speed-row>b{font-size:30px;min-width:36px}
+}
+@media(max-width:540px){
+  body.classic-remastered{--page-gutter:13px}.classic-remastered .header-inner{width:calc(100% - 26px)}.classic-remastered .brand{font-size:21px;gap:10px}.classic-remastered .brand img{width:31px;height:31px}.classic-remastered .brand small{font-size:8px;margin-top:5px}.classic-remastered .wallet-badge{padding:7px 9px;gap:8px}.classic-remastered .wallet-badge strong{font-size:21px}.classic-remastered .wallet-badge span{font-size:8px}.classic-remastered .simple-nav{margin-top:10px;gap:0}.classic-remastered .simple-nav a{min-height:47px;min-width:74px;padding:7px 10px;font-size:11px;gap:5px}.classic-remastered .simple-nav a>.ui-icon{width:14px;height:14px}.classic-remastered .announcement-inner{min-height:34px;gap:8px}.classic-remastered .announcement-window p{font-size:9px}.classic-remastered .announcement-inner>strong{font-size:8px}.classic-remastered .content{padding-top:17px}.classic-remastered .session-hero{border-radius:11px}.classic-remastered .session-visual{min-height:270px}.classic-remastered .session-heading{padding:28px 24px}.classic-remastered .session-heading h1{font-size:31px;max-width:none;margin-bottom:17px}.classic-remastered .session-heading .kicker{font-size:9px;letter-spacing:.1em;margin-bottom:18px;gap:8px}.classic-remastered .session-heading .kicker::before{width:16px}.classic-remastered .session-heading>p:last-child{font-size:11px;max-width:25ch;line-height:1.9}.classic-remastered .session-image-label{right:13px;bottom:12px;font-size:8px;padding:5px 7px}.classic-remastered .apex-hero-art img{object-position:58% 58%}.classic-remastered .session-console{display:flex;gap:19px;padding:22px}.classic-remastered .session-console-heading{padding-bottom:13px}.classic-remastered .session-console-heading .kicker{font-size:10px}.classic-remastered .selection-summary>strong{font-size:23px}.classic-remastered .selection-summary>p{font-size:11px}.classic-remastered .remaster-selected-brief{grid-template-columns:118px minmax(0,1fr);gap:20px;margin-top:-3px}.classic-remastered .remaster-session-meta{gap:8px}.classic-remastered .remaster-session-meta dt{font-size:9px}.classic-remastered .remaster-session-meta dd{font-size:11px}.classic-remastered .launch{min-height:59px;padding:16px 19px;width:100%;align-self:stretch;font-size:15px}.classic-remastered .session-console-links{display:flex;flex-direction:row;justify-content:space-between;gap:9px;margin-top:-6px;align-items:center}.classic-remastered .session-console-links a{font-size:10px}.classic-remastered .session-device-note{font-size:9px;margin-top:-7px}.classic-remastered .quick-start{padding:20px 16px;border-radius:10px;margin-top:16px;gap:16px}.classic-remastered .quick-start-heading{display:block}.classic-remastered .quick-start-heading .kicker{font-size:9px;margin-bottom:10px}.classic-remastered .quick-start-heading h3{font-size:19px;line-height:1.4;margin-bottom:8px}.classic-remastered .quick-start-heading>p:last-child{font-size:10px}.classic-remastered .driving-presets{gap:7px}.classic-remastered .driving-presets button{padding:13px 10px;gap:8px;min-height:106px}.classic-remastered .driving-presets strong{font-size:11px}.classic-remastered .driving-presets small{font-size:9px;line-height:1.6}.classic-remastered .preset-index{font-size:13px}.classic-remastered .quick-start-footer{display:block;padding-top:14px}.classic-remastered .quick-start-footer button{margin-top:13px;font-size:11px;min-height:44px}.classic-remastered :is(.driver-brief,.simple-panel,.simple-race-details)>summary{padding:16px;font-size:12px}.classic-remastered .setup-grid{padding:16px;gap:21px}.classic-remastered .catalog-tools{padding:12px;gap:10px;grid-template-columns:repeat(2,minmax(0,1fr))}.classic-remastered .catalog-tools label:first-child{grid-column:1/-1}.classic-remastered .track-list{gap:8px;padding-right:3px}.classic-remastered .track-card{display:block;padding:13px 11px;min-height:125px}.classic-remastered .track-badge{display:flex;justify-content:start;gap:5px;margin-bottom:9px;font-size:8px;max-width:none}.classic-remastered .track-badge .ui-icon{height:16px;width:16px}.classic-remastered .track-name{font-size:11px;line-height:1.5}.classic-remastered .track-detail{font-size:9px;margin-top:6px}.classic-remastered .mode-list{grid-template-columns:repeat(2,minmax(0,1fr))}.classic-remastered .mode-card{min-height:64px;grid-template-columns:24px minmax(0,1fr);font-size:11px}.classic-remastered .mode-options{grid-template-columns:minmax(0,1fr);padding:14px}.classic-remastered .mode-options>label:last-child{grid-column:auto}.classic-remastered .session-next-heading{display:block;margin-top:27px;margin-bottom:16px}.classic-remastered .session-next-heading .kicker{font-size:9px;margin-bottom:9px}.classic-remastered .session-next-heading h3{font-size:20px}.classic-remastered .reel-shortcuts{gap:9px}.classic-remastered .reel-tile{padding:17px 13px;grid-template-columns:30px minmax(0,1fr);gap:11px;min-height:107px}.classic-remastered .route-icon{font-size:20px;padding:5px;width:30px;height:30px;border-radius:6px}.classic-remastered .reel-arrow{display:none}.classic-remastered .reel-tile-text strong{font-size:12px}.classic-remastered .reel-tile-text small{font-size:9px;margin-top:6px;line-height:1.7}.classic-remastered .apex-hero-counts a{padding:20px 8px;gap:9px;align-items:center;flex-direction:column}.classic-remastered .apex-hero-counts strong{font-size:32px}.classic-remastered .apex-hero-counts span{font-size:8px;letter-spacing:0}.classic-remastered .reel-utility{gap:12px;font-size:10px;padding-block:19px}.classic-remastered .section-heading{padding-bottom:20px;margin-bottom:20px;gap:14px}.classic-remastered .section-heading h2{font-size:29px}.classic-remastered .theme-intro{font-size:11px;line-height:1.8;margin-top:9px}.classic-remastered .car-stage{min-height:265px;aspect-ratio:1.25}.classic-remastered .car-info{padding:22px;gap:14px}.classic-remastered .car-info h3{font-size:27px}.classic-remastered .car-list{gap:7px}.classic-remastered .car-choice{min-height:65px;padding:12px 9px;font-size:10px;gap:9px}.classic-remastered .car-choice>i{width:27px;flex-basis:27px;height:15px}.classic-remastered .shop-panel{padding:16px}.classic-remastered .shop-car{padding:15px;gap:13px}.classic-remastered .shop-car-title h4{font-size:15px}.classic-remastered .shop-car-price{font-size:25px}.classic-remastered .official-entry,.classic-remastered .official-license,.classic-remastered .official-awards{padding:19px}.classic-remastered .official-entry-card{padding:16px}.classic-remastered .workshop-console{padding:22px}.classic-remastered .gp-card-content{padding:16px}.classic-remastered .gp-card-content strong{font-size:15px}.classic-remastered .modal[data-overlay]{padding:23px 19px;border-radius:12px}.classic-remastered .settings-group{padding:17px}.classic-remastered .modal-head h2{font-size:25px}.classic-remastered .race-top{grid-template-columns:minmax(0,1fr) 90px 94px;gap:6px}.classic-remastered .race-timing{padding:9px 11px;gap:4px;border-radius:8px}.classic-remastered #race-time{font-size:31px}.classic-remastered .race-track-label{font-size:9px}.classic-remastered .race-car-label{font-size:8px}.classic-remastered .race-side strong{font-size:20px}.classic-remastered .race-side small{font-size:8px}.classic-remastered .race-map{width:90px;padding:6px;border-radius:8px}.classic-remastered .instrument{width:166px;padding:11px 13px;border-radius:10px}.classic-remastered .race-speed-row>strong{font-size:57px}.classic-remastered .race-speed-row>b{font-size:27px;min-width:32px;padding:4px}.classic-remastered .race-speed-row>span{font-size:11px}.classic-remastered .race-panel,.classic-remastered .race-loading-card{padding:24px 21px;gap:17px;border-radius:12px}.classic-remastered .race-panel h2,.classic-remastered .race-loading-card h2{font-size:25px}.classic-remastered .touch-controls button{border-radius:10px}.classic-remastered .footer-layout{padding-block:24px;font-size:10px}.classic-remastered .site-copyright small{font-size:8px}
+}
+@media(max-width:370px){.classic-remastered .session-heading h1{font-size:28px}.classic-remastered .remaster-selected-brief{grid-template-columns:98px minmax(0,1fr);gap:13px}.classic-remastered .session-console{padding:19px}.classic-remastered .race-top{grid-template-columns:minmax(0,1fr) 79px 94px;gap:5px}.classic-remastered .race-map{width:79px}.classic-remastered .race-timing{padding:8px}.classic-remastered #race-time{font-size:27px}.classic-remastered .race-side strong{font-size:17px}.classic-remastered .driving-presets button{padding:12px 8px}.classic-remastered .driving-presets strong{font-size:10px}}
+@media(max-height:560px) and (orientation:landscape){.classic-remastered .race-timing{padding:8px 11px;gap:3px}.classic-remastered #race-time{font-size:29px}.classic-remastered .race-car-label{font-size:8px}.classic-remastered .race-map{width:96px;padding:6px}.classic-remastered .race-side strong{font-size:18px}.classic-remastered .race-top{grid-template-columns:minmax(0,1fr) 96px minmax(0,1fr);gap:10px}.classic-remastered .race-buttons{display:flex;max-width:194px}.classic-remastered .instrument{width:159px;padding:10px 12px}.classic-remastered .race-speed-row>strong{font-size:51px}.classic-remastered .race-speed-row>b{font-size:25px}.classic-remastered .race-speed-row{margin-top:7px}.classic-remastered .race-panel,.classic-remastered .race-loading-card{padding:20px;gap:12px}.classic-remastered .race-panel h2{font-size:25px}}
+@media(prefers-reduced-motion:reduce){.classic-remastered *,.classic-remastered *::before,.classic-remastered *::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}

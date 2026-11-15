@@ -77,7 +77,7 @@ if(!hero.panoramaReady&&!process.argv.includes('--allow-fallback'))throw Error('
 let encoded;for(const quality of [76,68,60,52,44]){encoded=hero.canvas.toBuffer('image/webp',quality);if(encoded.length<96000)break;}
 fs.writeFileSync(output,encoded);
 const {canvas,coldMs,warmMs,...metadata}=hero;
-fs.writeFileSync(output.replace(/\.[^.]+$/,'.json'),JSON.stringify({...metadata,source:'assets/game.js + assets/vehicles.js',externalReferences:false,originalGeneratedBackdrop:'assets/art/sky-v3-'+metadata.panorama+'.webp',originalGeneratedFoliage:'assets/art/foliage-v3.webp'},null,2)+'\n');
+fs.writeFileSync(output.replace(/\.[^.]+$/,'.json'),JSON.stringify({...metadata,source:'assets/game.js + assets/vehicles.js + assets/classic-visuals.js',rendererVersion:'classic-remaster-v1',externalReferences:false,originalGeneratedBackdrop:'assets/art/sky-v3-'+metadata.panorama+'.webp',originalGeneratedFoliage:'assets/art/foliage-v3.webp'},null,2)+'\n');
 if(samples) {
     const directory=path.resolve(samples);fs.mkdirSync(directory,{recursive:true});
     const metrics=[];

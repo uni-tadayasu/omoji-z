@@ -1,5 +1,5 @@
 {
-  "checkedAt": "2026-11-15T09:20:26.218Z",
+  "checkedAt": "2026-11-15T09:39:58.336Z",
   "baseCommit": "d56dadaef293b97f88d9f017d8e65701be98e721",
   "browserQA": "not performed: this verifier checks source, data and geometry in Node.js",
   "passed": true,
@@ -12,7 +12,7 @@
     {
       "name": "JavaScript syntax",
       "status": "passed",
-      "detail": "39 scripts"
+      "detail": "44 scripts"
     },
     {
       "name": "v3 performance, drivetrain identities and legacy save namespaces",
@@ -50,9 +50,9 @@
       "detail": "512 car details + 256 course details + 4 hubs; unique titles/descriptions; original-code canonicals; sitemap reachability"
     },
     {
-      "name": "classic edition is accessible without competing with the remake canonical",
+      "name": "classic remaster is the canonical game and alternate entries preserve compatibility",
       "status": "passed",
-      "detail": "Classic edition remains playable and linked; noindex with root canonical"
+      "detail": "Full classic game is the default; legacy entry retained; experimental REBORN is separate"
     },
     {
       "name": "static car diagrams and road maps match the current playable geometry",
@@ -62,7 +62,7 @@
     {
       "name": "local HTML, CSS and manifest asset links",
       "status": "passed",
-      "detail": "22577 local links"
+      "detail": "22581 local links"
     },
     {
       "name": "33 original audio files, 8 race themes and 128 saved-ID aliases agree",
