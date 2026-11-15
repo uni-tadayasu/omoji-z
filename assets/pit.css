@@ -578,6 +578,10 @@ html { scroll-padding-top: var(--pit-offset); }
   border-radius: 8px;
   background: #0d1924;
 }
+.theme-pit #operator-garage .operator-gallery .operator-century-studio {
+  grid-column: 1 / -1;
+  min-block-size: clamp(180px,36vw,410px);
+}
 .theme-pit #operator-garage .operator-gallery .operator-studio img { object-position: center 55%; }
 .theme-pit #operator-garage .operator-gallery .operator-studio::before {
   background: linear-gradient(0deg,#06111bee,#0b172058 31%,transparent 63%);
