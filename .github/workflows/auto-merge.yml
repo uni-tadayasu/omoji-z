@@ -32,7 +32,7 @@ jobs:
       - name: Check out proposed branch without stored credentials
         uses: actions/checkout@v4
         with:
-          ref: ${{ inputs.branch || github.ref }}
+          ref: ${{ github.event_name == 'push' && github.sha || inputs.branch }}
           fetch-depth: 0
           persist-credentials: false
       - name: Prepare the actual merge candidate
