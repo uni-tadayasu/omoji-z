@@ -4676,12 +4676,12 @@ function omojiCrownWindows(group, car, paint) {
 // Imported operator models share a decoder while retaining their own assets and materials.
 const omojiCenturyAssetVersion = "century-original-model-20261115";
 const omojiOperatorModels = new Map([
-    [omojiCenturyId, {file:'century-royal.bin', version:omojiCenturyAssetVersion, label:'センチュリーロイヤル',
+    [omojiCenturyId, {file:'century-royal.bin', glassKey:'century', version:omojiCenturyAssetVersion, label:'センチュリーロイヤル',
         meshName:'Century Royal GLB', length:.97894287109375, width:.38812255859375, height:.2978515625,
         finish:{reflections:1.21, coat:.53, coatRoughness:.23, normalStrength:.90, rasterReflection:1.14}}],
-    ['rolls-royce-operator', {file:'rolls-royce.bin', label:'ロールスロイス', meshName:'Rolls-Royce GLB',
+    ['rolls-royce-operator', {file:'rolls-royce.bin', glassKey:'rolls', label:'ロールスロイス', meshName:'Rolls-Royce GLB',
         length:.98040771484375, width:.3808746337890625, height:.2905731201171875}],
-    ['maybach-classic', {file:'maybach-model.bin', label:'マイバッハ', meshName:'Maybach GLB',
+    ['maybach-classic', {file:'maybach-model.bin', glassKey:'maybach', label:'マイバッハ', meshName:'Maybach GLB',
         length:.98077392578125, width:.4433441162109375, height:.3267669379711151, brightTrim:true}],
 ]);
 
@@ -4797,6 +4797,29 @@ async function omojiOperatorFetch(model) {
     } finally { clearTimeout(timeout); }
 }
 
+let omojiOperatorPaneLibrary;
+
+async function omojiOperatorLoadPanes(model) {
+    if (!model.glassKey) return [];
+    omojiOperatorPaneLibrary ??= (async () => {
+        const controller = new AbortController();
+        const timeout = setTimeout(() => controller.abort(), 4_000);
+        try {
+            const url = new URL('./operator-glass-panes.json',import.meta.url);
+            const response = await fetch(url,{signal:controller.signal});
+            if (!response.ok) throw Error('ウインドウの形状を読み込めませんでした。');
+            return await response.json();
+        } catch (error) {
+            console.warn('運営車両のウインドウ',error.message);
+            return {};
+        } finally {
+            clearTimeout(timeout);
+        }
+    })();
+    const library = await omojiOperatorPaneLibrary;
+    return Array.isArray(library?.[model.glassKey]) ? library[model.glassKey] : [];
+}
+
 function omojiRollsDecodeFull(buffer) {
     if (typeof Worker !== 'function') return Promise.resolve(null);
     return new Promise(resolve => {
@@ -4824,6 +4847,7 @@ function omojiOperatorLoadLite(model) {
     if (model.asset) return Promise.resolve(model.asset);
     if (model.pending) return model.pending;
     if (performance.now() < (model.retryAfter ?? 0)) return Promise.resolve(null);
+    const paneData = omojiOperatorLoadPanes(model);
     model.pending = omojiOperatorFetch(model).then(async packed => {
         const {decodeRollsAsset} = await import('./rolls-asset-codec.js');
         const file = decodeRollsAsset(packed,{lite:true});
@@ -4831,11 +4855,13 @@ function omojiOperatorLoadLite(model) {
         const pbr = bundle.high.material.pbrMetallicRoughness;
         const blobs = [bundle.texture(pbr.baseColorTexture.index),bundle.texture(pbr.metallicRoughnessTexture.index),
             bundle.texture(bundle.high.material.normalTexture.index)];
-        const handles = await Promise.all(blobs.map(blob => omojiRollsMakeImage(blob)));
+        const [handles,panes] = await Promise.all([
+            Promise.all(blobs.map(blob => omojiRollsMakeImage(blob))),paneData
+        ]);
         model.packed = packed;
         model.asset = {high:null,low:bundle.high, materials:pbr, tex:handles, blobs,
             base:omojiRollsTexture(handles[0],true), metal:omojiRollsTexture(handles[1],false),
-            normal:omojiRollsTexture(handles[2],false), geometry:new Map()};
+            normal:omojiRollsTexture(handles[2],false), geometry:new Map(), panes};
         return model.asset;
     }).catch(error => {
         model.retryAfter = performance.now()+6_000;
@@ -4901,6 +4927,64 @@ function omojiOperatorGeometry(asset, quality) {
     return geometry;
 }
 
+function omojiOperatorPaneGeometry(pane) {
+    if (!pane.geometry) {
+        const geometry = new He();
+        geometry.setAttribute('position',new bt(Float32Array.from(pane.position),3));
+        geometry.setIndex(pane.index);
+        geometry.computeVertexNormals();
+        Vd.add(geometry);
+        pane.geometry = geometry;
+    }
+    return pane.geometry;
+}
+
+function omojiImportedPaneMaterial(kind, reflection, showroom) {
+    const profile = kind === 'front' ? {color:'#627d87', opacity:.21}
+        : kind === 'rear' ? {color:'#436273', opacity:.33}
+        : {color:'#4b626b', opacity:.28};
+    const material = new Ws({
+        name:'OMOJI Automotive Window Glass',
+        color:profile.color, opacity:profile.opacity, transparent:true, depthWrite:false,
+        side:im, forceSinglePass:true, roughness:.12, metalness:0, ior:1.51,
+        clearcoat:.90, clearcoatRoughness:.075, envMap:reflection, envMapIntensity:.77
+    });
+    material.customProgramCacheKey = () => 'omoji-operator-glass-pane-v1';
+    material.onBeforeCompile = shader => {
+        shader.uniforms.omojiPaneStudio = {value:showroom ? 1 : 0};
+        shader.fragmentShader = 'uniform float omojiPaneStudio;\n' + shader.fragmentShader.replace(
+            '#include <opaque_fragment>', `
+            vec3 omojiPaneEye = isOrthographic ? vec3(0.0, 0.0, 1.0) : normalize(vViewPosition);
+            float omojiPaneFacing = clamp(dot(normal, omojiPaneEye), 0.0, 1.0);
+            float omojiPaneFresnel = .043 + .957 * pow(1.0 - omojiPaneFacing, 5.0);
+            vec3 omojiPaneRay = inverseTransformDirection(reflect(-omojiPaneEye, normal), viewMatrix);
+            float omojiPaneHorizon = 1.0 - smoothstep(.02, .42, abs(omojiPaneRay.y - .13));
+            float omojiPaneSky = smoothstep(-.30, .80, omojiPaneRay.y);
+            float omojiPaneSoftbox = smoothstep(.65, .96, dot(omojiPaneRay, vec3(.49,.76,.42)));
+            vec3 omojiPaneTint = mix(vec3(.013,.024,.029), vec3(.032,.054,.072), omojiPaneSky);
+            vec3 omojiPaneGlint = vec3(.105,.153,.192)*omojiPaneHorizon
+                + vec3(.105,.118,.124)*omojiPaneSoftbox*omojiPaneStudio;
+            outgoingLight = mix(outgoingLight, omojiPaneTint, .67)
+                + omojiPaneGlint*(.16 + .78*omojiPaneFresnel);
+            diffuseColor.a += (1.0 - diffuseColor.a)*(.67*omojiPaneFresnel + .06*omojiPaneHorizon);
+            #include <opaque_fragment>`);
+    };
+    return material;
+}
+
+function omojiAddImportedPanes(model, panes, scale, reflection, showroom) {
+    if (!panes?.length) return;
+    const materials = new Map();
+    for (const pane of panes) {
+        const kind = pane.name === 'front' || pane.name === 'rear' ? pane.name : 'side';
+        if (!materials.has(kind)) materials.set(kind,omojiImportedPaneMaterial(kind,reflection,showroom));
+        const mesh = new Fe(omojiOperatorPaneGeometry(pane),materials.get(kind));
+        mesh.name = 'Window glass · ' + pane.name;
+        mesh.scale.setScalar(scale);
+        model.add(mesh);
+    }
+}
+
 function omojiOperatorMesh(car, options, operator) {
     const asset = operator.asset;
     const model = new Tt();
@@ -4944,12 +5028,36 @@ totalEmissiveRadiance += vec3(.05,.07,.08)*chrome + vec3(.16,.21,.28)*lampLens*o
     const quality = omojiOperatorVisualLevel(car, options.quality);
     const mesh = new Fe(omojiOperatorGeometry(asset, quality), surface);
     mesh.name = operator.meshName;
-    mesh.scale.setScalar(omojiOperatorScale(car, operator));
+    const scale = omojiOperatorScale(car, operator);
+    mesh.scale.setScalar(scale);
     model.add(mesh);
+    omojiAddImportedPanes(model,asset.panes,scale,light,!!options.showroom);
     if (options.beam && options.lights!==false) ex(model,car);
     model.userData = {data:car, importedQuality:quality,wheels:[],frontWheels:[],tailLights:[],headlights:[],
         animate({brake=0}={}) { braking.value=brake>.1 ? Math.min(1,brake*1.5) : 0; }};
     return model;
+}
+
+function omojiOperatorSoftwarePanes(asset,scale) {
+    return asset.softwarePanes ??= (asset.panes ?? []).map(pane => {
+        const geometry = omojiOperatorPaneGeometry(pane);
+        const positions = geometry.attributes.position.array;
+        const normals = geometry.attributes.normal.array;
+        const count = positions.length/3;
+        const vertices = new Float32Array(count*6);
+        for (let src=0,dest=0;src<positions.length;src+=3,dest+=6) {
+            vertices[dest]=positions[src]*scale;
+            vertices[dest+1]=positions[src+1]*scale;
+            vertices[dest+2]=positions[src+2]*scale;
+            vertices[dest+3]=normals[src];
+            vertices[dest+4]=normals[src+1];
+            vertices[dest+5]=normals[src+2];
+        }
+        const tint = pane.name === 'front' ? [68,89,93,.22] :
+            pane.name === 'rear' ? [40,62,74,.33] : [46,65,74,.29];
+        return {vertices,indexes:geometry.index.array,tint,projected:new Float32Array(count*5),
+            glassView:new Float32Array(count*2)};
+    });
 }
 
 function omojiOperatorSoftware(car,color,operator) {
@@ -4977,8 +5085,52 @@ function omojiOperatorSoftware(car,color,operator) {
     const batch = {...asset.cpuSamples,tint:chosen ? j0(new _e(chosen)) : null,
         reflection:operator.finish?.rasterReflection ?? 1};
     const scale = omojiOperatorScale(car, operator);
-    return {key:car.id+':original:'+chosen,batches:[batch],
+    return {key:car.id+':original:'+chosen,batches:[batch,...omojiOperatorSoftwarePanes(asset,scale)],
         dimensions:[car.dimensions[0],Math.max(car.dimensions[1],operator.width*scale),Math.max(car.dimensions[2],operator.height*scale)]};
+}
+
+function omojiOperatorRasterPanes({projected,glassView,indexes,tint},out,depth,width,height) {
+    for (let k=0;k<indexes.length;k+=3) {
+        const a = indexes[k], b = indexes[k+1], c = indexes[k+2];
+        const ia = a*5, ib = b*5, ic = c*5;
+        const x = projected[ia], y = projected[ia+1];
+        const ax = projected[ib]-x, ay = projected[ib+1]-y;
+        const bx = projected[ic]-x, by = projected[ic+1]-y;
+        const area = ax*by-ay*bx;
+        if (area >= -.025) continue;
+        const firstX = Math.max(0,Math.floor(Math.min(x,projected[ib],projected[ic])));
+        const lastX = Math.min(width-1,Math.ceil(Math.max(x,projected[ib],projected[ic])));
+        const firstY = Math.max(0,Math.floor(Math.min(y,projected[ib+1],projected[ic+1])));
+        const lastY = Math.min(height-1,Math.ceil(Math.max(y,projected[ib+1],projected[ic+1])));
+        const inv = projected[ia+2], invA = projected[ib+2]-inv, invB = projected[ic+2]-inv;
+        const grazing = glassView[a*2], grazingA = glassView[b*2]-grazing, grazingB = glassView[c*2]-grazing;
+        const direction = glassView[a*2+1];
+        const dirA = glassView[b*2+1]-direction, dirB = glassView[c*2+1]-direction;
+        const uStep = by/area, vStep = -ay/area;
+        for (let row=firstY;row<=lastY;row++) {
+            const px = firstX+.5-x, py = row+.5-y;
+            let u = (px*by-py*bx)/area, v = (ax*py-ay*px)/area;
+            for (let col=firstX;col<=lastX;col++,u+=uStep,v+=vStep) {
+                if (u<0 || v<0 || u+v>1) continue;
+                const at = row*width+col, z = inv+u*invA+v*invB;
+                if (z<=depth[at]) continue;
+                depth[at] = z;
+                const glancing = Re(grazing+u*grazingA+v*grazingB,0,1);
+                const fresnel = .043+.957*glancing**5;
+                const ray = direction+u*dirA+v*dirB;
+                const horizon = 1-Re(Math.abs(ray-.13)/.43,0,1);
+                const sky = Re((ray+.30)/1.10,0,1);
+                const strength = .15*sky + horizon*(.10+.41*fresnel);
+                const alpha = tint[3]+(1-tint[3])*(.67*fresnel+.06*horizon);
+                const pixel = at*4, under = out[pixel+3]/255;
+                const combined = alpha+(1-alpha)*under, mix = alpha/combined;
+                out[pixel] = lt(out[pixel],lt(tint[0],139,strength),mix);
+                out[pixel+1] = lt(out[pixel+1],lt(tint[1],176,strength),mix);
+                out[pixel+2] = lt(out[pixel+2],lt(tint[2],204,strength),mix);
+                out[pixel+3] = combined*255;
+            }
+        }
+    }
 }
 
 function omojiRollsRaster(batch,out,depth,width,height,brake,view) {
@@ -5106,7 +5258,15 @@ if(optical){
     omojiCoachPaint(a,t,!!e.showroom,!!e.beam);
     if(o!==a) omojiCoachPaint(o,t,!!e.showroom,!!e.beam);
 }
-let l=xt(t.accent,{roughness:.47,metalness:.33}),c=t.coachwork==="flagship",h=optical?omojiPhysicalLamp(c?"#c8dce8":"#dcd6c3",true,e.lights!==!1,reflection,t.front||"flagship"):xt(c?"#dcecff":"#f1e5bf",{roughness:.28,metalness:.09,emissive:c?"#dbeaff":"#fff0bb",emissiveIntensity:e.lights===!1?.14:1.2}),p=optical?omojiPhysicalLamp("#9e0d26",false,e.lights!==!1,reflection,t.rear||"flagship"):xt("#ce203b",{roughness:.34,metalness:.17,emissive:"#ff133a",emissiveIntensity:.48});Xb(s,t,o,t.twoTone?a:l),t.id==="omoji-z"?(omojiCrownWindows(s,t,o),omojiCrownSide(s,t,a,l)):(Yb(s,t,o,t.chrome?ce.chrome:ce.seal),Qb(s,t,a,l));let{lampGeometry:u}=t.id==="omoji-z"?omojiCrownFascia(s,t,a,l,h,p):Kb(s,t,a,l,h,p);Hd(s),Hd(u);if(optical)omojiCarGlass(s,reflection,!!e.beam);let d=[],m=[];for(let f of[!1,!0])for(let v of[-1,1]){let g=Zb(t,v,f,a,i);r.add(g),f&&m.push(g),d.push(g)}e.beam&&e.lights!==!1&&ex(r,t);let y=u.children;return r.userData={data:t,wheels:d,frontWheels:m,tailLights:y.filter(f=>f.material===p),headlights:y.filter(f=>f.material===h),animate({steering:f=0,speed:v=0,dt:g=0,brake:b=!1}={}){for(let w of m)w.rotation.y=f;let x=v*g/t.wheel[0];for(let w of d)w.userData.roll.rotation.x=(w.userData.roll.rotation.x+x)%(Math.PI*2);p.emissiveIntensity=(b?1.9:.53)*(1-(r.userData.omojiWear?.rearLight||0)*.72)},omojiBodyGroup:s},e.damageKey&&omojiApplyCarAppearance(r,e.damageKey),r}function ra(n){let e=new Set(Object.values(ce)),t=new Set,i=new Set;n.traverse(r=>{if(r.isMesh){const glass=r.userData.omojiGlassBase;glass&&t.add(glass);Vd.has(r.geometry)||i.add(r.geometry);for(let s of Array.isArray(r.material)?r.material:[r.material])e.has(s)||t.add(s)}});for(let r of i)r.dispose();for(let r of t)r.dispose()}var H0=new Map,Yc=new Map,V0=Math.PI*2,qc=new B,Xc=new B,W0=new ze;function q0(n,e,t,i){return n.set(e,t),n.size>i&&n.delete(n.keys().next().value),t}function tx(n){let e=Yc.get(n);return e?(Yc.delete(n),Yc.set(n,e),e):null}function nx(n,e){if(typeof OffscreenCanvas<"u")return new OffscreenCanvas(n,e);let t=document.createElement("canvas");return t.width=n,t.height=e,t}function j0(n){let e=n.clone().convertLinearToSRGB();return[e.r*255,e.g*255,e.b*255]}function ix(n,e,t,damageKey=0,detail=false){let i=typeof n=="object"&&n?.id?n:Wi(n);const operator=omojiOperatorModel(i);if(operator?.asset)return omojiOperatorSoftware(i,e,operator);let r=t==="race"&&!detail?"low":"medium",s=i.id+":"+(e??i.paint)+":"+r+(damageKey?":damage-"+damageKey:""),a=H0.get(s);if(a)return a;let o=fr(i,{color:e,quality:r,showroom:t!=="race",damageKey:damageKey}),l=new Set(o.userData.tailLights.map(h=>h.material));o.updateMatrixWorld(!0);let c=[];return o.traverse(h=>{if(!h.isMesh)return;W0.getNormalMatrix(h.matrixWorld);let p=h.geometry,u=p.attributes.position,d=p.attributes.normal,m=new Float32Array(u.count*6);for(let b=0;b<u.count;b++){qc.fromBufferAttribute(u,b).applyMatrix4(h.matrixWorld),Xc.fromBufferAttribute(d,b).applyNormalMatrix(W0);let x=b*6;m[x++]=qc.x,m[x++]=qc.y,m[x++]=qc.z,m[x++]=Xc.x,m[x++]=Xc.y,m[x]=Xc.z}let y=p.index?.array,f=Array.isArray(h.material)?h.material:[h.material],v=f.length===1?[{start:0,count:y?.length??u.count,materialIndex:0}]:p.groups,g=f.map(b=>({rgb:j0(b.color),metal:b.metalness,roughness:b.roughness,glow:b.emissiveIntensity,glowColor:j0(b.emissive),tail:l.has(b),rearLight:o.userData.omojiWear?.rearLight||0,glass:b===ce.glass||b===ce.glassEdge||!!o.userData.omojiGlassBase}));c.push({vertices:m,indexes:y,ranges:v,paints:g,projected:new Float32Array(u.count*5)})}),ra(o),q0(H0,s,{key:s,batches:c,dimensions:i.dimensions},11)}function rx(n,e,t,i,r,s,a){let{vertices:o,projected:l}=n,c=Math.sin(r),h=Math.cos(r),p=Math.sin(a),u=Math.cos(a),d=c*u,m=p,y=h*u,f=-c*p,v=-h*p,g=s==="race"?10:8.6,b=-.3+d,x=.77+m,w=.56+y,M=Math.hypot(b,x,w),E=b/M,T=x/M,P=w/M;for(let A=0,_=0;A<o.length;A+=6,_+=5){let S=o[A],R=o[A+1],C=o[A+2],L=o[A+3],F=o[A+4],z=o[A+5],j=g-(d*S+m*R+y*C),$=i*g/j;l[_]=e+(h*S-c*C)*$,l[_+1]=t-(f*S+u*R+v*C)*$,l[_+2]=1/j,l[_+3]=.40+Math.max(0,-.28*L+.76*F+.59*z)*.66+Math.max(0,.78*L+.34*F-.42*z)*.18+Math.max(0,-.36*L+.63*F-.52*z)*.09;let ie=Math.max(0,E*L+T*F+P*z);ie*=ie,ie*=ie,l[_+4]=ie*ie+.23*Math.pow(Math.max(0,(-.54*L+.65*F+.53*z)),5)}}function sx(n,e,t,i,r,s,a){if(n.albedo){omojiRollsRaster(n,e,t,i,r,s,a);return;}let{projected:o,indexes:l,ranges:c,paints:h}=n,p=a==="race";for(let u of c){let d=h[u.materialIndex],[m,y,f]=d.rgb,v=d.tail?(s?.92:.19)*(1-d.rearLight*.87):Math.min(d.glow,.86)*.72,[g,b,x]=d.glowColor.map(E=>E*v),w=11+(d.metal||0)*118*(1.06-(d.roughness||.65)),M=p?.96:1,glass=d.glass,reflect=(d.metal||0)*Math.max(0,.72-(d.roughness||.55));for(let E=u.start,T=E+u.count;E<T;E+=3){let P=(l?l[E]:E)*5,A=(l?l[E+1]:E+1)*5,_=(l?l[E+2]:E+2)*5,S=o[P],R=o[P+1],C=o[A],L=o[A+1],F=o[_],z=o[_+1],j=C-S,$=L-R,ie=F-S,Q=z-R,he=j*Q-$*ie;if(he>=-.025)continue;let ne=Math.max(0,Math.floor(Math.min(S,C,F))),se=Math.min(i-1,Math.ceil(Math.max(S,C,F))),oe=Math.max(0,Math.floor(Math.min(R,L,z))),ue=Math.min(r-1,Math.ceil(Math.max(R,L,z)));if(ne>se||oe>ue)continue;let pe=Q/he,k=-$/he,D=o[P+2],q=o[A+2]-D,G=o[_+2]-D,I=o[P+3],U=o[A+3]-I,X=o[_+3]-I,V=o[P+4],H=o[A+4]-V,N=o[_+4]-V,W=ne+.5-S;for(let J=oe;J<=ue;J++){let K=J+.5-R,te=(W*Q-K*ie)/he,me=(j*K-$*W)/he,xe=ne+J*i;for(let le=ne;le<=se;le++,xe++,te+=pe,me+=k){if(te<0||me<0||te+me>1)continue;let be=D+te*q+me*G;if(be<=t[xe])continue;t[xe]=be;let Ee=(I+te*U+me*X)*M,Ce=(V+te*H+me*N)*w,ve=xe*4;const horizon=glass?Math.max(0,1-Math.abs(J/r-.44)*3.6):0;
+let l=xt(t.accent,{roughness:.47,metalness:.33}),c=t.coachwork==="flagship",h=optical?omojiPhysicalLamp(c?"#c8dce8":"#dcd6c3",true,e.lights!==!1,reflection,t.front||"flagship"):xt(c?"#dcecff":"#f1e5bf",{roughness:.28,metalness:.09,emissive:c?"#dbeaff":"#fff0bb",emissiveIntensity:e.lights===!1?.14:1.2}),p=optical?omojiPhysicalLamp("#9e0d26",false,e.lights!==!1,reflection,t.rear||"flagship"):xt("#ce203b",{roughness:.34,metalness:.17,emissive:"#ff133a",emissiveIntensity:.48});Xb(s,t,o,t.twoTone?a:l),t.id==="omoji-z"?(omojiCrownWindows(s,t,o),omojiCrownSide(s,t,a,l)):(Yb(s,t,o,t.chrome?ce.chrome:ce.seal),Qb(s,t,a,l));let{lampGeometry:u}=t.id==="omoji-z"?omojiCrownFascia(s,t,a,l,h,p):Kb(s,t,a,l,h,p);Hd(s),Hd(u);if(optical)omojiCarGlass(s,reflection,!!e.beam);let d=[],m=[];for(let f of[!1,!0])for(let v of[-1,1]){let g=Zb(t,v,f,a,i);r.add(g),f&&m.push(g),d.push(g)}e.beam&&e.lights!==!1&&ex(r,t);let y=u.children;return r.userData={data:t,wheels:d,frontWheels:m,tailLights:y.filter(f=>f.material===p),headlights:y.filter(f=>f.material===h),animate({steering:f=0,speed:v=0,dt:g=0,brake:b=!1}={}){for(let w of m)w.rotation.y=f;let x=v*g/t.wheel[0];for(let w of d)w.userData.roll.rotation.x=(w.userData.roll.rotation.x+x)%(Math.PI*2);p.emissiveIntensity=(b?1.9:.53)*(1-(r.userData.omojiWear?.rearLight||0)*.72)},omojiBodyGroup:s},e.damageKey&&omojiApplyCarAppearance(r,e.damageKey),r}function ra(n){let e=new Set(Object.values(ce)),t=new Set,i=new Set;n.traverse(r=>{if(r.isMesh){const glass=r.userData.omojiGlassBase;glass&&t.add(glass);Vd.has(r.geometry)||i.add(r.geometry);for(let s of Array.isArray(r.material)?r.material:[r.material])e.has(s)||t.add(s)}});for(let r of i)r.dispose();for(let r of t)r.dispose()}var H0=new Map,Yc=new Map,V0=Math.PI*2,qc=new B,Xc=new B,W0=new ze;function q0(n,e,t,i){return n.set(e,t),n.size>i&&n.delete(n.keys().next().value),t}function tx(n){let e=Yc.get(n);return e?(Yc.delete(n),Yc.set(n,e),e):null}function nx(n,e){if(typeof OffscreenCanvas<"u")return new OffscreenCanvas(n,e);let t=document.createElement("canvas");return t.width=n,t.height=e,t}function j0(n){let e=n.clone().convertLinearToSRGB();return[e.r*255,e.g*255,e.b*255]}function ix(n,e,t,damageKey=0,detail=false){let i=typeof n=="object"&&n?.id?n:Wi(n);const operator=omojiOperatorModel(i);if(operator?.asset)return omojiOperatorSoftware(i,e,operator);let r=t==="race"&&!detail?"low":"medium",s=i.id+":"+(e??i.paint)+":"+r+(damageKey?":damage-"+damageKey:""),a=H0.get(s);if(a)return a;let o=fr(i,{color:e,quality:r,showroom:t!=="race",damageKey:damageKey}),l=new Set(o.userData.tailLights.map(h=>h.material));o.updateMatrixWorld(!0);let c=[];return o.traverse(h=>{if(!h.isMesh)return;W0.getNormalMatrix(h.matrixWorld);let p=h.geometry,u=p.attributes.position,d=p.attributes.normal,m=new Float32Array(u.count*6);for(let b=0;b<u.count;b++){qc.fromBufferAttribute(u,b).applyMatrix4(h.matrixWorld),Xc.fromBufferAttribute(d,b).applyNormalMatrix(W0);let x=b*6;m[x++]=qc.x,m[x++]=qc.y,m[x++]=qc.z,m[x++]=Xc.x,m[x++]=Xc.y,m[x]=Xc.z}let y=p.index?.array,f=Array.isArray(h.material)?h.material:[h.material],v=f.length===1?[{start:0,count:y?.length??u.count,materialIndex:0}]:p.groups,g=f.map(b=>({rgb:j0(b.color),metal:b.metalness,roughness:b.roughness,glow:b.emissiveIntensity,glowColor:j0(b.emissive),tail:l.has(b),rearLight:o.userData.omojiWear?.rearLight||0,glass:b===ce.glass||b===ce.glassEdge||!!o.userData.omojiGlassBase}));c.push({vertices:m,indexes:y,ranges:v,paints:g,projected:new Float32Array(u.count*5)})}),ra(o),q0(H0,s,{key:s,batches:c,dimensions:i.dimensions},11)}function rx(n,e,t,i,r,s,a){let{vertices:o,projected:l,glassView}=n,c=Math.sin(r),h=Math.cos(r),p=Math.sin(a),u=Math.cos(a),d=c*u,m=p,y=h*u,f=-c*p,v=-h*p,g=s==="race"?10:8.6,b=-.3+d,x=.77+m,w=.56+y,M=Math.hypot(b,x,w),E=b/M,T=x/M,P=w/M;for(let A=0,_=0;A<o.length;A+=6,_+=5){let S=o[A],R=o[A+1],C=o[A+2],L=o[A+3],F=o[A+4],z=o[A+5],j=g-(d*S+m*R+y*C),$=i*g/j;l[_]=e+(h*S-c*C)*$,l[_+1]=t-(f*S+u*R+v*C)*$,l[_+2]=1/j,l[_+3]=.40+Math.max(0,-.28*L+.76*F+.59*z)*.66+Math.max(0,.78*L+.34*F-.42*z)*.18+Math.max(0,-.36*L+.63*F-.52*z)*.09;let ie=Math.max(0,E*L+T*F+P*z);ie*=ie,ie*=ie,l[_+4]=ie*ie+.23*Math.pow(Math.max(0,(-.54*L+.65*F+.53*z)),5);
+    if (glassView) {
+        const index = A/3;
+        const normalDotView = d*L+m*F+y*z;
+        const facing = Re(Math.abs(normalDotView),0,1);
+        glassView[index] = 1-facing;
+        glassView[index+1] = 2*normalDotView*F-m;
+    }
+}}function sx(n,e,t,i,r,s,a){if(n.glassView){omojiOperatorRasterPanes(n,e,t,i,r);return;}if(n.albedo){omojiRollsRaster(n,e,t,i,r,s,a);return;}let{projected:o,indexes:l,ranges:c,paints:h}=n,p=a==="race";for(let u of c){let d=h[u.materialIndex],[m,y,f]=d.rgb,v=d.tail?(s?.92:.19)*(1-d.rearLight*.87):Math.min(d.glow,.86)*.72,[g,b,x]=d.glowColor.map(E=>E*v),w=11+(d.metal||0)*118*(1.06-(d.roughness||.65)),M=p?.96:1,glass=d.glass,reflect=(d.metal||0)*Math.max(0,.72-(d.roughness||.55));for(let E=u.start,T=E+u.count;E<T;E+=3){let P=(l?l[E]:E)*5,A=(l?l[E+1]:E+1)*5,_=(l?l[E+2]:E+2)*5,S=o[P],R=o[P+1],C=o[A],L=o[A+1],F=o[_],z=o[_+1],j=C-S,$=L-R,ie=F-S,Q=z-R,he=j*Q-$*ie;if(he>=-.025)continue;let ne=Math.max(0,Math.floor(Math.min(S,C,F))),se=Math.min(i-1,Math.ceil(Math.max(S,C,F))),oe=Math.max(0,Math.floor(Math.min(R,L,z))),ue=Math.min(r-1,Math.ceil(Math.max(R,L,z)));if(ne>se||oe>ue)continue;let pe=Q/he,k=-$/he,D=o[P+2],q=o[A+2]-D,G=o[_+2]-D,I=o[P+3],U=o[A+3]-I,X=o[_+3]-I,V=o[P+4],H=o[A+4]-V,N=o[_+4]-V,W=ne+.5-S;for(let J=oe;J<=ue;J++){let K=J+.5-R,te=(W*Q-K*ie)/he,me=(j*K-$*W)/he,xe=ne+J*i;for(let le=ne;le<=se;le++,xe++,te+=pe,me+=k){if(te<0||me<0||te+me>1)continue;let be=D+te*q+me*G;if(be<=t[xe])continue;t[xe]=be;let Ee=(I+te*U+me*X)*M,Ce=(V+te*H+me*N)*w,ve=xe*4;const horizon=glass?Math.max(0,1-Math.abs(J/r-.44)*3.6):0;
             const clearcoat=reflect*Math.max(0,Ee-.40)*Math.max(0,.52-Math.abs(J/r-.46)*.91);
             e[ve]=m*Ee+Ce*.96+g+clearcoat*34+horizon*8;
             e[ve+1]=y*Ee+Ce*1.03+b+clearcoat*46+horizon*19;
