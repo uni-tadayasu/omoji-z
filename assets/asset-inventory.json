@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "edition": "driving-studio-v3",
-  "baseCommit": "93733a076aa15f437793452d6aa270f39a01b48e",
+  "edition": "classic-remaster-4.2",
+  "baseCommit": "0c30dafde41abdab8a6243f104036b6be1543c6d",
   "files": [
     {
       "path": "assets/THREE-LICENSE.txt",
@@ -40,13 +40,13 @@
     },
     {
       "path": "assets/art/hero-v3.json",
-      "bytes": 477,
-      "sha256": "bc9456743f2652c64d20e391b4b0dab4998b286f1d758cffd254263f49b206ff"
+      "bytes": 550,
+      "sha256": "b4551e4224e9c1044d350152e6ec833c277d3ce88cd35d30f170b77ff4875186"
     },
     {
       "path": "assets/art/hero-v3.webp",
-      "bytes": 72542,
-      "sha256": "c0fda23abd38fc3a5fe95ca688e2c555c599d5d4505e9500d23f731bae84690f"
+      "bytes": 36684,
+      "sha256": "e00628fe1177d6eb5077f7fc005f80d5fef4263843fe5e7fb6f6daa7f1e339e1"
     },
     {
       "path": "assets/art/hero.svg",
@@ -1649,6 +1649,26 @@
       "sha256": "1f3b727401708e8562a94cfe0cfc1336d6c185d7eec6b0a40401ec35027a8b2b"
     },
     {
+      "path": "assets/classic-remaster-ui.js",
+      "bytes": 18278,
+      "sha256": "e1220d3846f827910eb88132da8df1997a32d56c58ccbdff91daf2f657da8a03"
+    },
+    {
+      "path": "assets/classic-remaster.css",
+      "bytes": 45330,
+      "sha256": "6d9a78f1885bbe8a6c6a2e91209375144c80495e01fd9b84d712f1a3b0651e49"
+    },
+    {
+      "path": "assets/classic-route-atlas.json",
+      "bytes": 431960,
+      "sha256": "c4822e45182d2b853288df3575f310ed20636c7fb88d1a4d1ffbd646c583d98c"
+    },
+    {
+      "path": "assets/classic-visuals.js",
+      "bytes": 11834,
+      "sha256": "a358828f21b90d294632dfbeabb4a50b9793718cbfa0b203e3914d19dcc51bef"
+    },
+    {
       "path": "assets/course-labels.js",
       "bytes": 68901,
       "sha256": "59e21228eea23114a2d20681b51e1077712f0723723ad6c1dd688b22bccab4fa"
@@ -1685,8 +1705,8 @@
     },
     {
       "path": "assets/game.js",
-      "bytes": 1259883,
-      "sha256": "6626a3c94902aaa4e9fd24b6ff3a37709ca2f9097fcb96554280b667dcf3aff1"
+      "bytes": 1261670,
+      "sha256": "e94da69030b4e64076123996af60d51ade46463882734b4d90bd1fcc37053913"
     },
     {
       "path": "assets/legacy-records.js",
@@ -1719,6 +1739,61 @@
       "sha256": "e8c595984c10d4502eb1c3e1961a3b2d5401118dc65dbd049ac5da8209b6013b"
     },
     {
+      "path": "assets/remake/app.js",
+      "bytes": 29155,
+      "sha256": "b8b530ac356af1feeb378ac754cd1a1e888cd3a894c158083dd5dcb9ae9562df"
+    },
+    {
+      "path": "assets/remake/audio.js",
+      "bytes": 4823,
+      "sha256": "1072f815f571f4a3f92cfc9b6affc3a8eff8d9c523dd6caf818c925ce1cbd9c7"
+    },
+    {
+      "path": "assets/remake/input.js",
+      "bytes": 3919,
+      "sha256": "8795e74601bd28c0d2a2e611b688332d3a5a9ff1401b5ab5099b8c732dd1dfd8"
+    },
+    {
+      "path": "assets/remake/physics.js",
+      "bytes": 12079,
+      "sha256": "1c2d3346f1ac45c190c627112177b3cb05a16a83157391b905a888e75b72114d"
+    },
+    {
+      "path": "assets/remake/profile.js",
+      "bytes": 8343,
+      "sha256": "6d77c532f18819ebdd998a13e8a04497163bcfd3e02c3d71c60990e1bf071f34"
+    },
+    {
+      "path": "assets/remake/renderer.js",
+      "bytes": 33500,
+      "sha256": "c649748fe875201bca828ae52b303db0a7a53951249ed21bec5f58e9aab4ecca"
+    },
+    {
+      "path": "assets/remake/style.css",
+      "bytes": 23041,
+      "sha256": "125bed8fd24729829692c2a12b2fe9487fa13889e347995951f37f77eacfd00a"
+    },
+    {
+      "path": "assets/remake/tracks.js",
+      "bytes": 6378,
+      "sha256": "10ea557efdf79b254297d836dbb05ced71c6c243f2ab7a9cb9e6eceacfd8fdda"
+    },
+    {
+      "path": "assets/remake/vendor/THREE-LICENSE.txt",
+      "bytes": 1081,
+      "sha256": "bfe119ea4fd413f5f7ca3fcd63adb0c4a073ed39daa2fe7d3e6b769e21272601"
+    },
+    {
+      "path": "assets/remake/vendor/three.core.min.js",
+      "bytes": 381124,
+      "sha256": "61ba0df005b05991361d040d8ff670e1aadfd0ce7aeebd1fdb0725957a8957de"
+    },
+    {
+      "path": "assets/remake/vendor/three.module.min.js",
+      "bytes": 338908,
+      "sha256": "e2b5ee6bccd38fd6d8a2428546b83c5f2426d84b152ef82be8055556e3b40eb6"
+    },
+    {
       "path": "assets/site.css",
       "bytes": 73613,
       "sha256": "f20117dbed7b8d143e941c7866c60b2e9a1898ed5a51f87a7ec9bc32e502f1e0"
@@ -1727,6 +1802,16 @@
       "path": "assets/soundtrack.js",
       "bytes": 54277,
       "sha256": "d8f71059f618a9d10d611038d8e86e1d5a7e8b6ed7d985ced1aa3846e497e293"
+    },
+    {
+      "path": "assets/startup.css",
+      "bytes": 875,
+      "sha256": "1c3721515526f23e32390605495738cf44b153aad37ce3b892137a72b09d2fe5"
+    },
+    {
+      "path": "assets/startup.js",
+      "bytes": 3470,
+      "sha256": "68cf9f5c00488442b75943ca1ba89ba1fbf5eae6d38112591137d2b340a3eae3"
     },
     {
       "path": "assets/ui-icons.provenance.json",

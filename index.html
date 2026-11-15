@@ -34,10 +34,12 @@
 <link rel="stylesheet" href="./assets/site.css?v=motorsport-v3">
 <link rel="stylesheet" href="./assets/workshop.css?v=motorsport-v3">
 <link rel="stylesheet" href="./assets/driving.css?v=motorsport-v3">
-<script type="module" src="./assets/game.js?v=classic-remaster-v4.1"></script>
+<link rel="stylesheet" href="./assets/startup.css?v=4.2">
+<script type="module" src="./assets/startup.js?v=4.2"></script>
+<script id="game-module" type="module" src="./assets/game.js?v=classic-remaster-v4.2"></script>
 <script type="module" src="./assets/refinement-ui.js?v=motorsport-v3"></script>
-<link rel="stylesheet" href="./assets/classic-remaster.css?v=4.1">
-<script type="module" src="./assets/classic-remaster-ui.js?v=4.1"></script>
+<link rel="stylesheet" href="./assets/classic-remaster.css?v=4.2">
+<script type="module" src="./assets/classic-remaster-ui.js?v=4.2"></script>
 </head>
 <body class="simple-menu motorsport classic-remastered">
 <a class="skip" href="#setup">レース設定へ</a>
@@ -51,6 +53,8 @@
     <div class="header-inner announcement-inner"><strong data-ui-icon="radio">お知らせ</strong><div class="announcement-window"><p id="announcement-copy">CLASSIC REMASTER — 全512台・256コースの世界を磨き直しました。</p></div><button type="button" id="announcement-toggle" class="quiet" hidden><span data-announcement-toggle-label>停止</span></button></div>
   </aside>
 </header>
+<div id="startup-status" class="startup-status" role="status" aria-live="polite" hidden><p data-startup-message>ゲームを準備しています…</p><button type="button" hidden>再読み込み</button></div>
+<noscript><p class="startup-status">走行にはJavaScriptが必要です。<a href="./cars.html">車両図鑑</a>と<a href="./courses.html">コース図鑑</a>はそのまま閲覧できます。</p></noscript>
 <main id="top">
   <div class="wrap content">
     <section id="setup" class="content-section" data-menu-view aria-labelledby="setup-title">

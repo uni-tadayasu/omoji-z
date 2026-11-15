@@ -27,7 +27,7 @@ jobs:
         run: python3 tools/build-site.py --out "$RUNNER_TEMP/omoji-public"
       - name: Create full and changed-files ZIPs
         env:
-          BASE_REF: ${{ github.event.pull_request.base.sha || '93733a076aa15f437793452d6aa270f39a01b48e' }}
+          BASE_REF: ${{ github.event.pull_request.base.sha || '0c30dafde41abdab8a6243f104036b6be1543c6d' }}
         run: python3 tools/package-release.py --base-ref "$BASE_REF" --out "$RUNNER_TEMP/omoji-release"
       - name: Prepare separate full and changed-files downloads
         run: |

@@ -1,0 +1,7 @@
+.startup-status { display:flex; align-items:center; gap:1rem; margin:0 auto; padding:.8rem max(1rem, env(safe-area-inset-right)) .8rem max(1rem, env(safe-area-inset-left)); max-width:1440px; background:#1a2329; color:#edf1f2; border-bottom:1px solid #3c4d55; font-size:.9rem; line-height:1.6; }
+.startup-status[hidden] { display:none; }
+.startup-status p { margin:0; flex:1; }
+.startup-status button { flex-shrink:0; min-height:44px; padding:.5rem 1rem; border:1px solid #7f9aab; border-radius:6px; background:#273b48; color:#fff; cursor:pointer; font:inherit; }
+.startup-status button:focus-visible { outline:3px solid #f1c79b; outline-offset:3px; }
+.startup-status[data-state="error"], .startup-status[data-state="offline"] { background:#392823; border-color:#986a56; }
+@media(max-width:480px) { .startup-status { align-items:stretch; flex-direction:column; gap:.5rem; } }

@@ -1,3 +1,13 @@
+CLASSIC REMASTER 4.2 — 品質更新
+
+基準: 0c30dafde41abdab8a6243f104036b6be1543c6d
+追加検査: npm run test:quality（起動・設定中の入力・描画上限/影・拡大コース図）
+詳細: docs/QUALITY_4_2.md
+実ブラウザ操作ツールが利用できないため、今回のUI検査はjsdomです。
+実機WebGL・スマートフォンの操作感/FPSは未確認です。
+
+以下は前回までの検証記録です。
+
 尾文字Z / OMOJI Z — CLASSIC REMASTER 4.1
 
 基準: 7f34821e00122e34d3aaf22f143b9341dbd2aed4

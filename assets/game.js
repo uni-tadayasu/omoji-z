@@ -1,4 +1,4 @@
-import { classicLightProfile, classicBeginFrame, classicEndFrame, classicReleaseFrame, drawClassicReflection, drawClassicContactShadow } from './classic-visuals.js?v=classic-remaster-20261115';
+import { classicLightProfile, classicBeginFrame, classicEndFrame, classicReleaseFrame, drawClassicReflection, drawClassicContactShadow } from './classic-visuals.js?v=classic-remaster-4.2';
 // OMOJI_FAIR_PHYSICS_V3
 import { parseTimeChallenge as omojiParseTimeChallenge, createTimeChallengeUrl as omojiCreateTimeChallengeUrl, normalizeChallengeRanking as omojiNormalizeChallengeRanking, CHALLENGE_RANKING_KEY as omojiChallengeRankingKey, LEGACY_CHALLENGE_RANKING_KEY as omojiLegacyChallengeRankingKey, CHALLENGE_REGULATION as omojiChallengeRegulation } from "./challenges.js";
 import { mountLegacyRecords as omojiMountLegacyRecords } from './legacy-records.js';
@@ -7003,7 +7003,11 @@ start(options = {}) {
         return false;
     }
 }
-key(e,t){if(this.status==="idle"||this.status==="finished"||e.altKey||e.ctrlKey||e.metaKey||e.target?.closest?.("input, select, textarea, [contenteditable]")&&t)return;if(E1[e.code]){if(e.code==="Space"&&e.target?.closest?.("button")&&this.status==="paused")return;e.preventDefault(),t&&this.status!=="paused"&&!this.gamepadSuspended?this.heldKeys.add(e.code):this.heldKeys.delete(e.code)}else t&&!e.repeat&&(Object.hasOwn(A1,e.code)&&this.player?.transmission==="mt"&&(e.preventDefault(),this.queueShift(A1[e.code])),e.code==="Escape"&&(e.preventDefault(),e.stopPropagation(),this.togglePause()),e.code==="KeyC"&&this.cycleCamera(),e.code==="KeyR"&&this.resetCar())}setInput(e,t){
+key(e,t){
+    // A settings/error overlay owns input while the race underneath is inert.
+    if(this.canvas?.closest?.('[inert]')){this.clearInputs();return;}
+    if(t&&e.defaultPrevented)return;
+    if(this.status==="idle"||this.status==="finished"||e.altKey||e.ctrlKey||e.metaKey||e.target?.closest?.("input, select, textarea, [contenteditable]")&&t)return;if(E1[e.code]){if(e.code==="Space"&&e.target?.closest?.("button")&&this.status==="paused")return;e.preventDefault(),t&&this.status!=="paused"&&!this.gamepadSuspended?this.heldKeys.add(e.code):this.heldKeys.delete(e.code)}else t&&!e.repeat&&(Object.hasOwn(A1,e.code)&&this.player?.transmission==="mt"&&(e.preventDefault(),this.queueShift(A1[e.code])),e.code==="Escape"&&(e.preventDefault(),e.stopPropagation(),this.togglePause()),e.code==="KeyC"&&this.cycleCamera(),e.code==="KeyR"&&this.resetCar())}setInput(e,t){
     if(e==='analogSteering'||e==='analogSteeringActive'){
       const enabled=!this.gamepadSuspended&&(this.status==='running'||this.status==='countdown');
       if(e==='analogSteering')this.omojiTouchSteer=enabled?Math.max(-1,Math.min(1,Number(t)||0)):0;
@@ -7025,9 +7029,12 @@ key(e,t){if(this.status==="idle"||this.status==="finished"||e.altKey||e.ctrlKey|
     return omojiPrepareRaceInput(this,{throttle,brake,steering,steeringProfile:digital?'digital':'analog',
       handbrake:Math.max(Number(actions.has('handbrake')),pad?.handbrake??0),shift,nitro,
       nitroSpeedLimit:this.multiplayer?k1:undefined});
-  }setGamepadSuspended(e){this.gamepadSuspended=!!e,this.gamepadSuspended&&this.clearInputs()}pollGamepad(){let e=S1(),t=this.padButtons??e;if(this.padButtons=e,document.hidden){this.gamepadControls=null;return}e.pause>.5&&t.pause<=.5&&this.togglePause(),!(this.status==="paused"||this.gamepadSuspended)&&(this.gamepadControls=e,e.gearUp>.5&&(t.gearUp??0)<=.5&&this.queueShift(1),e.gearDown>.5&&(t.gearDown??0)<=.5&&this.queueShift(-1),e.camera>.5&&t.camera<=.5&&this.cycleCamera(),e.reset>.5&&t.reset<=.5&&this.resetCar())}onPadFrame(){this.padFrame=null,this.status==="paused"&&(this.pollGamepad(),this.status==="paused"&&(this.padFrame=requestAnimationFrame(this.onPadFrame)))}togglePause(){this.multiplayer?this.onMultiplayerPause():this.status==="paused"?this.resume():this.pause()}cycleCamera(){return this.cameraMode=(this.cameraMode+1)%sh.length,this.world?(this.updateTransforms(0,!0),this.render(),this.sendHud(),sh[this.cameraMode]):sh[this.cameraMode]}resetCar(){this.multiplayer||this.status!=="running"||(this.player.offset=0,this.player.heading=0,this.player.speed=0,this.player.angularSpeed=0,this.player.steering=0,this.player.omojiDigitalSteer=0,this.player.roll=0,this.player.pitch=0,this.player.longitudinalAccel=0,this.player.wallSide=0,this.player.pedalThrottle=0,this.player.pedalBrake=0,this.player.boost=0,this.player.nitroActive=!1,this.player.shiftTime=0,this.player.shiftLock=0,this.player.limiter=!1,this.player.shiftPrompt=null,this.player.gear=this.player.transmission==="mt"?1:0,this.pendingShift=0,this.player.impact=0,this.player.slipAngle=0,this.player.slip=0,this.player.driftChain=0,this.player.chainTime=0,(this.grandPrix?this.gpTimePenalty+=2:this.elapsed+=2),this.updateTransforms(0,!0),this.sendHud());this.clearInputs();}pause(){this.multiplayer||this.status!=="countdown"&&this.status!=="running"&&this.status!=="gp-settling"||(this.resumeStatus=this.status,this.status="paused",this.player.nitroActive=!1,this.clearInputs(),cancelAnimationFrame(this.animationId),this.animationId=null,this.lastFrame=null,this.sendHud(),this.onPause(!0),this.padFrame=requestAnimationFrame(this.onPadFrame))
+  }setGamepadSuspended(e){this.gamepadSuspended=!!e,this.gamepadSuspended&&this.clearInputs()}pollGamepad(){let e=S1(),t=this.padButtons??e;if(this.padButtons=e,document.hidden||this.canvas?.closest?.('[inert]')){
+      // Keep button edges current so dismissing a dialog cannot replay a held press.
+      this.clearInputs();return;
+    }e.pause>.5&&t.pause<=.5&&this.togglePause(),!(this.status==="paused"||this.gamepadSuspended)&&(this.gamepadControls=e,e.gearUp>.5&&(t.gearUp??0)<=.5&&this.queueShift(1),e.gearDown>.5&&(t.gearDown??0)<=.5&&this.queueShift(-1),e.camera>.5&&t.camera<=.5&&this.cycleCamera(),e.reset>.5&&t.reset<=.5&&this.resetCar())}onPadFrame(){this.padFrame=null,this.status==="paused"&&(this.pollGamepad(),this.status==="paused"&&(this.padFrame=requestAnimationFrame(this.onPadFrame)))}togglePause(){this.multiplayer?this.onMultiplayerPause():this.status==="paused"?this.resume():this.pause()}cycleCamera(){return this.cameraMode=(this.cameraMode+1)%sh.length,this.world?(this.updateTransforms(0,!0),this.render(),this.sendHud(),sh[this.cameraMode]):sh[this.cameraMode]}resetCar(){this.multiplayer||this.status!=="running"||(this.player.offset=0,this.player.heading=0,this.player.speed=0,this.player.angularSpeed=0,this.player.steering=0,this.player.omojiDigitalSteer=0,this.player.roll=0,this.player.pitch=0,this.player.longitudinalAccel=0,this.player.wallSide=0,this.player.pedalThrottle=0,this.player.pedalBrake=0,this.player.boost=0,this.player.nitroActive=!1,this.player.shiftTime=0,this.player.shiftLock=0,this.player.limiter=!1,this.player.shiftPrompt=null,this.player.gear=this.player.transmission==="mt"?1:0,this.pendingShift=0,this.player.impact=0,this.player.slipAngle=0,this.player.slip=0,this.player.driftChain=0,this.player.chainTime=0,(this.grandPrix?this.gpTimePenalty+=2:this.elapsed+=2),this.updateTransforms(0,!0),this.sendHud());this.clearInputs();}pause(){this.multiplayer||this.status!=="countdown"&&this.status!=="running"&&this.status!=="gp-settling"||(this.resumeStatus=this.status,this.status="paused",this.player.nitroActive=!1,this.clearInputs(),cancelAnimationFrame(this.animationId),this.animationId=null,this.lastFrame=null,this.sendHud(),this.onPause(!0),this.padFrame=requestAnimationFrame(this.onPadFrame))
 ;if(this.omojiTechnique&&this.status==="paused")omojiPayTechnique(this.omojiTechnique);
-}resume(){this.status!=="paused"||!this.canResume()||(this.padFrame!=null&&cancelAnimationFrame(this.padFrame),this.padFrame=null,this.status=this.resumeStatus||"running",this.lastFrame=null,this.onPause(!1),this.animationId=requestAnimationFrame(this.frame))}restart(){return this.selected&&!this.multiplayer?this.start({...this.selected}):!1}exit(){
+}resume(){this.status!=="paused"||this.canvas?.closest?.('[inert]')||!this.canResume()||(this.padFrame!=null&&cancelAnimationFrame(this.padFrame),this.padFrame=null,this.status=this.resumeStatus||"running",this.lastFrame=null,this.onPause(!1),this.animationId=requestAnimationFrame(this.frame))}restart(){return this.selected&&!this.multiplayer?this.start({...this.selected}):!1}exit(){
 omojiPayTechnique(this.omojiTechnique,true);this.omojiTechnique=null;
 if (this.driverTags) {
     document.getElementById('race-labels')?.replaceChildren();
@@ -7092,6 +7099,7 @@ let i=this.updateCar(this.playerCar,this.playerShadow,this.player,e,this.playerP
     }
 }
 draw() {
+    this.classicDeviceRatio = window.devicePixelRatio || 1;
     const classicStarted = classicBeginFrame(this, omojiCarReflection);
     const canvas = this.rendererMode === "software" ? this.softwareCanvas : this.canvas;
     const width = Math.max(1, canvas.clientWidth), height = Math.max(1, canvas.clientHeight);
@@ -9956,3 +9964,7 @@ function omojiWorkshopPreset(carId,slot,load) {
  });
 }
 // OMOJI_WORKSHOP_V3_END
+
+// Readiness is emitted only after every classic binding has been installed.
+document.documentElement.dataset.engineReady = "true";
+window.dispatchEvent(new CustomEvent("omoji:engine-ready"));
