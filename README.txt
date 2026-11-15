@@ -1,8 +1,15 @@
 尾文字Z｜上書きアップロード専用版
 
 ■ 更新（既に同じGitHub Pagesで公開している場合）
-前回の公式戦更新版を反映済みの公開フォルダーへ、このZIPを展開して中身を同じ階層で上書きしてください。assets 内の更新ファイルは、既存の assets フォルダーへ入れてください。
+前回のニトロ回復更新版を反映済みの公開フォルダーへ、このZIPを展開して中身を同じ階層で上書きしてください。assets 内の更新ファイルは、既存の assets フォルダーへ入れてください。
 GitHub Pagesへ反映された後、いつものURLを再読み込みしてください。同じURL・同じブラウザーの既存セーブを使用できます。
+
+■ BGM「Cityline Mix」
+・メニュー1曲とレース8曲を新しいインスト曲に差し替えました。メニューは Cityline Ignition、峠の目玉曲は Pass of Crimson です。
+・「設定」→「BGM」で試聴・選曲できます。「コースに合わせて選ぶ」は新しい曲で選曲し、直前と同じ曲を避けます。全128曲の曲IDを保持しています。
+・Cityline Ignition と Pass of Crimson は Stability AI の公式 Stable Audio 3 で生成し、ゲーム用のループ編集・音量調整を行いました。生成サービス https://huggingface.co/spaces/stabilityai/stable-audio-3
+・Vermilion Descent、Midnight Harbor、Apex Accelerator、Rainlight Afterglow、Whiteout Run、Last Sector、Velvet Redline は尾文字Z用の新作アレンジです。
+・音源は assets/audio から配信します。ZIPの index.html・assets/game.js・assets/audio 以下を同時に更新してください。
 
 ■ ニトロの回復
 ・全レースはニトロ満タンで始まります。ニトロを離して2秒経過後、10 km/h以上で前進している間に回復します。
