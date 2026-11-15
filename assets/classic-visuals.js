@@ -1,5 +1,4 @@
 /** Classic rendering only. Never writes to driver, course, economy or save data. */
-const clamp = (value, low, high) => Math.max(low, Math.min(high, value));
 const profiles = Object.freeze({
     day: {key:'day', body:[1.035,1.015,.99], specular:[1.04,1,.96], environment:.46, exposure:1.07},
     wet: {key:'wet', body:[.80,.88,.94], specular:[.87,.97,1.12], environment:.72, exposure:1.08},
@@ -18,8 +17,12 @@ export function classicLightProfile(track = {}) {
 export function classicResolutionLimit(quality, dpr, width, height, mode = 'webgl') {
     const cap = mode === 'software' ? 1 : quality === 'high' ? 1.8 : quality === 'low' ? 1 : 1.35;
     const pixels = quality === 'high' ? 2800000 : quality === 'low' ? 1100000 : 1850000;
-    return clamp(Math.min(Number.isFinite(dpr) && dpr > 0 ? dpr : 1, cap,
-        Math.sqrt(pixels / (Math.max(1, Number.isFinite(width) ? width : 1) * Math.max(1, Number.isFinite(height) ? height : 1)))), .55, cap);
+    const safeWidth = Math.max(1, Number.isFinite(width) ? width : 1);
+    const safeHeight = Math.max(1, Number.isFinite(height) ? height : 1);
+    // A fixed lower DPR floor defeats the pixel budget on 4K/8K screens. The HUD
+    // remains at CSS/native resolution; only the 3D render buffer is reduced.
+    return Math.min(Number.isFinite(dpr) && dpr > 0 ? dpr : 1, cap,
+        Math.sqrt(pixels / safeWidth / safeHeight));
 }
 
 function configureReceivers(group, strength) {
@@ -48,7 +51,8 @@ function configureCar(car) {
 function createState(game, reflectionFactory) {
     const scene = game.world?.scene;
     const profile = classicLightProfile(game.world?.track);
-    const state = {world:game.world, mode:game.rendererMode, seen:new WeakSet(), cars:new WeakSet(), frames:0,
+    const state = {world:game.world, mode:game.rendererMode, renderer:game.renderer, quality:game.classicQuality,
+        seen:new WeakSet(), cars:new WeakSet(), frames:0,
         samples:0, cost:0, scale:1, maxRatio:1, viewport:'', profile};
     if (game.rendererMode !== 'webgl' || !scene) return state;
     // The engine owns this cached HDR texture. The renderer's world disposal must not dispose it.
@@ -59,7 +63,13 @@ function createState(game, reflectionFactory) {
         const sun = scene.children.find(object => object.isDirectionalLight);
         if (sun?.shadow) {
             state.sun = sun;
-            state.sunDirection = sun.position.clone().normalize();
+            state.sunDirection = sun.position.clone();
+            // A reused light is already positioned around its player target. Initial
+            // and streamed biome directions are short vectors relative to the origin.
+            if (sun.position.lengthSq() >= 4) state.sunDirection.sub(sun.target.position);
+            state.sunDirection.normalize();
+            state.shadowRight = sun.position.clone();
+            state.shadowUp = sun.position.clone();
             sun.castShadow = true;
             sun.shadow.mapSize.set(quality === 'high' ? 1536 : 1024, quality === 'high' ? 1536 : 1024);
             Object.assign(sun.shadow.camera, {left:-18,right:18,top:18,bottom:-18,near:.5,far:140});
@@ -80,20 +90,27 @@ function createState(game, reflectionFactory) {
 export function classicReleaseFrame(game) {
     const state = game.classicVisuals;
     // Only this module owns the shadow render target; HDR environments stay engine-owned.
-    state?.sun?.shadow?.dispose?.();
+    if (state?.sun) {
+        state.sun.shadow?.dispose?.();
+        // Three.js dispose releases GPU resources but leaves the JS references.
+        // Reusing this renderer/world must allocate fresh shadow targets.
+        if (state.sun.shadow) {state.sun.shadow.map = null; state.sun.shadow.mapPass = null;}
+        state.sun.castShadow = false;
+    }
     game.classicVisuals = null;
 }
 
 export function classicBeginFrame(game, reflectionFactory, now = performance.now()) {
     let state = game.classicVisuals;
-    if (!state || state.world !== game.world || state.mode !== game.rendererMode) {
+    if (!state || state.world !== game.world || state.mode !== game.rendererMode ||
+        state.renderer !== game.renderer || state.quality !== game.classicQuality) {
         classicReleaseFrame(game);
         state = game.classicVisuals = createState(game, reflectionFactory);
     }
     const canvas = game.rendererMode === 'software' ? game.softwareCanvas : game.canvas;
     const width = Math.max(1, canvas?.clientWidth || game.size?.[0] || 1);
     const height = Math.max(1, canvas?.clientHeight || game.size?.[1] || 1);
-    const viewport = `${width}:${height}`;
+    const viewport = `${width}:${height}:${game.classicDeviceRatio || 1}`;
     if (state.viewport !== viewport) {
         state.viewport = viewport;
         state.maxRatio = classicResolutionLimit(game.classicQuality, game.classicDeviceRatio || 1, width, height, game.rendererMode);
@@ -122,8 +139,26 @@ export function classicBeginFrame(game, reflectionFactory, now = performance.now
         state.sun.target.position.copy(focus);
         state.sun.target.updateMatrixWorld();
         state.sun.position.copy(focus).addScaledVector(state.sunDirection, 65);
+        stabilizeShadowProjection(state, focus);
     }
     return now;
+}
+
+/** Snap the light-space projection rather than the car/light target. Sub-pixel
+ * camera motion then reuses the same shadow texels instead of shimmering. */
+function stabilizeShadowProjection(state, focus) {
+    const shadow = state.sun.shadow, camera = shadow.camera;
+    const right = state.shadowRight.crossVectors(camera.up, state.sunDirection);
+    if (right.lengthSq() < 1e-8) right.set(0, 0, -1);
+    else right.normalize();
+    const up = state.shadowUp.crossVectors(state.sunDirection, right).normalize();
+    const stepX = 36 / shadow.mapSize.x, stepY = 36 / shadow.mapSize.y;
+    const x = focus.dot(right), y = focus.dot(up);
+    const offsetX = Math.round(x / stepX) * stepX - x;
+    const offsetY = Math.round(y / stepY) * stepY - y;
+    camera.left = -18 + offsetX; camera.right = 18 + offsetX;
+    camera.bottom = -18 + offsetY; camera.top = 18 + offsetY;
+    camera.updateProjectionMatrix();
 }
 
 /** Only the automatic graphics preset adapts; game time and input are untouched. */

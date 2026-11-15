@@ -6,7 +6,7 @@ on:
       base_ref:
         description: 'Commit SHA, tag, or branch of the version currently installed'
         required: true
-        default: '93733a076aa15f437793452d6aa270f39a01b48e'
+        default: '0c30dafde41abdab8a6243f104036b6be1543c6d'
         type: string
 
 permissions:
