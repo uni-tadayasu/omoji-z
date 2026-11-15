@@ -4674,9 +4674,11 @@ function omojiCrownWindows(group, car, paint) {
 
 
 // Imported operator models share a decoder while retaining their own assets and materials.
+const omojiCenturyAssetVersion = "century-original-model-20261115";
 const omojiOperatorModels = new Map([
-    [omojiCenturyId, {file:'century-royal.bin', label:'センチュリーロイヤル', meshName:'Century Royal GLB',
-        length:1.013412, width:.386, height:.3011985}],
+    [omojiCenturyId, {file:'century-royal.bin', version:omojiCenturyAssetVersion, label:'センチュリーロイヤル',
+        meshName:'Century Royal GLB', length:.97894287109375, width:.38812255859375, height:.2978515625,
+        finish:{reflections:1.21, coat:.53, coatRoughness:.23, normalStrength:.90, rasterReflection:1.14}}],
     ['rolls-royce-operator', {file:'rolls-royce.bin', label:'ロールスロイス', meshName:'Rolls-Royce GLB',
         length:.98040771484375, width:.3808746337890625, height:.2905731201171875}],
     ['maybach-classic', {file:'maybach-model.bin', label:'マイバッハ', meshName:'Maybach GLB',
@@ -4787,7 +4789,9 @@ async function omojiOperatorFetch(model) {
     const controller = new AbortController();
     const timeout = setTimeout(() => controller.abort(), 40_000);
     try {
-        const response = await fetch(new URL('./' + model.file, import.meta.url), {signal:controller.signal});
+        const url = new URL('./' + model.file, import.meta.url);
+        if (model.version) url.searchParams.set('v',model.version);
+        const response = await fetch(url, {signal:controller.signal});
         if (!response.ok) throw Error(model.label + 'のモデルを読み込めませんでした。');
         return await response.arrayBuffer();
     } finally { clearTimeout(timeout); }
@@ -4905,12 +4909,15 @@ function omojiOperatorMesh(car, options, operator) {
     const shade = new _e(tint || '#000000');
     const braking = {value:0};
     const light = options.showroom ? null : omojiCarReflection(!!options.beam);
+    const finish = operator.finish;
     const surface = new Ws({
         color:'#ffffff', map:asset.base, roughnessMap:asset.metal,
         metalnessMap:asset.metal, normalMap:asset.normal, roughness:asset.materials.roughnessFactor ?? 1,
-        metalness:asset.materials.metallicFactor ?? 1, envMap:light, envMapIntensity:1.08,
-        clearcoat:operator.brightTrim ? .48 : .26, clearcoatRoughness:operator.brightTrim ? .22 : .32
+        metalness:asset.materials.metallicFactor ?? 1, envMap:light, envMapIntensity:finish?.reflections ?? 1.08,
+        clearcoat:finish?.coat ?? (operator.brightTrim ? .48 : .26),
+        clearcoatRoughness:finish?.coatRoughness ?? (operator.brightTrim ? .22 : .32)
     });
+    if (finish) surface.normalScale.setScalar(finish.normalStrength);
     // Glints stay inside the original lens and grille areas, using the baked image as a mask.
     const maybachFinish = operator.brightTrim ? `
 vec3 p = omojiOperatorPosition;
@@ -4967,14 +4974,15 @@ function omojiOperatorSoftware(car,color,operator) {
             indexes:spec.index.data, projected:new Float32Array((positions.length/3)*5)};
     }
     const chosen = omojiOperatorPaint(car, color);
-    const batch = {...asset.cpuSamples,tint:chosen ? j0(new _e(chosen)) : null};
+    const batch = {...asset.cpuSamples,tint:chosen ? j0(new _e(chosen)) : null,
+        reflection:operator.finish?.rasterReflection ?? 1};
     const scale = omojiOperatorScale(car, operator);
     return {key:car.id+':original:'+chosen,batches:[batch],
         dimensions:[car.dimensions[0],Math.max(car.dimensions[1],operator.width*scale),Math.max(car.dimensions[2],operator.height*scale)]};
 }
 
 function omojiRollsRaster(batch,out,depth,width,height,brake,view) {
-    const {projected:p,indexes,uv,size,albedo,metallicRough,tint}=batch;
+    const {projected:p,indexes,uv,size,albedo,metallicRough,tint,reflection}=batch;
     const preview=view!=='race';
     for (let cursor=0;cursor<indexes.length;cursor+=3) {
         const a=indexes[cursor], b=indexes[cursor+1], c=indexes[cursor+2];
@@ -5006,7 +5014,7 @@ function omojiRollsRaster(batch,out,depth,width,height,brake,view) {
                 const sample=(xpos+ypos*size)*4, block=pix*4, red=albedo[sample],green=albedo[sample+1],blue=albedo[sample+2];
                 const metallic=metallicRough[sample+2]/255;
                 const shiny=(1-metallicRough[sample+1]/255)*(.44+.56*metallic);
-                const beam=(gloss+u*ga+v*gb)*(11+shiny*105);
+                const beam=(gloss+u*ga+v*gb)*(11+shiny*105)*reflection;
                 const luminosity=(light+u*la+v*lb)*(preview?1.08:.96);
                 const glowing=red>55 && red>green*1.7 && red>blue*1.4;
                 const mask=!tint || glowing || Math.max(red,green,blue)>115 || metallic<.25 ? 0 : .22*metallic;
@@ -6477,7 +6485,7 @@ function omojiDriverSteering(vehicle, demand, profile, speed, handbrake, dt, pre
     if (profile !== 'digital') {
         vehicle.omojiDigitalSteer = 0;
         // The lower slope near centre makes small line corrections easier while preserving full lock.
-        const center = precision === null ? .64 : lt(.57,.36,precision);
+        const center = precision === null ? .64 : lt(.54,.29,precision);
         return center * demand + (1-center) * demand ** 3;
     }
     if (!demand) {
@@ -6488,10 +6496,10 @@ function omojiDriverSteering(vehicle, demand, profile, speed, handbrake, dt, pre
     const previous = vehicle.omojiDigitalSteer || 0;
     const held = direction === Math.sign(previous) ? Math.abs(previous) : 0;
     const pace = lh(speed);
-    const pressureRate = precision === null ? lt(5.6,4.2,pace) : lt(6.2,3.3,precision);
+    const pressureRate = precision === null ? lt(5.6,4.2,pace) : lt(6.8,3.25,precision);
     const pressure = Math.min(1, held + pressureRate * dt);
     vehicle.omojiDigitalSteer = direction * pressure;
-    const initialBite = precision === null ? lt(.22,.15,pace) : lt(.20,.055,precision);
+    const initialBite = precision === null ? lt(.22,.15,pace) : lt(.15,.035,precision);
     return direction * (initialBite + pressure * (.56 + (.44-initialBite) * pressure));
 }
 function omojiDriverYaw(vehicle, route, road, limit, pace, paceInput, intended, slide, handbrake, preview, precision = null) {
@@ -6507,15 +6515,23 @@ function omojiDriverYaw(vehicle, route, road, limit, pace, paceInput, intended, 
     const curveHelp = Re(relevantTurn, -limit * .75, limit * .75)
         * (.16 + pace * .28) * (natural * .68 + towardsTurn * (1 - natural));
     const angle = _i(vehicle.heading - vehicle.slipAngle);
-    const returnLimit = limit * (precision === null ? .67 : lt(.72,.90,precision));
-    const returnGain = precision === null ? 1 : lt(1.2,1.78,precision);
+    const returnLimit = limit * (precision === null ? .67 : lt(.84,1.08,precision));
+    const returnGain = precision === null ? 1 : lt(1.44,2.24,precision);
     const calm = -Re(angle * (1.1 + pace * 1.7) * returnGain, -returnLimit, returnLimit)
         * natural * (.46 + .48 * pace);
     const outwardAngle = Math.sign(vehicle.offset) * angle;
     const margin = oh(vehicle.stats, route);
     const edge = Re((Math.abs(vehicle.offset) - margin * .75) / (margin * .25), 0, 1);
     const inward = -Math.sign(vehicle.offset) * edge * natural * Re(outwardAngle * 6 + (vehicle.wallSide ? .18 : 0), 0, .54) * limit;
-    return Re(paceInput + curveHelp + calm + inward, -limit, limit);
+    const directed = paceInput + curveHelp + calm + inward;
+    // Sustain available inward yaw when the driver steers away from an edge.
+    if (precision !== null && intended*vehicle.offset < 0) {
+        const proximity = Re((Math.abs(vehicle.offset)-margin*.58)/(margin*.36),0,1);
+        const outwardMotion = Re((outwardAngle + .035)*16 + (vehicle.wallSide ? .3 : 0),0,1);
+        const recovery = proximity*outwardMotion*Math.min(1,Math.abs(intended)*2.1)*1.25;
+        return Re(directed - Math.sign(vehicle.offset)*recovery*limit,-limit,limit);
+    }
+    return Re(directed,-limit,limit);
 }
 
 function ep(n,e,t,i,r={}){if(!Number.isFinite(i)||i<=0)return n;let{stats:s}=n,tuning=omojiHandlingProgress(s),a=(s.topSpeed||190)/3.6,o=t.gripAt?.(n.distance)??(t.track.grip||1),l=Math.abs(n.speed),c=Re((s.grip||1)*o*(1+(s.aeroGrip??0)*lh(l)+(t.track.wet?s.wetGrip??0:s.dryGrip??0)),.58,2),h=C1[s.drive]??C1.FR,p=oh(s,t),u=Re((Math.abs(n.offset)-p+.42)/.42,0,1),d=u>0,m=t.sample(n.distance,r),y=(s.preTurbineAccel??s.accel)||7,turbineForce=omojiTurbineForce(s.turbineDriveProgress,y,l),f=Re(e.throttle||0,0,1),v=Re(e.brake||0,0,1),g=Re(e.handbrake||0,0,1),b=Re(Math.abs(n.speed)/a,0,1.2);
@@ -6523,27 +6539,36 @@ function ep(n,e,t,i,r={}){if(!Number.isFinite(i)||i<=0)return n;let{stats:s}=n,t
         const precision = century && g <= .07 ? omojiCenturyHandlingPace(l) : null;
         const centuryBrake = precision !== null && n.speed > .64;
         // A pressed service brake has priority over an overlapping accelerator.
-        if (centuryBrake) f *= 1 - .96 * v;
-        const brakeResponse = (s.brakeResponse ?? 1) * (centuryBrake ? lt(1.22,1.42,precision) : 1);
+        if (centuryBrake) f *= 1 - .995 * v;
+        const brakeResponse = (s.brakeResponse ?? 1) * (centuryBrake ? lt(1.36,1.58,precision) : 1);
         n.pedalThrottle=lt(n.pedalThrottle,f,un((f>n.pedalThrottle?12:18)*(s.pedalResponse??1),i));
         n.pedalBrake=lt(n.pedalBrake,v,un(21*brakeResponse,i));
-        let x=n.pedalThrottle,w=n.pedalBrake,M=e.reverse!==!1&&v>.1&&f<.1&&n.speed<.64;O1(n,e,i,b,M);let E=n.gear>0?la(n,n.gear):1,T=b/E,P=Math.max(T,n.gear===1?.46:.16),A=Wx[s.engineType]??.69,_=Re(1.035-Math.abs(P-A)**1.22*1.35*(1-(s.torqueResponse??0)),.31,1.03),S=s.turbo?x*Re((Math.max(n.rpm,1700)-1650)/2750,0,1):0;n.boost=lt(n.boost,S,un(S>n.boost?3.2:10.5,i));let R=Math.abs(n.angularSpeed*l)/(10.2*c),C=Math.sqrt(1-Math.min(.82,R*R*.62)),L=s.tractionAid??0,F=1-Math.max(0,1-c*h.launch)*(1-Re(l/24,0,1))*.72*(1-L),j=n.gear<n.gearCount,upgradeMps=(s.nitroLevelSpeedBonus??0)/3.6,stockBoost=Math.min(a*(L1+(s.nitroSpeed ?? 0)),s.specialEdition?1/0:(e.nitroSpeedLimit??1/0)),ordinaryBoost=Math.max(a,stockBoost),z=omojiNitroLimit(stockBoost,a,j?0:upgradeMps),$=!!e.nitro&&n.nitroRemaining>0&&n.gear>0&&n.speed>=0&&f>.17&&v<.08&&g<.08&&n.shiftTime<=0&&u<.58&&!n.wallSide&&C>.47&&(!j&&upgradeMps>0?n.speed<=z+.025:n.speed<z-.02)&&(!j||T<.996),ie=$?Math.min(1,n.nitroRemaining*n.nitroSeconds/i):0,Q=y*(s.nitroForce??1)*lt(.72,.5,Re(b,0,1))*x*C*F*Re(c,.54,1.15)*ie*omojiNitroDelivery(tuning,z-n.speed,R),he=n.progression,ne=(.018+b**2*.025)*(1-(s.dragReduction ?? 0)),se=he&&n.speed>he.dragStart?(n.speed-he.dragStart)*(1-he.dragSlope)*ne:0,oe=n.speed*(ne+u*.092)-se,ue=n.shiftTime>0?.23+.77*(1-n.shiftTime/(D1*(s.shiftTimeFactor??1))):1,pe=Re(la(n,1)/E,0,1),k=lt(.82,1.25,pe),D=n.gear>0&&T>=1?0:1,q=turbineForce*(1-.66*b**2.2)*(1+n.boost*.16)*x*ue*F*lt(.67,1,lt(C,1,L))*k*_*D*omojiDriveReserve(tuning,c*h.launch,turbineForce,l,R,w),G=Re((1-x)*w*.13,0,.13),I=(M?0:w*13.1*c*omojiBrakeStrength(s.brakeForce??1,tuning,lh(l))*(centuryBrake ? Math.sqrt(C)*(1+w*lt(.34,.60,precision)) : C))+g*4.7*(s.handbrakeForce ?? 1),U=n.speed,X=(1-x)*(.14+Re(T,0,1.16)*(.55+pe*.95))*Re(l*.5,0,1)*(n.gear>0?1:.26),V=ie?0:Math.max(0,n.speed-a)*.52,baseDrive=q-oe-V-(I+X)*Math.sign(n.speed)-(M?w*4.3:0)-(m.grade||0)*7.1*Re(l/5,0,1)+Q,N=baseDrive+omojiNitroLevelDrive(n,upgradeMps,j,z,ie,baseDrive,C*F*Re(c,.54,1.15),x),W=$&&(!j&&upgradeMps>0&&ie>0||N>0&&(Q>0||upgradeMps>0)),J=W?z:Math.max(a,U);n.speed+=N*i,!M&&(n.speed*U<0&&f<.1||U===0&&n.speed<0)&&(n.speed=0),n.speed=Re(n.speed,-8.6,J),n.gear>0&&T>1.045&&(j||!W)&&(n.speed=Math.max(0,n.speed-8.2*(T-1.045)*i));omojiNitroRelease(n,ordinaryBoost,!!(W&&!j&&upgradeMps>0),i);let K=Re(e.steering||0,-1,1),te=Re(Math.sqrt(1200/(s.mass||1200)),.68,1.31),me=Math.abs(n.speed),xe=lh(me);
+        let x=n.pedalThrottle,w=n.pedalBrake,M=e.reverse!==!1&&v>.1&&f<.1&&n.speed<.64;O1(n,e,i,b,M);let E=n.gear>0?la(n,n.gear):1,T=b/E,P=Math.max(T,n.gear===1?.46:.16),A=Wx[s.engineType]??.69,_=Re(1.035-Math.abs(P-A)**1.22*1.35*(1-(s.torqueResponse??0)),.31,1.03),S=s.turbo?x*Re((Math.max(n.rpm,1700)-1650)/2750,0,1):0;n.boost=lt(n.boost,S,un(S>n.boost?3.2:10.5,i));let R=Math.abs(n.angularSpeed*l)/(10.2*c),C=Math.sqrt(1-Math.min(.82,R*R*.62)),L=s.tractionAid??0,F=1-Math.max(0,1-c*h.launch)*(1-Re(l/24,0,1))*.72*(1-L),j=n.gear<n.gearCount,upgradeMps=(s.nitroLevelSpeedBonus??0)/3.6,stockBoost=Math.min(a*(L1+(s.nitroSpeed ?? 0)),s.specialEdition?1/0:(e.nitroSpeedLimit??1/0)),ordinaryBoost=Math.max(a,stockBoost),z=omojiNitroLimit(stockBoost,a,j?0:upgradeMps),$=!!e.nitro&&n.nitroRemaining>0&&n.gear>0&&n.speed>=0&&f>.17&&v<.08&&g<.08&&n.shiftTime<=0&&u<.58&&!n.wallSide&&C>.47&&(!j&&upgradeMps>0?n.speed<=z+.025:n.speed<z-.02)&&(!j||T<.996),ie=$?Math.min(1,n.nitroRemaining*n.nitroSeconds/i):0,Q=y*(s.nitroForce??1)*lt(.72,.5,Re(b,0,1))*x*C*F*Re(c,.54,1.15)*ie*omojiNitroDelivery(tuning,z-n.speed,R),he=n.progression,ne=(.018+b**2*.025)*(1-(s.dragReduction ?? 0)),se=he&&n.speed>he.dragStart?(n.speed-he.dragStart)*(1-he.dragSlope)*ne:0,oe=n.speed*(ne+u*.092)-se,ue=n.shiftTime>0?.23+.77*(1-n.shiftTime/(D1*(s.shiftTimeFactor??1))):1,pe=Re(la(n,1)/E,0,1),k=lt(.82,1.25,pe),D=n.gear>0&&T>=1?0:1,q=turbineForce*(1-.66*b**2.2)*(1+n.boost*.16)*x*ue*F*lt(.67,1,lt(C,1,L))*k*_*D*omojiDriveReserve(tuning,c*h.launch,turbineForce,l,R,w),G=Re((1-x)*w*.13,0,.13),I=(M?0:w*13.1*c*omojiBrakeStrength(s.brakeForce??1,tuning,lh(l))*(centuryBrake ? Math.sqrt(Math.sqrt(C))*(1+w*lt(.52,.83,precision)) : C))+g*4.7*(s.handbrakeForce ?? 1),U=n.speed,X=(1-x)*(.14+Re(T,0,1.16)*(.55+pe*.95))*Re(l*.5,0,1)*(n.gear>0?1:.26),V=ie?0:Math.max(0,n.speed-a)*.52,baseDrive=q-oe-V-(I+X)*Math.sign(n.speed)-(M?w*4.3:0)-(m.grade||0)*7.1*Re(l/5,0,1)+Q,N=baseDrive+omojiNitroLevelDrive(n,upgradeMps,j,z,ie,baseDrive,C*F*Re(c,.54,1.15),x),W=$&&(!j&&upgradeMps>0&&ie>0||N>0&&(Q>0||upgradeMps>0)),J=W?z:Math.max(a,U);n.speed+=N*i,!M&&(n.speed*U<0&&f<.1||U===0&&n.speed<0)&&(n.speed=0),n.speed=Re(n.speed,-8.6,J),n.gear>0&&T>1.045&&(j||!W)&&(n.speed=Math.max(0,n.speed-8.2*(T-1.045)*i));omojiNitroRelease(n,ordinaryBoost,!!(W&&!j&&upgradeMps>0),i);let K=Re(e.steering||0,-1,1),te=Re(Math.sqrt(1200/(s.mass||1200)),.68,1.31),me=Math.abs(n.speed),xe=lh(me);
         const playerSteer = e.steeringProfile === "digital" || e.steeringProfile === "analog";
         const manualPrecision = playerSteer ? precision : null;
         const steerTarget = playerSteer ? omojiDriverSteering(n,K,e.steeringProfile,me,g,i,manualPrecision) : U1(K);
         const changingDirection = steerTarget*n.steering < 0;
         const steerReturn = !K ? 18.8+xe*4 : changingDirection ? 23+xe*3 : 14.4+xe*1.9;
-        const response = manualPrecision === null ? 1 : !K ? lt(1.34,1.66,manualPrecision)
-            : changingDirection ? 1.3 : lt(1.14,1,manualPrecision);
+        const response = manualPrecision === null ? 1 : !K ? lt(1.54,1.92,manualPrecision)
+            : changingDirection ? 1.55 : lt(1.2,1,manualPrecision);
         const steerRate = playerSteer && g<.08 ? steerReturn*response : (K?9.6+xe*3.2:13.5+xe*1.8);
         n.steering=lt(n.steering,steerTarget,un(steerRate*te*(s.steeringResponse??1)*(1+tuning*xe*(K?-.08:.12)),i));let le=g*Re((me-4)/10,0,1),be=Re((me-12)/38,0,1)*Math.abs(n.steering),Ee=n.steering*Math.sign(n.speed)*N1(n,o,me)*(1+(.26+(s.handbrakeYaw??0))*le+h.trail*(w*.17+G)*(1-.18*tuning*xe)-x*be*h.powerSteer*(1-.24*tuning*xe)),Ce=Re(me/2.6,0,1),Ie=n.wallSide*n.steering*Math.sign(n.speed)<0&&(f>.1||M)?Math.max(.53,Ce):Ce,Ne=((13.5+(6.4+3.25*tuning)*xe)*c+(3.5+3.5*(s.handbrakeYaw??0))*le)/Math.max(12,me);
-        const tightTurnGain = manualPrecision === null ? 1 : 1 + .20*(1-manualPrecision)*Math.abs(n.steering);
+        // Add cornering authority progressively under deliberate steering. Small
+        // corrections, neutral steering and the handbrake keep their own response.
+        const turnCommitment = manualPrecision === null ? 0 : Re((Math.abs(n.steering)-.3)/.7,0,1);
+        const turnGain = manualPrecision === null ? 1 : 1 + lt(.46,.20,manualPrecision)*turnCommitment;
+        const yawLimit = Ne*(1 + .23*turnCommitment);
         const steerRateLimited = playerSteer
-            ? omojiDriverYaw(n,t,m,Ne,xe,Ee*tightTurnGain,K,le,g,n.omojiSteerPreview??={},manualPrecision)
+            ? omojiDriverYaw(n,t,m,yawLimit,xe,Ee*turnGain,K,le,g,n.omojiSteerPreview??={},manualPrecision)
             : Re(Ee,-Ne,Ne);
-        const settleYaw = manualPrecision !== null && !K ? lt(1.15,1.38,manualPrecision) : 1;
+        const settleYaw = manualPrecision !== null && !K ? lt(1.26,1.51,manualPrecision) : 1;
         const yawResponse = playerSteer && g < .08 ? ((K ? 14.8 : 17.2) + xe*1.9)*settleYaw : 10.5+xe*2.8;
-        n.angularSpeed=lt(n.angularSpeed,Ie*steerRateLimited,un(lt(yawResponse*te*(1+tuning*xe*(K?.045:.11)),5.9,le),i));let wt=be*x*h.powerSlide*(.23/c),Se=w*be*h.trail*.13,it=s.drift||1,Qe=n.steering*it*(wt+Se+be*(t.track.wet?.082:.028)),dn=Math.abs(n.angularSpeed)*(t.track.wet?.1:.082)*(1-xe*.5),Hn=Re(Qe,-dn,dn)*(1-tuning*xe*.16*(1-le))*(playerSteer&&g<.08?1-.34*xe-.12*(1-Math.abs(K)):1)+n.steering*it*.6*le,Z=s.rollSupport??0,Nt=lt((7.8+xe*2.5)*c*te*(1+Z),4.1,le);n.slipAngle=_i(n.slipAngle+_i(Hn-n.slipAngle)*un(Nt,i));let Xt=n.offset,pt=n.heading-n.slipAngle+n.angularSpeed*i*.5,si=Math.sin(pt)*n.speed;n.offset+=si*i;let Ai=Math.max(.56,1-(m.curve||0)*(n.offset+Xt)/2),Zi=Math.cos(pt)*n.speed,as=Zi/Ai;n.distance=Re(n.distance+as*i,-30,t.length+105),n.furthestDistance=Math.max(n.furthestDistance,n.distance);let Aa=t.sample(n.distance,{}),Ra=_i(Aa.heading-m.heading);n.heading=_i(n.heading+n.angularSpeed*i-Ra),n.impact=Math.max(0,n.impact-i*4.1),Xx(n,p,si,Zi,i),n.nitroActive=W&&(!j&&upgradeMps>0||n.speed>U),omojiUpdateNitroReserve(n,n.nitroActive,!!e.nitro,ie,i),qx(n,x,i,Re(Math.abs(n.speed)/a,0,1.2)),n.throttle=M?w:x,n.brake=Math.max(M?0:w,g),n.longitudinalAccel=lt(n.longitudinalAccel,(n.speed-U)/i,un(8,i));let Ca=Re((s.dimensions?.[2]??1.3)/1.35/(s.handling||1),.57,1.48),Ko=n.angularSpeed*n.speed;return n.roll=lt(n.roll,Re(-Ko*.006*Ca*(1-Z),-.09,.09),un(7,i)),n.pitch=lt(n.pitch,Re(-n.longitudinalAccel*.0031*Ca,-.038,.053),un(9,i)),n.slip=Re(Math.abs(n.slipAngle)*(n.wallSide?.54:2.6)+u*(me>10?.23:0),0,1),n.slip>.31&&n.speed>10&&!d?(n.chainTime+=i,n.driftChain+=n.speed*n.slip*(1+Math.min(2,n.chainTime/2.5))*i*8):n.driftChain>0&&(n.impact<.15&&(n.driftScore+=n.driftChain),n.driftChain=0,n.chainTime=0),n}function tp(n,e,t,i=1,r=1,s={},a=!1,o=null){const tuning=omojiHandlingProgress(n.stats);let l=Math.max(0,n.speed),h=e.sample(n.distance,s).curve||0,p=e.track.grip||1,u=e.gripAt?.(n.distance)??p,d=6.65*(n.stats.grip||1)*i**2,m=a?L1:1,levelReserve=a&&n.gear>=n.gearCount?(n.stats.nitroLevelSpeedBonus??0)/3.6:0,y=(n.stats.topSpeed||190)*Math.min(1,.84*i)*m/3.6+levelReserve,turbine=Number(n.stats.turbineLevel>0||levelReserve>0||n.omojiNitroLevelCarry>0),extraPreview=turbine*Math.min(2600,.037*Math.max(0,l-54)**2),f=9+l*((o?.preview??1.6)+.29*tuning*lh(l))+extraPreview;for(let P=0;P<=f;P+=6+Math.min(18,extraPreview/170)){let A=Math.abs(e.sample(n.distance+P,s).curve||0),_=e.gripAt?.(n.distance+P)??p,S=Math.sqrt(d*_/Math.max(turbine ? .00004 : .001,A)),R=Math.sqrt(S**2+2*(o?.braking??7.5)*Math.min(u,_)*(1+.10*tuning*lh(l))*P);y=Math.min(y,R)}let v=Re(Math.atan2(t-n.offset,4.2+l*(o?.54:.49)),-.42,.42),g=o?e.sample(n.distance+l*.12,s).curve||0:h,b=lt(h,g,.6),x=b*l/Math.max(.58,1-b*n.offset),w=x+2.45*_i(v+n.slipAngle*.6-n.heading)-.28*(n.angularSpeed-x),M=jx(w/N1(n,u));o&&(n.wallSide||Math.abs(n.heading-n.slipAngle)>.32)&&(y=Math.min(y,n.wallSide?20.5:27.5));let E=l-y,T=o?2.7*Re(1-Math.max(0,E)/1.55,0,1):0;return{steering:M,brake:Re((E+.1)*.32,0,1),throttle:Re((y-l+T)*.21,0,r),handbrake:0,reverse:!1}}function B1(n,e,t=Wi(n.id==="hachi"?"nagare":"hachi")){if (n.operatorMax || n.grandPrixCpuReference) n=Wi(n.grandPrixCpuReference ?? n.id);let i=Object.hasOwn(Yr,e)?Yr[e]:Yr.normal,speed=n.preTurbineTopSpeed??n.topSpeed,acceleration=n.preTurbineAccel??n.accel,r=lt(t.topSpeed,speed,.72);if(!i.line)return{...t,topSpeed:r,accel:lt(t.accel,acceleration,.76)};let s=i.nitro?.88:.76;return{...t,topSpeed:Math.min(350,Math.max(speed,r)*i.speedMatch),accel:lt(t.accel,acceleration,s)*i.power,grip:Re(lt(t.grip,n.grip,s)*(i.nitro?1.12:1.06),.67,1.78),handling:Re(lt(t.handling,n.handling,s)*(i.nitro?1.12:1.06),.68,1.73),brakeForce:Math.min(1.9,(n.brakeForce??1)*(i.nitro?1.17:1.09)),gears:n.gears,nitroSeconds:Kd}}function omojiGrandPrixLane(vehicle, route, nearest, grid, target) {
+        n.angularSpeed=lt(n.angularSpeed,Ie*steerRateLimited,un(lt(yawResponse*te*(1+tuning*xe*(K?.045:.11)),5.9,le),i));let wt=be*x*h.powerSlide*(.23/c),Se=w*be*h.trail*.13,it=s.drift||1,Qe=n.steering*it*(wt+Se+be*(t.track.wet?.082:.028)),dn=Math.abs(n.angularSpeed)*(t.track.wet?.1:.082)*(1-xe*.5),Hn=Re(Qe,-dn,dn)*(1-tuning*xe*.16*(1-le))*(playerSteer&&g<.08?1-.34*xe-.12*(1-Math.abs(K)):1)+n.steering*it*.6*le,Z=s.rollSupport??0,Nt=lt((7.8+xe*2.5)*c*te*(1+Z),4.1,le);if (manualPrecision !== null) {
+            const gripAssist = lt(.26,.45,manualPrecision);
+            Hn *= 1 - gripAssist;
+            Nt *= 1 + gripAssist;
+        }
+        n.slipAngle=_i(n.slipAngle+_i(Hn-n.slipAngle)*un(Nt,i));let Xt=n.offset,pt=n.heading-n.slipAngle+n.angularSpeed*i*.5,si=Math.sin(pt)*n.speed;n.offset+=si*i;let Ai=Math.max(.56,1-(m.curve||0)*(n.offset+Xt)/2),Zi=Math.cos(pt)*n.speed,as=Zi/Ai;n.distance=Re(n.distance+as*i,-30,t.length+105),n.furthestDistance=Math.max(n.furthestDistance,n.distance);let Aa=t.sample(n.distance,{}),Ra=_i(Aa.heading-m.heading);n.heading=_i(n.heading+n.angularSpeed*i-Ra),n.impact=Math.max(0,n.impact-i*4.1),Xx(n,p,si,Zi,i),n.nitroActive=W&&(!j&&upgradeMps>0||n.speed>U),omojiUpdateNitroReserve(n,n.nitroActive,!!e.nitro,ie,i),qx(n,x,i,Re(Math.abs(n.speed)/a,0,1.2)),n.throttle=M?w:x,n.brake=Math.max(M?0:w,g),n.longitudinalAccel=lt(n.longitudinalAccel,(n.speed-U)/i,un(8,i));let Ca=Re((s.dimensions?.[2]??1.3)/1.35/(s.handling||1),.57,1.48),Ko=n.angularSpeed*n.speed;return n.roll=lt(n.roll,Re(-Ko*.006*Ca*(1-Z),-.09,.09),un(7,i)),n.pitch=lt(n.pitch,Re(-n.longitudinalAccel*.0031*Ca,-.038,.053),un(9,i)),n.slip=Re(Math.abs(n.slipAngle)*(n.wallSide?.54:2.6)+u*(me>10?.23:0),0,1),n.slip>.31&&n.speed>10&&!d?(n.chainTime+=i,n.driftChain+=n.speed*n.slip*(1+Math.min(2,n.chainTime/2.5))*i*8):n.driftChain>0&&(n.impact<.15&&(n.driftScore+=n.driftChain),n.driftChain=0,n.chainTime=0),n}function tp(n,e,t,i=1,r=1,s={},a=!1,o=null){const tuning=omojiHandlingProgress(n.stats);let l=Math.max(0,n.speed),h=e.sample(n.distance,s).curve||0,p=e.track.grip||1,u=e.gripAt?.(n.distance)??p,d=6.65*(n.stats.grip||1)*i**2,m=a?L1:1,levelReserve=a&&n.gear>=n.gearCount?(n.stats.nitroLevelSpeedBonus??0)/3.6:0,y=(n.stats.topSpeed||190)*Math.min(1,.84*i)*m/3.6+levelReserve,turbine=Number(n.stats.turbineLevel>0||levelReserve>0||n.omojiNitroLevelCarry>0),extraPreview=turbine*Math.min(2600,.037*Math.max(0,l-54)**2),f=9+l*((o?.preview??1.6)+.29*tuning*lh(l))+extraPreview;for(let P=0;P<=f;P+=6+Math.min(18,extraPreview/170)){let A=Math.abs(e.sample(n.distance+P,s).curve||0),_=e.gripAt?.(n.distance+P)??p,S=Math.sqrt(d*_/Math.max(turbine ? .00004 : .001,A)),R=Math.sqrt(S**2+2*(o?.braking??7.5)*Math.min(u,_)*(1+.10*tuning*lh(l))*P);y=Math.min(y,R)}let v=Re(Math.atan2(t-n.offset,4.2+l*(o?.54:.49)),-.42,.42),g=o?e.sample(n.distance+l*.12,s).curve||0:h,b=lt(h,g,.6),x=b*l/Math.max(.58,1-b*n.offset),w=x+2.45*_i(v+n.slipAngle*.6-n.heading)-.28*(n.angularSpeed-x),M=jx(w/N1(n,u));o&&(n.wallSide||Math.abs(n.heading-n.slipAngle)>.32)&&(y=Math.min(y,n.wallSide?20.5:27.5));let E=l-y,T=o?2.7*Re(1-Math.max(0,E)/1.55,0,1):0;return{steering:M,brake:Re((E+.1)*.32,0,1),throttle:Re((y-l+T)*.21,0,r),handbrake:0,reverse:!1}}function B1(n,e,t=Wi(n.id==="hachi"?"nagare":"hachi")){if (n.operatorMax || n.grandPrixCpuReference) n=Wi(n.grandPrixCpuReference ?? n.id);let i=Object.hasOwn(Yr,e)?Yr[e]:Yr.normal,speed=n.preTurbineTopSpeed??n.topSpeed,acceleration=n.preTurbineAccel??n.accel,r=lt(t.topSpeed,speed,.72);if(!i.line)return{...t,topSpeed:r,accel:lt(t.accel,acceleration,.76)};let s=i.nitro?.88:.76;return{...t,topSpeed:Math.min(350,Math.max(speed,r)*i.speedMatch),accel:lt(t.accel,acceleration,s)*i.power,grip:Re(lt(t.grip,n.grip,s)*(i.nitro?1.12:1.06),.67,1.78),handling:Re(lt(t.handling,n.handling,s)*(i.nitro?1.12:1.06),.68,1.73),brakeForce:Math.min(1.9,(n.brakeForce??1)*(i.nitro?1.17:1.09)),gears:n.gears,nitroSeconds:Kd}}function omojiGrandPrixLane(vehicle, route, nearest, grid, target) {
     const edge = oh(vehicle.stats, route) - .35;
     const gridMix = Re(1 - Math.max(0, vehicle.distance) / 63, 0, 1);
     let lane = lt(target + grid.lane, grid.offset, gridMix);
@@ -10196,7 +10221,9 @@ for(let[n,e]of[["difficulty","difficulty"],["quality","quality"],["song-picker",
     figure.className = "operator-studio operator-century-studio";
     figure.innerHTML = `<img alt="漆黒のセンチュリーロイヤルを斜め前方から描いたCGイラスト" width="1240" height="698" loading="lazy" decoding="async" draggable="false">
         <figcaption><strong>センチュリーロイヤル</strong></figcaption>`;
-    figure.querySelector("img").src = new URL("./century-royal-studio.webp", import.meta.url).href;
+    const artwork = new URL("./century-royal-studio.webp", import.meta.url);
+    artwork.searchParams.set("v",omojiCenturyAssetVersion);
+    figure.querySelector("img").src = artwork.href;
     Y("operator-garage").querySelector(".operator-gallery").prepend(figure);
 }
 
