@@ -1,11 +1,11 @@
 {
-  "name": "omoji-z-reborn",
-  "version": "4.0.0",
+  "name": "omoji-z-classic-remaster",
+  "version": "4.1.0",
   "private": true,
   "type": "module",
   "description": "Buildless browser racing game with independent designs",
   "scripts": {
-    "test": "node tools/test-remake-physics.mjs && node tools/test-remake-input.mjs && node tools/test-remake-profile.mjs && node tools/test-remake-renderer.mjs && node tools/test-remake-ui.mjs && node tools/test-auto-merge.mjs && npm run test:legacy",
+    "test": "node tools/test-classic-remaster.mjs && node tools/test-classic-visuals.mjs && node tools/build-classic-atlas.mjs --check && node tools/test-remake-physics.mjs && node tools/test-remake-input.mjs && node tools/test-remake-profile.mjs && node tools/test-remake-renderer.mjs && node tools/test-remake-ui.mjs && node tools/test-auto-merge.mjs && npm run test:legacy",
     "test:legacy": "node tools/test-balance.mjs && node tools/test-economy-integration.mjs && node tools/verify-driving.mjs && node tools/verify-network.mjs && node tools/verify-challenges.mjs && node tools/test-soundtrack.mjs && node tools/verify.mjs --report tools/verification-report.json",
     "dev": "node tools/dev-server.mjs"
   },

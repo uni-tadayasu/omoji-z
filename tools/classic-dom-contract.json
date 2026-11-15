@@ -1,0 +1,821 @@
+{
+  "source": "classic-v3 legacy.html at 7f34821e00122e34d3aaf22f143b9341dbd2aed4",
+  "ids": [
+    "gp-header-title",
+    "gp-header-driver",
+    "gp-header-title-text",
+    "announcements",
+    "announcement-copy",
+    "announcement-toggle",
+    "top",
+    "setup",
+    "setup-title",
+    "time-challenge-offer",
+    "launch-track",
+    "launch-car",
+    "launch-xp",
+    "quick-start-title",
+    "driving-preset-status",
+    "race-options",
+    "show-tuning-tracks",
+    "xp-guide",
+    "xp-course-count",
+    "xp-course-range",
+    "show-xp-tracks",
+    "bonus-count",
+    "show-bonus-tracks",
+    "endurance-bonus",
+    "show-endurance-track",
+    "track-search",
+    "track-filter",
+    "track-type",
+    "track-matches",
+    "track-current",
+    "track-list",
+    "mode-list",
+    "solo-cpu-field",
+    "solo-cpu-count",
+    "solo-cpu-help",
+    "difficulty-field",
+    "difficulty",
+    "difficulty-tip",
+    "transmission",
+    "mission-panel",
+    "race-missions",
+    "technique-course-title",
+    "car-count",
+    "track-count",
+    "music-count",
+    "about-game",
+    "official",
+    "official-heading",
+    "official-entry-heading",
+    "official-solo-start",
+    "official-multi-start",
+    "official-status",
+    "official-license-heading",
+    "official-grade",
+    "official-points",
+    "official-next-grade",
+    "official-awards-heading",
+    "grand-prix",
+    "gp-heading",
+    "gp-status",
+    "gp-titles",
+    "gp-detail",
+    "gp-list",
+    "garage",
+    "garage-title",
+    "car-canvas",
+    "rolls-model-status",
+    "garage-error",
+    "garage-rotation-hint",
+    "car-info",
+    "owned-panel",
+    "garage-catalog",
+    "garage-catalog-heading",
+    "car-search",
+    "car-filter",
+    "car-decade",
+    "car-category",
+    "car-matches",
+    "car-current",
+    "car-list",
+    "paint-panel",
+    "garage-custom",
+    "paint-heading",
+    "reset-paint",
+    "paint-swatches",
+    "paint-status",
+    "paint",
+    "nickname-heading",
+    "car-nickname-form",
+    "car-nickname",
+    "reset-nickname",
+    "nickname-help",
+    "nickname-status",
+    "maintenance-panel",
+    "maintenance-overview",
+    "maintenance-status",
+    "turbine-panel",
+    "turbine-help",
+    "turbine-quote",
+    "nitro-level-panel",
+    "nitro-level-help",
+    "nitro-level-quote",
+    "tuning-panel",
+    "garage-tuning",
+    "operator-garage",
+    "operator-unlock",
+    "operator-key",
+    "operator-status",
+    "operator-choices",
+    "operator-max-panel",
+    "operator-max",
+    "operator-max-help",
+    "operator-max-status",
+    "paint-shop",
+    "paint-shop-title",
+    "workshop-vehicle",
+    "workshop-swatches-heading",
+    "workshop-picker",
+    "workshop-hex",
+    "shop",
+    "shop-title",
+    "shop-inventory",
+    "community",
+    "community-title",
+    "multiplayer-panel",
+    "online-play",
+    "p2p-title",
+    "p2p-room",
+    "records-panel",
+    "level-ranking",
+    "records",
+    "records-title",
+    "record-list",
+    "time-challenge",
+    "ranking-panel",
+    "link-rank",
+    "transfer-panel",
+    "save-sync",
+    "preferences",
+    "preferences-title",
+    "audio-panel",
+    "audio",
+    "audio-title",
+    "menu-theme-heading",
+    "menu-theme-title",
+    "menu-theme-status",
+    "menu-music-toggle",
+    "race-music-heading",
+    "para-song-query",
+    "para-song-scene",
+    "para-song-count",
+    "song-list",
+    "song-status",
+    "guide-panel",
+    "guide",
+    "guide-title",
+    "settings",
+    "settings-title",
+    "volume-music-value",
+    "volume-music",
+    "volume-sfx-value",
+    "volume-sfx",
+    "song-picker",
+    "quality",
+    "camera-distance",
+    "settings-transmission",
+    "assist",
+    "gamepad-settings",
+    "race",
+    "race-canvas",
+    "race-labels",
+    "gp-race-round",
+    "official-race-label",
+    "race-track-name",
+    "race-time",
+    "race-best",
+    "race-car-name",
+    "gp-race-title",
+    "race-position",
+    "race-context",
+    "race-renderer-notice",
+    "operator-max-race",
+    "map",
+    "race-progress",
+    "race-endurance-progress",
+    "camera",
+    "reset-car",
+    "race-fullscreen",
+    "pause",
+    "race-orientation-hint",
+    "dismiss-orientation-hint",
+    "race-display-status",
+    "countdown",
+    "race-tip",
+    "nitro-tip",
+    "race-rpm",
+    "race-speed",
+    "race-gear",
+    "race-transmission",
+    "race-rev-count",
+    "race-shift-tip",
+    "nitro-hud",
+    "race-nitro-label",
+    "race-nitro-level",
+    "race-nitro-meter",
+    "race-nitro-bar",
+    "touch-nitro",
+    "touch-shifts",
+    "race-loading",
+    "race-loading-track",
+    "race-loading-car",
+    "race-loading-bar",
+    "race-loading-state",
+    "pause-layer",
+    "pause-heading",
+    "resume-race",
+    "endurance-pause-note",
+    "pause-help",
+    "restart-race",
+    "pause-exit",
+    "pause-exit-label",
+    "endurance-retire-layer",
+    "endurance-retire-title",
+    "endurance-retire-distance",
+    "endurance-retire-amount",
+    "endurance-retire-note",
+    "endurance-retire-cancel",
+    "endurance-retire-confirm",
+    "result-layer",
+    "result-kicker",
+    "result-title",
+    "result-details",
+    "tuning-bench-result",
+    "result-note",
+    "gp-result",
+    "official-result",
+    "gp-result-action",
+    "retry-race",
+    "gp-result-return",
+    "online-race-layer",
+    "online-race-kicker",
+    "online-race-title",
+    "online-race-status",
+    "online-race-continue",
+    "online-race-quit",
+    "error",
+    "error-title",
+    "error-text",
+    "race-error-retry"
+  ],
+  "views": [
+    "setup",
+    "official",
+    "grand-prix",
+    "garage",
+    "paint-shop",
+    "shop",
+    "community",
+    "preferences"
+  ],
+  "controls": [
+    {
+      "id": "track-search",
+      "tag": "input",
+      "type": "search"
+    },
+    {
+      "id": "track-filter",
+      "tag": "select",
+      "type": "select-one",
+      "options": [
+        ""
+      ]
+    },
+    {
+      "id": "track-type",
+      "tag": "select",
+      "type": "select-one",
+      "options": [
+        ""
+      ]
+    },
+    {
+      "id": "solo-cpu-count",
+      "tag": "select",
+      "type": "select-one",
+      "options": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7"
+      ]
+    },
+    {
+      "id": "difficulty",
+      "tag": "select",
+      "type": "select-one",
+      "options": [
+        "easy",
+        "normal",
+        "hard",
+        "master",
+        "legend"
+      ]
+    },
+    {
+      "id": "transmission",
+      "tag": "select",
+      "type": "select-one",
+      "options": [
+        "at",
+        "mt"
+      ]
+    },
+    {
+      "id": "car-search",
+      "tag": "input",
+      "type": "search"
+    },
+    {
+      "id": "car-filter",
+      "tag": "select",
+      "type": "select-one",
+      "options": [
+        ""
+      ]
+    },
+    {
+      "id": "car-decade",
+      "tag": "select",
+      "type": "select-one",
+      "options": [
+        ""
+      ]
+    },
+    {
+      "id": "car-category",
+      "tag": "select",
+      "type": "select-one",
+      "options": [
+        ""
+      ]
+    },
+    {
+      "id": "paint",
+      "tag": "input",
+      "type": "text"
+    },
+    {
+      "id": "car-nickname",
+      "tag": "input",
+      "type": "text"
+    },
+    {
+      "id": "operator-key",
+      "tag": "input",
+      "type": "password"
+    },
+    {
+      "id": "operator-max",
+      "tag": "input",
+      "type": "checkbox"
+    },
+    {
+      "id": "workshop-vehicle",
+      "tag": "select",
+      "type": "select-one",
+      "options": []
+    },
+    {
+      "id": "workshop-picker",
+      "tag": "input",
+      "type": "color"
+    },
+    {
+      "id": "workshop-hex",
+      "tag": "input",
+      "type": "text"
+    },
+    {
+      "id": "para-song-query",
+      "tag": "input",
+      "type": "search"
+    },
+    {
+      "id": "para-song-scene",
+      "tag": "select",
+      "type": "select-one",
+      "options": [
+        ""
+      ]
+    },
+    {
+      "id": "volume-music",
+      "tag": "input",
+      "type": "range"
+    },
+    {
+      "id": "volume-sfx",
+      "tag": "input",
+      "type": "range"
+    },
+    {
+      "id": "song-picker",
+      "tag": "select",
+      "type": "select-one",
+      "options": [
+        "auto"
+      ]
+    },
+    {
+      "id": "quality",
+      "tag": "select",
+      "type": "select-one",
+      "options": [
+        "auto",
+        "low",
+        "medium",
+        "high"
+      ]
+    },
+    {
+      "id": "camera-distance",
+      "tag": "select",
+      "type": "select-one",
+      "options": [
+        "auto",
+        "near",
+        "normal",
+        "far"
+      ]
+    },
+    {
+      "id": "settings-transmission",
+      "tag": "select",
+      "type": "select-one",
+      "options": [
+        "at",
+        "mt"
+      ]
+    },
+    {
+      "id": "assist",
+      "tag": "input",
+      "type": "checkbox"
+    }
+  ],
+  "hooks": [
+    {
+      "attribute": "data-start",
+      "value": "",
+      "tag": "button"
+    },
+    {
+      "attribute": "data-driving-preset",
+      "value": "beginner",
+      "tag": "button"
+    },
+    {
+      "attribute": "data-driving-preset",
+      "value": "balanced",
+      "tag": "button"
+    },
+    {
+      "attribute": "data-driving-preset",
+      "value": "sport",
+      "tag": "button"
+    },
+    {
+      "attribute": "data-driving-tutorial",
+      "value": "",
+      "tag": "button"
+    },
+    {
+      "attribute": "data-open",
+      "value": "settings",
+      "tag": "button"
+    },
+    {
+      "attribute": "data-open",
+      "value": "settings",
+      "tag": "button"
+    },
+    {
+      "attribute": "data-open",
+      "value": "settings",
+      "tag": "button"
+    },
+    {
+      "attribute": "data-open",
+      "value": "settings",
+      "tag": "button"
+    },
+    {
+      "attribute": "data-open",
+      "value": "settings",
+      "tag": "button"
+    },
+    {
+      "attribute": "data-settings-focus",
+      "value": "gamepad-settings",
+      "tag": "button"
+    },
+    {
+      "attribute": "data-settings-focus",
+      "value": "volume-music",
+      "tag": "button"
+    },
+    {
+      "attribute": "data-settings-focus",
+      "value": "gamepad-settings",
+      "tag": "button"
+    },
+    {
+      "attribute": "data-settings-focus",
+      "value": "quality",
+      "tag": "button"
+    },
+    {
+      "attribute": "data-open-technique-course",
+      "value": "",
+      "tag": "button"
+    },
+    {
+      "attribute": "data-official-room",
+      "value": "",
+      "tag": "button"
+    },
+    {
+      "attribute": "data-maintenance-action",
+      "value": "body",
+      "tag": "button"
+    },
+    {
+      "attribute": "data-maintenance-action",
+      "value": "paint",
+      "tag": "button"
+    },
+    {
+      "attribute": "data-maintenance-action",
+      "value": "lights",
+      "tag": "button"
+    },
+    {
+      "attribute": "data-maintenance-action",
+      "value": "wheels",
+      "tag": "button"
+    },
+    {
+      "attribute": "data-legacy-upgrade",
+      "value": "",
+      "tag": "details"
+    },
+    {
+      "attribute": "data-legacy-upgrade",
+      "value": "",
+      "tag": "details"
+    },
+    {
+      "attribute": "data-legacy-upgrade",
+      "value": "",
+      "tag": "div"
+    },
+    {
+      "attribute": "data-turbine",
+      "value": "summary",
+      "tag": "span"
+    },
+    {
+      "attribute": "data-turbine",
+      "value": "car",
+      "tag": "h3"
+    },
+    {
+      "attribute": "data-turbine",
+      "value": "level",
+      "tag": "strong"
+    },
+    {
+      "attribute": "data-turbine",
+      "value": "progress",
+      "tag": "progress"
+    },
+    {
+      "attribute": "data-turbine",
+      "value": "speed",
+      "tag": "dd"
+    },
+    {
+      "attribute": "data-turbine",
+      "value": "acceleration",
+      "tag": "dd"
+    },
+    {
+      "attribute": "data-turbine",
+      "value": "totalSpeed",
+      "tag": "dd"
+    },
+    {
+      "attribute": "data-turbine",
+      "value": "balance",
+      "tag": "strong"
+    },
+    {
+      "attribute": "data-turbine",
+      "value": "buy",
+      "tag": "button"
+    },
+    {
+      "attribute": "data-turbine",
+      "value": "quote",
+      "tag": "p"
+    },
+    {
+      "attribute": "data-turbine",
+      "value": "status",
+      "tag": "p"
+    },
+    {
+      "attribute": "data-nitro-level",
+      "value": "summary",
+      "tag": "span"
+    },
+    {
+      "attribute": "data-nitro-level",
+      "value": "name",
+      "tag": "h3"
+    },
+    {
+      "attribute": "data-nitro-level",
+      "value": "progress",
+      "tag": "progress"
+    },
+    {
+      "attribute": "data-nitro-level",
+      "value": "speed",
+      "tag": "dd"
+    },
+    {
+      "attribute": "data-nitro-level",
+      "value": "recovery",
+      "tag": "dd"
+    },
+    {
+      "attribute": "data-nitro-level",
+      "value": "balance",
+      "tag": "strong"
+    },
+    {
+      "attribute": "data-nitro-level",
+      "value": "buy",
+      "tag": "button"
+    },
+    {
+      "attribute": "data-nitro-level",
+      "value": "quote",
+      "tag": "p"
+    },
+    {
+      "attribute": "data-nitro-level",
+      "value": "status",
+      "tag": "p"
+    },
+    {
+      "attribute": "data-car",
+      "value": "maybach-classic",
+      "tag": "button"
+    },
+    {
+      "attribute": "data-car",
+      "value": "rolls-royce-operator",
+      "tag": "button"
+    },
+    {
+      "attribute": "data-paint-workshop",
+      "value": "mount",
+      "tag": "div"
+    },
+    {
+      "attribute": "data-paint-workshop",
+      "value": "form",
+      "tag": "form"
+    },
+    {
+      "attribute": "data-paint-workshop",
+      "value": "car",
+      "tag": "select"
+    },
+    {
+      "attribute": "data-paint-workshop",
+      "value": "swatches",
+      "tag": "div"
+    },
+    {
+      "attribute": "data-paint-workshop",
+      "value": "picker",
+      "tag": "input"
+    },
+    {
+      "attribute": "data-paint-workshop",
+      "value": "hex",
+      "tag": "input"
+    },
+    {
+      "attribute": "data-paint-workshop",
+      "value": "sample",
+      "tag": "output"
+    },
+    {
+      "attribute": "data-paint-workshop",
+      "value": "apply",
+      "tag": "button"
+    },
+    {
+      "attribute": "data-paint-workshop",
+      "value": "undo",
+      "tag": "button"
+    },
+    {
+      "attribute": "data-paint-workshop",
+      "value": "reset",
+      "tag": "button"
+    },
+    {
+      "attribute": "data-paint-workshop",
+      "value": "status",
+      "tag": "p"
+    },
+    {
+      "attribute": "data-overlay",
+      "value": "",
+      "tag": "div"
+    },
+    {
+      "attribute": "data-overlay",
+      "value": "",
+      "tag": "div"
+    },
+    {
+      "attribute": "data-overlay",
+      "value": "",
+      "tag": "div"
+    },
+    {
+      "attribute": "data-close",
+      "value": "",
+      "tag": "button"
+    },
+    {
+      "attribute": "data-close",
+      "value": "",
+      "tag": "button"
+    },
+    {
+      "attribute": "data-close",
+      "value": "",
+      "tag": "button"
+    },
+    {
+      "attribute": "data-close",
+      "value": "",
+      "tag": "button"
+    },
+    {
+      "attribute": "data-action",
+      "value": "left",
+      "tag": "button"
+    },
+    {
+      "attribute": "data-action",
+      "value": "right",
+      "tag": "button"
+    },
+    {
+      "attribute": "data-action",
+      "value": "nitro",
+      "tag": "button"
+    },
+    {
+      "attribute": "data-action",
+      "value": "handbrake",
+      "tag": "button"
+    },
+    {
+      "attribute": "data-action",
+      "value": "brake",
+      "tag": "button"
+    },
+    {
+      "attribute": "data-action",
+      "value": "accelerate",
+      "tag": "button"
+    },
+    {
+      "attribute": "data-action",
+      "value": "gearDown",
+      "tag": "button"
+    },
+    {
+      "attribute": "data-action",
+      "value": "gearUp",
+      "tag": "button"
+    },
+    {
+      "attribute": "data-exit",
+      "value": "",
+      "tag": "button"
+    },
+    {
+      "attribute": "data-exit",
+      "value": "",
+      "tag": "button"
+    }
+  ]
+}

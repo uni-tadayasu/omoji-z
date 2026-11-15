@@ -1,13 +1,13 @@
 {
   "id": "./",
   "lang": "ja",
-  "name": "尾文字Z | OMOJI Z",
+  "name": "尾文字Z CLASSIC REMASTER",
   "short_name": "尾文字Z",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
-  "theme_color": "#091119",
-  "background_color": "#091119",
+  "theme_color": "#101214",
+  "background_color": "#101214",
   "icons": [
     {
       "src": "./assets/art/icon-192.png",

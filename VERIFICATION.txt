@@ -1,47 +1,33 @@
-REBORN 4.0 verification scope
+尾文字Z / OMOJI Z — CLASSIC REMASTER 4.1
 
-New engine: deterministic fixed-step physics and 6 full-course laps, input releases, pause/resume, nitro, collision, AI, lap results, bounded economy, separate legacy migration, duplicate reward prevention, audio lifecycle, renderer mesh/material/camera checks, and DOM application integration.
+基準: 7f34821e00122e34d3aaf22f143b9341dbd2aed4
+既定の入口をフル機能クラシックへ変更。画面と描画を改良。
 
-Structural rendering tests use actual vendored Three.js geometry. GPU image correctness and real-device FPS are not verified by those tests.
+自動検証: npm test（Node.js 22）
+・従来の249 ID・26入力契約・73操作属性・8メニューの保持。
+・公開512台+運営専用3台、全256コース、既存詳細ページの起動先。
+・legacy.htmlからのquery/hash保持、REBORNの独立保存先の維持。
+・実コース座標で生成した256コース図の一致。
+・実Threeコアの照明・材質・追従影・画質制限・リソース解放。
+・全515台×24構成（12,360条件）の性能・PP・価格・報酬・移行。
+・購入・支払、保存失敗時の復元、報酬重複防止、強化条件。
+・走行コアの操舵・制動・支援、全515台の最大強化/下り1,030走行。
+・通信データの速度単位、後退上限、非数値拒否、座標境界。
+・旧記録とv3記録の分離、チャレンジ、保存、復元。
+・33曲の音源ハッシュ、構成、旧選曲ID互換。
+・車両メッシュの一意性・有限座標、256コースの距離・幅・座標。
+・静的HTMLのメタ・canonical・構造化データ・内部参照。
+・保持したREBORNの物理・入力・保存・音声・画面接続。
+・main自動統合の検証条件とGitHub Pages公開ファイル生成。
 
-The managed browser reported WebGL disabled (GL_VENDOR Disabled) during QA. Therefore new WebGL scene screenshots and mobile-device visual/performance QA remain unverified. The application displayed its intended unavailable-WebGL message and classic-edition link.
-
-Classic edition verification retained below:
-
-尾文字Z / OMOJI Z — Driving Studio v3 検証記録
-
-改修元: 93733a076aa15f437793452d6aa270f39a01b48e（前回納品v2）
-現mainの55cabca1f53c7759a16cfaf9d1bcffc4d7393a7bは同じ内容をマージ済み。
-今回のmain統合はユーザーの明示指示に基づきます。
-
-検証: Node.js 22で npm test
-詳細: tools/verification-report.json / tools/BALANCE_V3.md
-
-・全515台×24構成（12,360条件）の性能・PP・価格・報酬・セーブ移行。
-・購入見積と支払、保存失敗時の復元、報酬重複防止、強化段階/習熟条件。
-・通常約307.5 Z/分、短周回264 Z/分、長距離296.7 Z/分のモデル値。
-  コースと実走により変動し、固定の獲得額を約束するものではありません。
-・実走コアによる操舵/制動/支援/チュートリアル等15項目。
-  全515台の最大強化・下り坂を含む1,030走行の最高速は385.000 km/h。
-・通信データの速度単位、後退上限、非数値拒否、コース座標境界。
-・旧記録・旧共有ランキングを閲覧用に分離し、v3と混合しないこと。
-  手動セーブ・自動セーブ・バックアップ復元も世代分離を確認。
-・新BGM33ファイル（メニュー1＋8テーマ各4ミックス）のハッシュと構成。
-  全曲をffmpegで全長デコードし、非数値・クリッピングなし。
-  menu/Night約-19.45 LUFS、Drive/Focus/Peak約-17.96 LUFS。
-  実測true peak最大-4.3 dBTP。旧128選曲IDは新音源へ互換変換。
-・全車の独自メッシュ一意性と有限座標、256コースの距離/幅/標本座標。
-・772静的HTMLの固有メタ・canonical・構造化データ・内部参照。
-  車512・コース256の詳細ページは実ゲームの形状/性能を参照して生成。
-・Happy DOMによる起動、515台/256コース、選曲、3操作プリセット、
-  強化見積/購入/調整適用/3枠プリセット保存復元の統合確認。
-・CSS構文および320/375/768/1440pxと横向きの適用ルール確認。
-・ゲームの実CPU描画処理による車体/コースの画像出力。
-  遠景は新規生成した架空地形、前景・道路・車体は実ゲーム処理です。
-・公開用stage、完全版と差分版の生成、差分適用のハッシュ/削除検証。
+描画確認
+実際のクラシックsoftware rendererで4環境×PC/縦長の8画面、
+8車型の前後16画像を出力して比較。雨天/夜間も追加確認。
+影と反射の接地点を実際の車両画像の不透明境界へ補正。
+CPU描画画像はGPU描画の正しさを保証するものではありません。
 
 確認範囲
-この環境では実ブラウザーのWebGL/GPU、実スマホ/PCの画面配置とタッチ、
-複数の実機を接続したオンライン対戦は確認できません。
-DOM・CSS・CPU描画検証は実ブラウザーの視覚検証を代替しません。
-全曲の主観評価、全機種での完全動作、写真同一の描画は保証していません。
+この制作環境のブラウザはWebGLが無効です。WebGLの実ピクセル、
+実スマートフォンのFPS・タッチ、複数実機を使ったオンライン対戦は未確認。
+性能テストの数値は実機FPSではありません。
+この記録は公開前の自動検証とCPU描画確認を対象とします。

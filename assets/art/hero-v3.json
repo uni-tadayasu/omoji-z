@@ -1,15 +1,16 @@
 {
-  "track": "shiramine",
+  "track": "shiosaki",
   "distance": 700,
   "width": 1600,
   "height": 900,
   "carCode": "OZ-323",
-  "panorama": "snow",
+  "panorama": "coast",
   "panoramaReady": true,
   "mode": "actual game software renderer",
   "composition": "Left crop of a 2400 px game viewport; car on the right half",
-  "source": "assets/game.js + assets/vehicles.js",
+  "source": "assets/game.js + assets/vehicles.js + assets/classic-visuals.js",
+  "rendererVersion": "classic-remaster-v1",
   "externalReferences": false,
-  "originalGeneratedBackdrop": "assets/art/sky-v3-snow.webp",
+  "originalGeneratedBackdrop": "assets/art/sky-v3-coast.webp",
   "originalGeneratedFoliage": "assets/art/foliage-v3.webp"
 }

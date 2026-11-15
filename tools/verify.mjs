@@ -246,7 +246,7 @@ check('772 useful static pages have canonical metadata, JSON-LD and crawlable li
                 assert(visible.includes(question.name)&&visible.includes(question.acceptedAnswer?.text),`FAQ structured data does not match visible content: ${relative}`);
             }
         }
-        const expectedTheme=relative==='index.html'?'assets/remake/style.css':'assets/site.css';
+        const expectedTheme='assets/site.css';
         assert(html.includes(expectedTheme)&&!html.includes('theme-catalog.css'),`Expected page theme not applied: ${relative}`);
     }
     const carsHTML=fs.readFileSync(path.join(root,'cars.html'),'utf8'),coursesHTML=fs.readFileSync(path.join(root,'courses.html'),'utf8');
@@ -261,13 +261,20 @@ check('772 useful static pages have canonical metadata, JSON-LD and crawlable li
     return '512 car details + 256 course details + 4 hubs; unique titles/descriptions; original-code canonicals; sitemap reachability';
 });
 
-check('classic edition is accessible without competing with the remake canonical', () => {
-    const html=fs.readFileSync(path.join(root,'legacy.html'),'utf8');
-    assert(/<meta[^>]+name=["']robots["'][^>]+content=["'][^"']*noindex/i.test(html),'Classic edition must be noindexed.');
-    assert(html.includes('<link rel="canonical" href="https://omoji-z.com/">'),'Classic edition must point to the main game canonical.');
-    assert(html.includes('./assets/game.js'),'Classic edition must retain its game engine.');
-    assert(fs.readFileSync(path.join(root,'index.html'),'utf8').includes('./legacy.html'),'Classic edition must remain reachable from the remake.');
-    return 'Classic edition remains playable and linked; noindex with root canonical';
+check('classic remaster is the canonical game and alternate entries preserve compatibility', () => {
+    const index=fs.readFileSync(path.join(root,'index.html'),'utf8');
+    assert(index.includes('./assets/game.js'),'Classic engine must be the default game.');
+    assert(!index.includes('./assets/remake/app.js'),'Experimental REBORN must not replace the classic default.');
+    assert(index.includes('classic-remastered')&&index.includes('./assets/classic-remaster.css'),'Classic remaster styling must be mounted.');
+    assert(index.includes('./assets/classic-remaster-ui.js'),'Classic remaster presentation enhancements must be mounted.');
+    const legacy=fs.readFileSync(path.join(root,'legacy.html'),'utf8');
+    assert(/<meta[^>]+name=["']robots["'][^>]+content=["'][^"']*noindex/i.test(legacy),'Legacy alias must be noindexed.');
+    assert(legacy.includes('<link rel="canonical" href="https://omoji-z.com/">'),'Legacy alias must point to the main game canonical.');
+    assert(legacy.includes('./index.html')||legacy.includes('./assets/game.js'),'Legacy entry must redirect or retain a playable classic game.');
+    const reborn=fs.readFileSync(path.join(root,'reborn.html'),'utf8');
+    assert(reborn.includes('./assets/remake/app.js'),'Optional REBORN game must remain reachable at its own entry.');
+    assert(/<meta[^>]+name=["']robots["'][^>]+content=["'][^"']*noindex/i.test(reborn),'Optional REBORN entry must not compete with the main canonical.');
+    return 'Full classic game is the default; legacy entry retained; experimental REBORN is separate';
 });
 
 check('static car diagrams and road maps match the current playable geometry', () => {
