@@ -35,7 +35,7 @@
 <link rel="stylesheet" href="./assets/pit.css?v=maybach-20261115">
 <link rel="stylesheet" href="./assets/grid.css?v=20261115">
 <link rel="stylesheet" href="./assets/official.css?v=20261115">
-<script type="module" src="./assets/game.js?v=official-20261115"></script>
+<script type="module" src="./assets/game.js?v=nitro-20261115"></script>
 </head>
 <body class="simple-menu theme-midnight theme-reel theme-pit">
 <a class="skip" href="#setup">レース設定へ</a>
@@ -322,9 +322,9 @@
 <details class="simple-panel" id="nitro-level-panel">
   <summary data-ui-icon="bolt"><span>ニトロレベル</span><span class="turbine-summary" data-nitro-level="summary">Lv.0 / 15</span></summary>
   <div class="turbine-panel">
-    <div class="turbine-head"><div><h3 data-nitro-level="name">選択中の車両</h3><p id="nitro-level-help">1 Lvごとに、ニトロ噴射中の最高速度が25 km/h上がります。所有車ごとにLv.15まで強化できます。</p></div></div>
+    <div class="turbine-head"><div><h3 data-nitro-level="name">選択中の車両</h3><p id="nitro-level-help">ニトロレベルは車両ごとにLv.15まで。1 Lvごとに走行中の回復速度が0.3ポイント／秒増えます。ニトロ噴射中の最高速度加算は通常の強化ルールに従います。</p></div></div>
     <progress data-nitro-level="progress" max="15" value="0" aria-label="ニトロレベル"></progress>
-    <dl class="turbine-stats"><div><dt>噴射中の最高速度加算</dt><dd data-nitro-level="speed">+0 km/h</dd></div></dl>
+    <dl class="turbine-stats"><div><dt>噴射中の最高速度加算</dt><dd data-nitro-level="speed">+0 km/h</dd></div><div><dt>ニトロ回復速度</dt><dd data-nitro-level="recovery">+4.0% / 秒</dd></div></dl>
     <div class="turbine-actions"><span>所持Z <strong data-nitro-level="balance"></strong></span><button type="button" class="primary" data-nitro-level="buy" aria-describedby="nitro-level-help nitro-level-quote" disabled>強化する</button></div>
     <div class="turbine-messages"><p id="nitro-level-quote" class="panel-note" data-nitro-level="quote"></p><p class="panel-note" role="status" data-nitro-level="status"></p></div>
   </div>
@@ -491,7 +491,7 @@
             </details>
           </div>
           <div class="guide-notes">
-            <p>ニトロはレースごとに満タンになります。ガレージで強化すると使用時間が延びます。</p>
+            <p>ニトロは毎レース満タンで始まります。ボタンを離して2秒経つと、10 km/h以上で前進中に回復します。回復速度はニトロレベルで決まります。</p>
             <p>ゲームパッドは標準の割り当てを掲載しています。スティックを少し倒すと進路を微調整できます。</p>
             <button type="button" class="quiet support-action" data-open="settings" data-settings-focus="gamepad-settings" aria-controls="settings" aria-haspopup="dialog" data-ui-icon="controller">ゲームパッド設定</button>
           </div>
