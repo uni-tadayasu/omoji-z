@@ -1,0 +1,39 @@
+name: Verify game and download ZIPs
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify-and-package:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out proposed source and history
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Use Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify geometry, compatibility, assets and references
+        run: node tools/verify.mjs
+      - name: Verify public file staging
+        run: python3 tools/build-site.py --out "$RUNNER_TEMP/omoji-public"
+      - name: Create full and changed-files ZIPs
+        env:
+          BASE_REF: ${{ github.event.pull_request.base.sha || 'd56dadaef293b97f88d9f017d8e65701be98e721' }}
+        run: python3 tools/package-release.py --base-ref "$BASE_REF" --out "$RUNNER_TEMP/omoji-release"
+      - name: Download full and changed-files packages
+        uses: actions/upload-artifact@v4
+        with:
+          name: omoji-z-full-and-update
+          path: |
+            ${{ runner.temp }}/omoji-release/omoji-z-full.zip
+            ${{ runner.temp }}/omoji-release/omoji-z-update.zip
+            ${{ runner.temp }}/omoji-release/release-summary.json
+          if-no-files-found: error
+          retention-days: 14

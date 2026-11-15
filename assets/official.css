@@ -10,7 +10,7 @@
 .theme-pit #official {
   --grid-accent: #ffd791;
   --grid-glow: #d5b27b82;
-  --section-art: url("./official-grid.webp");
+  --section-art: url("./art/official.svg");
 }
 .theme-pit #official > .section-heading {
   background-image: linear-gradient(94deg,#141624fe,#2b253fd9 32%,#25213821 79%),

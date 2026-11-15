@@ -1,0 +1,2182 @@
+{
+  "schemaVersion": 1,
+  "edition": "original-design-v2",
+  "baseCommit": "d56dadaef293b97f88d9f017d8e65701be98e721",
+  "files": [
+    {
+      "path": "assets/THREE-LICENSE.txt",
+      "bytes": 1081,
+      "sha256": "bfe119ea4fd413f5f7ca3fcd63adb0c4a073ed39daa2fe7d3e6b769e21272601"
+    },
+    {
+      "path": "assets/art/brand.svg",
+      "bytes": 1211,
+      "sha256": "b5f7c8cd766b0c80e0528d15b1fe2984c35ec6aed2ba836d473affa6968cab0a"
+    },
+    {
+      "path": "assets/art/favicon.ico",
+      "bytes": 7750,
+      "sha256": "ae016d92408094ab074cbbec20700c3d5123b0ab33eb805a6a59e58e88b1e8e4"
+    },
+    {
+      "path": "assets/art/garage.svg",
+      "bytes": 59525,
+      "sha256": "be62cb73c0d4c34440c3680287ebe8b05a7a111e0f15b754688960a5a02476b4"
+    },
+    {
+      "path": "assets/art/hero-photo.webp",
+      "bytes": 334104,
+      "sha256": "c746e9e094a65335267df1da1d7d8afb940eebcc42278bb3dd88482ff1af13c9"
+    },
+    {
+      "path": "assets/art/hero-provenance.json",
+      "bytes": 714,
+      "sha256": "69c384fc13d0103cfbe69009d7d832601806100e393d843126bfc3ec077eb79f"
+    },
+    {
+      "path": "assets/art/hero.svg",
+      "bytes": 82675,
+      "sha256": "729c82370683240b7ccfbb449a607e249de15f9c6160e6300c85b541fcb62d41"
+    },
+    {
+      "path": "assets/art/icon-192.png",
+      "bytes": 21122,
+      "sha256": "178d11298dffbe7c7eea574da3cbdaaa1bd7caf9b3457b4b5e84a23d01cf1017"
+    },
+    {
+      "path": "assets/art/icon-512.png",
+      "bytes": 63813,
+      "sha256": "ed92b3c4ce0bb73a7cab0c65dbd617e778e23fcd3c9dd565a845e2bfd37c47c7"
+    },
+    {
+      "path": "assets/art/manifest.json",
+      "bytes": 49842,
+      "sha256": "93726c0148c6177d82c24d9c091c1d31f8b85e9d75d01446e79fc0672742e0db"
+    },
+    {
+      "path": "assets/art/official.svg",
+      "bytes": 100558,
+      "sha256": "1bce91acbd9bd7c60676a93dcbc946db27652d0254ce6f3cf090989de57b27ca"
+    },
+    {
+      "path": "assets/art/operator-a.svg",
+      "bytes": 59568,
+      "sha256": "83030899d00e3bd1707d7913341205ef6e056e5598037c7165bbfc56aa8ad992"
+    },
+    {
+      "path": "assets/art/operator-b.svg",
+      "bytes": 59571,
+      "sha256": "94cddb7b096cd62e13927ffde564e8dd85c86d2db447d89f8f0308d2eb278752"
+    },
+    {
+      "path": "assets/art/operator-c.svg",
+      "bytes": 59571,
+      "sha256": "9ea378d771eb89b2f51162e06d67e9612c0275b4a4f1bfb9f9dec54c4eb1c34d"
+    },
+    {
+      "path": "assets/art/records.svg",
+      "bytes": 80663,
+      "sha256": "baaa23c3b045369822018d9264dadcbb634f2513f4d41ca7cc0b28f60e6c9489"
+    },
+    {
+      "path": "assets/art/routes/akatsuki.svg",
+      "bytes": 29574,
+      "sha256": "7da2f916833b556f0ce39a480f66d573930bb6fe487d1accb3e8ba042ce59283"
+    },
+    {
+      "path": "assets/art/routes/amatsuyu.svg",
+      "bytes": 33673,
+      "sha256": "e13246184609ef56bb6efcc30ddd7118a536f2fd8f6b210efbbd84d43c040dee"
+    },
+    {
+      "path": "assets/art/routes/aobane.svg",
+      "bytes": 29529,
+      "sha256": "c633b46d3aa7504bc02cd27e75d4b775a4a789fe6c08b9a957d864ed8381439a"
+    },
+    {
+      "path": "assets/art/routes/aoi-testway.svg",
+      "bytes": 45016,
+      "sha256": "9f779419eb9c79e9629882efa7bde20117e955e69ade0e3fd76941f22564aeb9"
+    },
+    {
+      "path": "assets/art/routes/bonus-alpine-arc.svg",
+      "bytes": 33864,
+      "sha256": "2e0d47924d3ad656b246fdcb0c47969478c5f9241888fb95830a43584c9bcca3"
+    },
+    {
+      "path": "assets/art/routes/bonus-alpine-brake.svg",
+      "bytes": 33795,
+      "sha256": "3985583cbf1b5af19dd6e822dd44581ea54a80f125c79a8e0da854dc542115c5"
+    },
+    {
+      "path": "assets/art/routes/bonus-alpine-chicane.svg",
+      "bytes": 33815,
+      "sha256": "8af17d6f7436180c47ba3610c8d19c107f7ea9449b38c75d257d7ddf10e841c0"
+    },
+    {
+      "path": "assets/art/routes/bonus-alpine-grand.svg",
+      "bytes": 30832,
+      "sha256": "ec00195ec78f171d0fa1c29d2f378b8313125ba25ee32ef889e234091feafc45"
+    },
+    {
+      "path": "assets/art/routes/bonus-alpine-hairpin.svg",
+      "bytes": 33831,
+      "sha256": "719e8a4e2fc3f0f6c649b434b37c51ed4ba03b53d7f06acf71be940af15f818c"
+    },
+    {
+      "path": "assets/art/routes/bonus-alpine-highspeed.svg",
+      "bytes": 30855,
+      "sha256": "972fe959fc9b5600dbdc80cb8e7e67da15f58a9c8a184a8c376e3577dc6686c1"
+    },
+    {
+      "path": "assets/art/routes/bonus-alpine-loose.svg",
+      "bytes": 30765,
+      "sha256": "e41fcca69c9c44dbbcb2e105eab9f93d70f6cbb5cf8b49e81f3c96a1fa4e0c92"
+    },
+    {
+      "path": "assets/art/routes/bonus-alpine-relay.svg",
+      "bytes": 30911,
+      "sha256": "04309a0dc90775104856b5e62d94a1db9fd1461de0f2b740d7e2581a04e7c12e"
+    },
+    {
+      "path": "assets/art/routes/bonus-alpine-sprint.svg",
+      "bytes": 30878,
+      "sha256": "579a55caf29fd78534cc2a5e094f5b120d955d50d05c986cd7ceb01f5ce5e060"
+    },
+    {
+      "path": "assets/art/routes/bonus-alpine-start.svg",
+      "bytes": 30898,
+      "sha256": "be8102695a861e8e1cb98d3bccb3ea294ceb501835ea4f797997a64738eb496f"
+    },
+    {
+      "path": "assets/art/routes/bonus-alpine-training.svg",
+      "bytes": 33833,
+      "sha256": "83704d3a19eb306babc2537729a1bd264f1cd5164789565a51c955dda7319775"
+    },
+    {
+      "path": "assets/art/routes/bonus-alpine-transition.svg",
+      "bytes": 30904,
+      "sha256": "1879a6fe77fa83a2add7296d9ad2eef4bc200cc4b7b220e13d1817c128226085"
+    },
+    {
+      "path": "assets/art/routes/bonus-basin-arc.svg",
+      "bytes": 27635,
+      "sha256": "09506363c4e2378f0b8839e4f5ef04e028b4edd44bfa8776d3c8383b05c24d0d"
+    },
+    {
+      "path": "assets/art/routes/bonus-basin-brake.svg",
+      "bytes": 32591,
+      "sha256": "ccbd870cc4a4d16871fb3d9652cb5e7774b31c1b574ed9c2b773d746e287fad1"
+    },
+    {
+      "path": "assets/art/routes/bonus-basin-chicane.svg",
+      "bytes": 27556,
+      "sha256": "ea457b80e1c356377c11e1617d9fe08cba60bec078fe870af3e1e887e9765be0"
+    },
+    {
+      "path": "assets/art/routes/bonus-basin-grand.svg",
+      "bytes": 29609,
+      "sha256": "8307491538bbd8ec0c94474f7960faf75d2a46fbd81de50cf8d16995bc9a9432"
+    },
+    {
+      "path": "assets/art/routes/bonus-basin-hairpin.svg",
+      "bytes": 32500,
+      "sha256": "48050e3f121150616430e34f5629a2c538f5637e97b3497ba20f195f09b03266"
+    },
+    {
+      "path": "assets/art/routes/bonus-basin-highspeed.svg",
+      "bytes": 29606,
+      "sha256": "1d264deca96739016ffcc3579fcdbbcb3c87879efe68d48746c0ce5230a12833"
+    },
+    {
+      "path": "assets/art/routes/bonus-basin-loose.svg",
+      "bytes": 29651,
+      "sha256": "2b8a2b43987c2d79b016c4959e8848bb1ba3e9cc86d55845e227b22168f327e9"
+    },
+    {
+      "path": "assets/art/routes/bonus-basin-relay.svg",
+      "bytes": 33828,
+      "sha256": "c526a99c93d4b61ae17852afc5fdfee67fa79445ebe9841057938fc575b2f74c"
+    },
+    {
+      "path": "assets/art/routes/bonus-basin-sprint.svg",
+      "bytes": 30582,
+      "sha256": "cade553d75ba7a96692b13affd8e587fe8a6ea192054ca15f131bb4a751548bb"
+    },
+    {
+      "path": "assets/art/routes/bonus-basin-start.svg",
+      "bytes": 32598,
+      "sha256": "4ed6da9c4df0988d03a07cd7147c9c198287bb79a75c3dcf1413206907bee208"
+    },
+    {
+      "path": "assets/art/routes/bonus-basin-training.svg",
+      "bytes": 30836,
+      "sha256": "2388dbf2aa3bbcef1d42dd044465f23f26ad4102d2b14567cf042d207f3e339a"
+    },
+    {
+      "path": "assets/art/routes/bonus-basin-transition.svg",
+      "bytes": 27665,
+      "sha256": "9ce4f25986f405ee4c95eabe75446bfb4ba14d320dd9dd4798fb0b486a5aefa4"
+    },
+    {
+      "path": "assets/art/routes/bonus-bay-30km.svg",
+      "bytes": 44586,
+      "sha256": "06dbd41f85e3f242e57b11920875de06de9f86d1385bc332c81de599475fcaf4"
+    },
+    {
+      "path": "assets/art/routes/bonus-cedar-arc.svg",
+      "bytes": 29614,
+      "sha256": "af7a7b2393b2a2b77e3ebb8e5e126bfe8d8474a7cf3e5cbb51998233996c0e8c"
+    },
+    {
+      "path": "assets/art/routes/bonus-cedar-brake.svg",
+      "bytes": 29653,
+      "sha256": "4a08a5710296827781be21306a6781cebf045fa0f3f80dfc259bcfab53e0ee80"
+    },
+    {
+      "path": "assets/art/routes/bonus-cedar-chicane.svg",
+      "bytes": 29640,
+      "sha256": "902a921576149f4c50161b3da2da4176b0820c6cb28d18a0ad20c5d55ad9bca4"
+    },
+    {
+      "path": "assets/art/routes/bonus-cedar-grand.svg",
+      "bytes": 29623,
+      "sha256": "8ebb79c73c86eb81ef69b4b501af2653bfe8f95903c6138daeb302280650c666"
+    },
+    {
+      "path": "assets/art/routes/bonus-cedar-hairpin.svg",
+      "bytes": 32582,
+      "sha256": "da9e33940cd87c4e8e1dfb848ac7fa6e4cf5890af2836d72767c4988b201f4dc"
+    },
+    {
+      "path": "assets/art/routes/bonus-cedar-highspeed.svg",
+      "bytes": 32566,
+      "sha256": "89b5caa30468432f7561e23dd4c51279235123582f059fae3331eec30e04e4b8"
+    },
+    {
+      "path": "assets/art/routes/bonus-cedar-loose.svg",
+      "bytes": 29622,
+      "sha256": "414b5830f26b86cb9cceee257700ddf298b73eefe080b33066ff5235e14295eb"
+    },
+    {
+      "path": "assets/art/routes/bonus-cedar-relay.svg",
+      "bytes": 32556,
+      "sha256": "d76ad103fc1bae43cb6a3d6130b5a0ec93591695daf37f7206611f0992b9f9cd"
+    },
+    {
+      "path": "assets/art/routes/bonus-cedar-sprint.svg",
+      "bytes": 29612,
+      "sha256": "1c386891f3993adc2a357c078214d386c073f2b7333202fe198eabadf3f9d77f"
+    },
+    {
+      "path": "assets/art/routes/bonus-cedar-start.svg",
+      "bytes": 29620,
+      "sha256": "1ef1cae991297db530da5da4a128313112da2275017863c273242ebdb0562fc1"
+    },
+    {
+      "path": "assets/art/routes/bonus-cedar-training.svg",
+      "bytes": 29611,
+      "sha256": "91406b7d4664f83453d8083bcb5cc20698d36ed72f12bc9bdfbf3cc9d51dce8d"
+    },
+    {
+      "path": "assets/art/routes/bonus-cedar-transition.svg",
+      "bytes": 29592,
+      "sha256": "538defad1d351c553fac68e2247f5457d80ae08f3e6ea2a952c5ce95819a3088"
+    },
+    {
+      "path": "assets/art/routes/bonus-dock-arc.svg",
+      "bytes": 32616,
+      "sha256": "4e96e4456c9c9d9c25e573f45d6e9333d740c35d1ad2e9849c5db8e5e053e198"
+    },
+    {
+      "path": "assets/art/routes/bonus-dock-brake.svg",
+      "bytes": 32617,
+      "sha256": "85e353fdec5dc983e0508f6d163ae944fe9c700ba97ea3402b9aef495e7ab718"
+    },
+    {
+      "path": "assets/art/routes/bonus-dock-chicane.svg",
+      "bytes": 48795,
+      "sha256": "93c63331188b3181e0299a93b5b35ecfbc949d98512f45f8abc43f1aab43a0ad"
+    },
+    {
+      "path": "assets/art/routes/bonus-dock-grand.svg",
+      "bytes": 45355,
+      "sha256": "e90be203acfda4d1916e7e8699388337b5dd920b8571fd4c48e81a3aa73dd4bf"
+    },
+    {
+      "path": "assets/art/routes/bonus-dock-hairpin.svg",
+      "bytes": 29617,
+      "sha256": "c7e92cd0f55885c6ceaabacd751b682f584d97237556fc779bf49076a76d4316"
+    },
+    {
+      "path": "assets/art/routes/bonus-dock-highspeed.svg",
+      "bytes": 33819,
+      "sha256": "ad1e12ae448fa300e49efac82f1ea948b6d0bc95df335b40d7bb92258421c3dc"
+    },
+    {
+      "path": "assets/art/routes/bonus-dock-loose.svg",
+      "bytes": 29610,
+      "sha256": "350e90a4680c06dae5b04d1169eec33b9e157a75e8dc09b726a48958b1188155"
+    },
+    {
+      "path": "assets/art/routes/bonus-dock-relay.svg",
+      "bytes": 27570,
+      "sha256": "4c4893770f840d481d38534ed0d53c7251e7685868ddfff1cf33098a13303901"
+    },
+    {
+      "path": "assets/art/routes/bonus-dock-sprint.svg",
+      "bytes": 48919,
+      "sha256": "7ea5c3be52ed6d05ddf11c553f59eb6f42cb604f131c0827a4da0e5d2d6eec23"
+    },
+    {
+      "path": "assets/art/routes/bonus-dock-start.svg",
+      "bytes": 29648,
+      "sha256": "14837f54950b2c9e8be665600156a33267022194f2968ab911c28f937f76b3db"
+    },
+    {
+      "path": "assets/art/routes/bonus-dock-training.svg",
+      "bytes": 30532,
+      "sha256": "a92b78b2ad73bdc815ceedfb767e3c93a75be2b7eb3e9e0efc2f902fa279d6ac"
+    },
+    {
+      "path": "assets/art/routes/bonus-dock-transition.svg",
+      "bytes": 30847,
+      "sha256": "b603d806049225e9ac8ff9c69ca9cc1b2a31406f2a1426f1e430a75190d4ad8e"
+    },
+    {
+      "path": "assets/art/routes/bonus-mesa-arc.svg",
+      "bytes": 29605,
+      "sha256": "1ae361336328c8f87326ad0d18256aad18760e1522d27c2be211d1e486526003"
+    },
+    {
+      "path": "assets/art/routes/bonus-mesa-brake.svg",
+      "bytes": 32605,
+      "sha256": "6458b6b376cdc4a78503a1faeac5f49ea221bf0788894744c56d16e683de9fb2"
+    },
+    {
+      "path": "assets/art/routes/bonus-mesa-chicane.svg",
+      "bytes": 32536,
+      "sha256": "0c418f485afd12d28b0e5b92e344349f67af5aa9bf912725b210373c48732c0f"
+    },
+    {
+      "path": "assets/art/routes/bonus-mesa-grand.svg",
+      "bytes": 30857,
+      "sha256": "494cef75d1594979d4dc348753359191e6bd34b0375590fc9800881bc05c8429"
+    },
+    {
+      "path": "assets/art/routes/bonus-mesa-hairpin.svg",
+      "bytes": 29648,
+      "sha256": "47888d78dbb6f4c071d85251021287fb62203003ebaab8cbe054521c76c3e9ae"
+    },
+    {
+      "path": "assets/art/routes/bonus-mesa-highspeed.svg",
+      "bytes": 30895,
+      "sha256": "17f0ac4d331981bc39d83496534eb9e6f6e84ae4f8e22594409803aca22b2fad"
+    },
+    {
+      "path": "assets/art/routes/bonus-mesa-loose.svg",
+      "bytes": 32612,
+      "sha256": "8a5f9cca0bfda38ff363fad3d59df3125951ef632ad9755c192e7fb6e8e08ea8"
+    },
+    {
+      "path": "assets/art/routes/bonus-mesa-relay.svg",
+      "bytes": 32481,
+      "sha256": "552318a0d9daaea72cba0b745779d59919ae10cab1fafea956665f48905d0fd7"
+    },
+    {
+      "path": "assets/art/routes/bonus-mesa-sprint.svg",
+      "bytes": 29652,
+      "sha256": "8d933e4945408589b6d36a4c415b23e73e9c34806d60db11587f66e5804e6226"
+    },
+    {
+      "path": "assets/art/routes/bonus-mesa-start.svg",
+      "bytes": 27607,
+      "sha256": "620b434ba777cc1031055dbfe7950ff81208aeb9776169718bf6d2f714016ed1"
+    },
+    {
+      "path": "assets/art/routes/bonus-mesa-training.svg",
+      "bytes": 27556,
+      "sha256": "1981a18e908cab94302a3264d9fcc00cfeca99ae3de72f4171ddd3cb6a7e0008"
+    },
+    {
+      "path": "assets/art/routes/bonus-mesa-transition.svg",
+      "bytes": 30915,
+      "sha256": "1b4237be536dba251067e28872af6a99277ecac31aa2d73fa918ea31ebd8d7c5"
+    },
+    {
+      "path": "assets/art/routes/bonus-mill-arc.svg",
+      "bytes": 32572,
+      "sha256": "e2294eb4c31e7e5fef812cfc0dd7bd66a2ef2c2e8b4552eb38d7e1ff12b685d5"
+    },
+    {
+      "path": "assets/art/routes/bonus-mill-brake.svg",
+      "bytes": 33830,
+      "sha256": "48b08f1d52368cda8a562e6d9dac550e061ec1bb32c6327e3b43529ba23dd6a8"
+    },
+    {
+      "path": "assets/art/routes/bonus-mill-chicane.svg",
+      "bytes": 29605,
+      "sha256": "cafa3929c60ef0e4abd78970e4cb405018e36bae7c246daab26ba226bc98fffb"
+    },
+    {
+      "path": "assets/art/routes/bonus-mill-grand.svg",
+      "bytes": 29564,
+      "sha256": "ba55ed1669a55d321aeebca30a9ce151c1380e47b7e56282db9bfe3fd114cb8f"
+    },
+    {
+      "path": "assets/art/routes/bonus-mill-hairpin.svg",
+      "bytes": 30523,
+      "sha256": "03f15804ed146a85c9a6218e69dee0d662ca554308f3b39fb20b8ecf94015734"
+    },
+    {
+      "path": "assets/art/routes/bonus-mill-highspeed.svg",
+      "bytes": 30892,
+      "sha256": "ca6af425cf2a2fc328f6bb01c1df4645605adc55d297177f1128230697008c44"
+    },
+    {
+      "path": "assets/art/routes/bonus-mill-loose.svg",
+      "bytes": 32571,
+      "sha256": "170b487d82ea9ededfcb2f723b7409a46fa61b50fbc01e2ebea032f68732759f"
+    },
+    {
+      "path": "assets/art/routes/bonus-mill-relay.svg",
+      "bytes": 46057,
+      "sha256": "7b87b1e94e466bfded40fcb53c9db9df1161ec3fc9a1928adda8237d3bc7e48b"
+    },
+    {
+      "path": "assets/art/routes/bonus-mill-sprint.svg",
+      "bytes": 47979,
+      "sha256": "b12b768f068f4e488ab7acd21f7faeea48c935bfbd0d4dc93bfa80825a2ae585"
+    },
+    {
+      "path": "assets/art/routes/bonus-mill-start.svg",
+      "bytes": 47510,
+      "sha256": "badb3c9ea182b4e7db544a930e1daf71e9b7c8d8925bf9f94421770310151bc7"
+    },
+    {
+      "path": "assets/art/routes/bonus-mill-training.svg",
+      "bytes": 30847,
+      "sha256": "f6b15deaa9feb53b274120de3cadf7f582557d250d4abc79c27e17f3d14fae56"
+    },
+    {
+      "path": "assets/art/routes/bonus-mill-transition.svg",
+      "bytes": 27588,
+      "sha256": "a926e9a148663c79e1406fc6782667f2183e4ce6101d7e4b9bcbbc248ae74c6a"
+    },
+    {
+      "path": "assets/art/routes/bonus-shore-arc.svg",
+      "bytes": 30602,
+      "sha256": "b834c7c6f209c9139f7d0e012a527871cb998857f8a91264c8c657b1f521a08a"
+    },
+    {
+      "path": "assets/art/routes/bonus-shore-brake.svg",
+      "bytes": 32596,
+      "sha256": "cc774448b9d5a8a3d261cce3305a02d7df02521529ca423bbe2379d7a59ed8aa"
+    },
+    {
+      "path": "assets/art/routes/bonus-shore-chicane.svg",
+      "bytes": 32605,
+      "sha256": "fc5bb2850f9a56ecc982ce777e23cd646e35dafd6ff0fe7e6a5a88860d9a1c35"
+    },
+    {
+      "path": "assets/art/routes/bonus-shore-grand.svg",
+      "bytes": 32639,
+      "sha256": "1904dd51dc893252b6f3e03164f0e685b0f0d7899f857ca43b3acc275334cbf7"
+    },
+    {
+      "path": "assets/art/routes/bonus-shore-hairpin.svg",
+      "bytes": 32588,
+      "sha256": "c280750977a0083e184c5f052da78ca21e96945e3d418d76e26f397d27cc7bde"
+    },
+    {
+      "path": "assets/art/routes/bonus-shore-loose.svg",
+      "bytes": 32581,
+      "sha256": "a76a676d1eeb0e25f60861d7348ae61d9848355d30b608bd21e6b61db0bedb12"
+    },
+    {
+      "path": "assets/art/routes/bonus-shore-relay.svg",
+      "bytes": 32606,
+      "sha256": "772f915db976029f2ab474da08208ec1e7f067eb938adde8c3a529d4084783e6"
+    },
+    {
+      "path": "assets/art/routes/bonus-shore-sprint.svg",
+      "bytes": 30585,
+      "sha256": "8a29648f5cd8d9fc0277f07cb69c683eead8739fe4cbb7909fced7db88738fc1"
+    },
+    {
+      "path": "assets/art/routes/bonus-shore-start.svg",
+      "bytes": 33808,
+      "sha256": "d61d980bbcd1c4f5afa3f11569953bf9226de1d760c12c44135f9d4553786382"
+    },
+    {
+      "path": "assets/art/routes/bonus-shore-training.svg",
+      "bytes": 48380,
+      "sha256": "17b3b110567d3e16958481f5e8a6d678f31829b847c2fb1ed28776ad5268c09e"
+    },
+    {
+      "path": "assets/art/routes/bonus-shore-transition.svg",
+      "bytes": 30502,
+      "sha256": "567aa65b3c2db54daed6932784587f9d56419069e8bc18acd55b9198659dc10e"
+    },
+    {
+      "path": "assets/art/routes/bonus-valley-arc.svg",
+      "bytes": 29631,
+      "sha256": "7d8dc55ddc8540cbdccc8858e07f2877bdd49da89a207c694b36ffdf9e5b8faa"
+    },
+    {
+      "path": "assets/art/routes/bonus-valley-brake.svg",
+      "bytes": 32551,
+      "sha256": "ed9a59d383750aff1cf76e0ebd9efbbb7da558aed5f60a7c7c29a6b4e96e6afd"
+    },
+    {
+      "path": "assets/art/routes/bonus-valley-chicane.svg",
+      "bytes": 32572,
+      "sha256": "0fffdfa9a7af3c6c2e4c96074c02e9c6a451679dc73f56d2aef56907702efe8f"
+    },
+    {
+      "path": "assets/art/routes/bonus-valley-grand.svg",
+      "bytes": 29619,
+      "sha256": "80142f6f1d29cf70f2c5af136b76972f4ca81e28ae9cbd4c916e17b66e1bdb1d"
+    },
+    {
+      "path": "assets/art/routes/bonus-valley-hairpin.svg",
+      "bytes": 29640,
+      "sha256": "ad8aafc9706890c943ea019c4a45b4e7d70224d0be47d20d2cd7c2ef0fce8dac"
+    },
+    {
+      "path": "assets/art/routes/bonus-valley-highspeed.svg",
+      "bytes": 32547,
+      "sha256": "a21ad9604ad99016649695c04abec7716540eaca99be305802457f718e6c0252"
+    },
+    {
+      "path": "assets/art/routes/bonus-valley-loose.svg",
+      "bytes": 29405,
+      "sha256": "161276e78347c2e9e34cb2fc3e5b31ba20e7aedd3a4085cab53d37ee29a9cdc0"
+    },
+    {
+      "path": "assets/art/routes/bonus-valley-relay.svg",
+      "bytes": 29664,
+      "sha256": "817c9eb0affefa8172f43fba2a81e5f2ae5761a5ed16a70b42a6394b300237e9"
+    },
+    {
+      "path": "assets/art/routes/bonus-valley-sprint.svg",
+      "bytes": 29664,
+      "sha256": "96b0b8fc800acd7862f1dbe376d57e902c59d36838dc1cf7a5f494f9b5b05f52"
+    },
+    {
+      "path": "assets/art/routes/bonus-valley-start.svg",
+      "bytes": 29613,
+      "sha256": "430cfbfc7b713a1464226a1796437385d5f7086299e6c4c9c34cc9d603092cbd"
+    },
+    {
+      "path": "assets/art/routes/bonus-valley-training.svg",
+      "bytes": 32615,
+      "sha256": "4dbc33db720a8e2dcb9d0d08bb77edd1176a41183e978d69884dcf8c8bbbe8e6"
+    },
+    {
+      "path": "assets/art/routes/bonus-valley-transition.svg",
+      "bytes": 29662,
+      "sha256": "0bf24770ef5453ecfd019f8465cbca6f25da22bdd891e8500e193058f5c2a869"
+    },
+    {
+      "path": "assets/art/routes/enkan-circuit.svg",
+      "bytes": 47674,
+      "sha256": "42c47452117d845970166a090c9058e09fa22283ebdad39f24f2389b54158502"
+    },
+    {
+      "path": "assets/art/routes/fuyunagi.svg",
+      "bytes": 33804,
+      "sha256": "61c20caaee6af243082784ae38911792e8f78dc9aa1f7c2069f39eabd39def1f"
+    },
+    {
+      "path": "assets/art/routes/hakugin-straight.svg",
+      "bytes": 30805,
+      "sha256": "e48f21bb8a94b6b00819dd98cd71b2c401797c29ca711a4e4d881ad190436626"
+    },
+    {
+      "path": "assets/art/routes/haruna.svg",
+      "bytes": 32570,
+      "sha256": "57da1bd77c60ba74415a5b7bd7c31eb5d3828d9cc45adfe9509dc4b5d6a70f84"
+    },
+    {
+      "path": "assets/art/routes/hayasaka.svg",
+      "bytes": 30845,
+      "sha256": "6a5eeeb27ad53bb1f4c97947f44c2d47c08a39cd962fa490388d435252187e4e"
+    },
+    {
+      "path": "assets/art/routes/hyakuri-endurance.svg",
+      "bytes": 46295,
+      "sha256": "d6e9a4f3e6e3d38e9da744df18bbe836d8a6ba3254dc1691ceb56ce654504645"
+    },
+    {
+      "path": "assets/art/routes/kirisawa.svg",
+      "bytes": 32375,
+      "sha256": "f2331028eba6863cf62d7ffb3dea64771772e9991ad9e99f3cf59e05a613e1df"
+    },
+    {
+      "path": "assets/art/routes/kogane-yard.svg",
+      "bytes": 27597,
+      "sha256": "797cd16c6e5a7823f4b0c9a84d6ad8112f705f21106e74c77a056d07c1838199"
+    },
+    {
+      "path": "assets/art/routes/kogarashi.svg",
+      "bytes": 33816,
+      "sha256": "85346ae21fae2c5b237e43618caa345210d06cfb0222d9fad7c59ed89499c69d"
+    },
+    {
+      "path": "assets/art/routes/kumogakure.svg",
+      "bytes": 27583,
+      "sha256": "9a39a7335d26e46e072d91f2ca63c067e93028a2d14dfae23f1c1019a96f6138"
+    },
+    {
+      "path": "assets/art/routes/kurogane.svg",
+      "bytes": 32561,
+      "sha256": "46271464f974f3f80a18c606c2dcb97fb123cc205cc4cf4ca6c527193be5f0ff"
+    },
+    {
+      "path": "assets/art/routes/mikazuki.svg",
+      "bytes": 27572,
+      "sha256": "ea819d07d345497f2631b402f7cf691f1c92cbd50bb379e6bcfc185620ba1392"
+    },
+    {
+      "path": "assets/art/routes/minakami.svg",
+      "bytes": 29645,
+      "sha256": "c3d936f311d5436632a8c928316699fb2f0c514e8f78cbb01d723533940f993c"
+    },
+    {
+      "path": "assets/art/routes/mugen-apex-loop.svg",
+      "bytes": 27576,
+      "sha256": "e0dd7c8e2bdc8e1aa64730a712daa17167762d3d576f2c9dec26eccab329219e"
+    },
+    {
+      "path": "assets/art/routes/shiosai-straight.svg",
+      "bytes": 27618,
+      "sha256": "d3a6da6ecf5179c202fea37543c5e55fee1737ea37a12bbd46ba3bd4bcb74255"
+    },
+    {
+      "path": "assets/art/routes/shiosaki.svg",
+      "bytes": 27568,
+      "sha256": "81f038803e3370058f37171b0e91170c3632cf7a90517ae6d6269b362452608c"
+    },
+    {
+      "path": "assets/art/routes/shiramine.svg",
+      "bytes": 30759,
+      "sha256": "4b8ec3df4df23aca3040c4d898c323b0397203b3bf649fe4826a39176eca72bb"
+    },
+    {
+      "path": "assets/art/routes/suzukae.svg",
+      "bytes": 29631,
+      "sha256": "d055b3e6d4804bdcd7666bcb90c499761b16116182003726b10f2ec9daaaf649"
+    },
+    {
+      "path": "assets/art/routes/takamine.svg",
+      "bytes": 27587,
+      "sha256": "6abc6c75cb8ad31a214ca8def0c27842004e63b2ff29b6c2373706f338deb97e"
+    },
+    {
+      "path": "assets/art/routes/tamahira.svg",
+      "bytes": 32548,
+      "sha256": "4eba944ee83610093aacaa59b307bb7e1d26be1e4a65f5528b63382a6fa0db52"
+    },
+    {
+      "path": "assets/art/routes/tsukishima.svg",
+      "bytes": 51710,
+      "sha256": "592aaa0bf9076617e0db01c895159dec988e8223e17a30fe06c986bbe770a4e7"
+    },
+    {
+      "path": "assets/art/routes/tune-brake-downhill.svg",
+      "bytes": 29662,
+      "sha256": "df816c633d656fdca86b0054e526efa915c1453af23f8772ab9e1ce5ddb29b80"
+    },
+    {
+      "path": "assets/art/routes/tune-brake-first-marker.svg",
+      "bytes": 29653,
+      "sha256": "eaf7bce437d51898fe1839c0ce6e8df65df192f1e9da7fd153cc4a814500c685"
+    },
+    {
+      "path": "assets/art/routes/tune-handling-coast.svg",
+      "bytes": 30501,
+      "sha256": "ded61917a4f08a96a697a8483a77301acbdb402704a29554ae3cabd056fbf064"
+    },
+    {
+      "path": "assets/art/routes/tune-handling-esses.svg",
+      "bytes": 33793,
+      "sha256": "d6d49ef077cece714ca65fd2e69244b55882df65faa75ec2e480f4af9605bc36"
+    },
+    {
+      "path": "assets/art/routes/tune-launch-dock.svg",
+      "bytes": 49202,
+      "sha256": "4f7f673475f8b80f2bbe490aa4d61484f827b7a0547b6a4435df12ebdc0a8c47"
+    },
+    {
+      "path": "assets/art/routes/tune-launch-quarter.svg",
+      "bytes": 44884,
+      "sha256": "d15a09af6b7bdf2bcc8edf8ed79cdd286970fcf51bc080327b93da4f97dc83f0"
+    },
+    {
+      "path": "assets/art/routes/tune-nitro-coastal-exit.svg",
+      "bytes": 30543,
+      "sha256": "1282ada5faee9295a18b637eaf6ccd9984080b2af8739559672149e23aced075"
+    },
+    {
+      "path": "assets/art/routes/tune-nitro-one-shot.svg",
+      "bytes": 30877,
+      "sha256": "6d42a5d145deabf53c82e52dd396e8d745ce624c4e8b8fc3fe10f9465dc6fec7"
+    },
+    {
+      "path": "assets/art/routes/tune-speed-runway.svg",
+      "bytes": 45460,
+      "sha256": "c32cbdb715518c879cf0f5678e0206afd76879091bfbe87fc1e435d46f884f53"
+    },
+    {
+      "path": "assets/art/routes/tune-speed-tunnel.svg",
+      "bytes": 29574,
+      "sha256": "8cc30653f74a99f3284f7fe43697bad61b4f6e5ca8939c58f522c8c704bb6539"
+    },
+    {
+      "path": "assets/art/routes/tune-traction-snowbelt.svg",
+      "bytes": 30747,
+      "sha256": "72dfc0b150f3a9be916df584d765dbbb66d68b34d6303cc4889f49d6b619e5cd"
+    },
+    {
+      "path": "assets/art/routes/tune-traction-woodland.svg",
+      "bytes": 32446,
+      "sha256": "2760a3a2726c221a73ba8f25d2d30c130f5973d2c21bb900690d85f311d6e905"
+    },
+    {
+      "path": "assets/art/routes/wakaba.svg",
+      "bytes": 32297,
+      "sha256": "b5c908701dd4dd4525edb5367531c06d48d96f87f61ad3553a27baff06e0f87d"
+    },
+    {
+      "path": "assets/art/routes/xp-akebono-apex.svg",
+      "bytes": 32557,
+      "sha256": "6aea07a692b43cd0ffe803a286c8c3d69b52a29ccf5a11deaadb3babac7b853b"
+    },
+    {
+      "path": "assets/art/routes/xp-akebono-brake.svg",
+      "bytes": 33791,
+      "sha256": "1706a9cf22a76d4f82f4d537c4b7721d326f64b8df56e0eacb8b8e279dd09ca2"
+    },
+    {
+      "path": "assets/art/routes/xp-akebono-crest.svg",
+      "bytes": 32585,
+      "sha256": "956e8f47c11244b586a5c85b9d430988d12dc37e41f77690b609a56e98fceb3b"
+    },
+    {
+      "path": "assets/art/routes/xp-akebono-cruise.svg",
+      "bytes": 30605,
+      "sha256": "3e97a4ca4c63f2c1252d2c115828908e3a43b686e0a49d01d05fa3564ce37d5c"
+    },
+    {
+      "path": "assets/art/routes/xp-akebono-esses.svg",
+      "bytes": 27623,
+      "sha256": "848cc13c4ccd9aaf5941e8466c1c6d2096f3d25a3e8c5e6a3219380df065ae63"
+    },
+    {
+      "path": "assets/art/routes/xp-akebono-launch.svg",
+      "bytes": 32575,
+      "sha256": "bf907a8ba2c132055507b9811c1c2251a59d995992d2ae77a9a87c6f1f61607c"
+    },
+    {
+      "path": "assets/art/routes/xp-akebono-master.svg",
+      "bytes": 29650,
+      "sha256": "cfbca6fe70278f85ee368a9968aa24190f7debe90ee0828bd5e6db5597ec7f9a"
+    },
+    {
+      "path": "assets/art/routes/xp-akebono-mixed-grip.svg",
+      "bytes": 29626,
+      "sha256": "949313628afd06240d1efa35956204a8dacaa1b4f7984299e901e678c4dfb4ee"
+    },
+    {
+      "path": "assets/art/routes/xp-akebono-relay.svg",
+      "bytes": 30562,
+      "sha256": "94784f937cc7394582faa59dce8b0501e5323c87de838679f4da02135413d9fd"
+    },
+    {
+      "path": "assets/art/routes/xp-akebono-switchback.svg",
+      "bytes": 27578,
+      "sha256": "92f89cf56bf9ed83ce4df193071cedb7daf02f2ea742788cd0209a10a4047ab5"
+    },
+    {
+      "path": "assets/art/routes/xp-asahi-apex.svg",
+      "bytes": 27610,
+      "sha256": "f440660657d6d1cd5ac5587fa7677f1fd266d880572d66bccfc4840b1435bc92"
+    },
+    {
+      "path": "assets/art/routes/xp-asahi-brake.svg",
+      "bytes": 29547,
+      "sha256": "95c21b2c6fc01d21a2fc7d8bcda426c7924cd97e3a66af01925e50ec487b03c9"
+    },
+    {
+      "path": "assets/art/routes/xp-asahi-crest.svg",
+      "bytes": 29608,
+      "sha256": "5e8e1a09bd0481a193d7fb8b8581bf786f33ca1c7f3cf85bb465e8374a547566"
+    },
+    {
+      "path": "assets/art/routes/xp-asahi-cruise.svg",
+      "bytes": 29616,
+      "sha256": "fd157fb90055766b187c0301691f6ce25a74d0e17ca5a113a14105e435953234"
+    },
+    {
+      "path": "assets/art/routes/xp-asahi-esses.svg",
+      "bytes": 29631,
+      "sha256": "cc130ff24dcafe96aa69f2d9bd483f19fa0593eaf55b911d28e3fdee6b525011"
+    },
+    {
+      "path": "assets/art/routes/xp-asahi-launch.svg",
+      "bytes": 30906,
+      "sha256": "e708729f886a31e9a0c89c00cf6ba792ab2903aacd29cd72302c81b08f11f56d"
+    },
+    {
+      "path": "assets/art/routes/xp-asahi-master.svg",
+      "bytes": 46436,
+      "sha256": "9f9f1f6d3d6223b3572592adee71a752f0b7074e1ad1c92e1954b8192e04fbda"
+    },
+    {
+      "path": "assets/art/routes/xp-asahi-mixed-grip.svg",
+      "bytes": 30922,
+      "sha256": "66f092149ad15a6bf3a7e9b0f0e2e12b097b77c6a38189161cb056ef7bab8e53"
+    },
+    {
+      "path": "assets/art/routes/xp-asahi-relay.svg",
+      "bytes": 46706,
+      "sha256": "fdddf2ac0a7495020616bf5858c4ff8dded8f6a2f85da5d40d5fe9e0389932e5"
+    },
+    {
+      "path": "assets/art/routes/xp-asahi-switchback.svg",
+      "bytes": 27655,
+      "sha256": "0963dfe90d4a61a9112cb358546098e3b4784e68a3101e0df378197899fd55b5"
+    },
+    {
+      "path": "assets/art/routes/xp-dawn-30km.svg",
+      "bytes": 30876,
+      "sha256": "5573be10c60427355e20007b86fb744992f6c7587ab4facb142fb0a321882553"
+    },
+    {
+      "path": "assets/art/routes/xp-harusugi-apex.svg",
+      "bytes": 32321,
+      "sha256": "7d99ae18692adb2d5d0ea26be9a107b8fb00399e69290be381f8042466458375"
+    },
+    {
+      "path": "assets/art/routes/xp-harusugi-brake.svg",
+      "bytes": 32419,
+      "sha256": "676f535f5333f61fccdd6c4b13f263326c5cfd3fe7b81afe15cabd296690d4b2"
+    },
+    {
+      "path": "assets/art/routes/xp-harusugi-crest.svg",
+      "bytes": 32247,
+      "sha256": "d33fb325c0ae0cfa0e727da25f30e53fb79c6f3e68a0a3c7b4efcdd0fab4d880"
+    },
+    {
+      "path": "assets/art/routes/xp-harusugi-cruise.svg",
+      "bytes": 32438,
+      "sha256": "126cb50583740cc904e0da213d6f3ff3e8b0b70f0278219d3959cf66e2501361"
+    },
+    {
+      "path": "assets/art/routes/xp-harusugi-esses.svg",
+      "bytes": 32366,
+      "sha256": "6f2c9e988e359d511f7862e716312bc8ba71ac560af1daeba07da2789b6be8a6"
+    },
+    {
+      "path": "assets/art/routes/xp-harusugi-launch.svg",
+      "bytes": 32387,
+      "sha256": "60aebde4f35b136a3421b01b6170b21f7272d77ce7a623dc66038e1e45e01ef3"
+    },
+    {
+      "path": "assets/art/routes/xp-harusugi-master.svg",
+      "bytes": 32432,
+      "sha256": "4d4940b9630149d355d7df15e2eedad351b12fa10ca883cf7ac0bf14c6634f5a"
+    },
+    {
+      "path": "assets/art/routes/xp-harusugi-mixed-grip.svg",
+      "bytes": 32434,
+      "sha256": "e5ee61990582719ad78d74e60ea516ac79f130ad45cb19e6628a87b4a770992e"
+    },
+    {
+      "path": "assets/art/routes/xp-harusugi-relay.svg",
+      "bytes": 32460,
+      "sha256": "91b79411ac5b9585770f80015b03092cfcb3252acf67877d16edb970439dad34"
+    },
+    {
+      "path": "assets/art/routes/xp-harusugi-switchback.svg",
+      "bytes": 32462,
+      "sha256": "dc2d63e77d60f14029712ed001f1225035e046da8a5809474fc53ed2a7fdc1f7"
+    },
+    {
+      "path": "assets/art/routes/xp-hisui-apex.svg",
+      "bytes": 29671,
+      "sha256": "43194f3ee954b5ad76065af423d165b14d4be9aefee88230f5ee2869822db98f"
+    },
+    {
+      "path": "assets/art/routes/xp-hisui-brake.svg",
+      "bytes": 29667,
+      "sha256": "1ab2e97f2f09aacd0a66a09993104d2ca1b8493c6bad9f76778157ad49d20f69"
+    },
+    {
+      "path": "assets/art/routes/xp-hisui-crest.svg",
+      "bytes": 32639,
+      "sha256": "7e971e868d8d4d48e8d9434292986c2809534bd27d9cc4a08ff1eb0c6833fcad"
+    },
+    {
+      "path": "assets/art/routes/xp-hisui-cruise.svg",
+      "bytes": 29588,
+      "sha256": "2ddde135c6ab12353eed5d5be3acadfd532cad2b39a39421fbfa12b1a6939078"
+    },
+    {
+      "path": "assets/art/routes/xp-hisui-esses.svg",
+      "bytes": 32613,
+      "sha256": "2d79dc8ef7de0c6ca5ba8df885a51acd2d7ecc2bc9736746f604d7d0d4d4ad58"
+    },
+    {
+      "path": "assets/art/routes/xp-hisui-launch.svg",
+      "bytes": 29649,
+      "sha256": "8363895282dd450907b5eb7240066fac1ed15d9b9cba35dc4bf2fde9286ea6d9"
+    },
+    {
+      "path": "assets/art/routes/xp-hisui-master.svg",
+      "bytes": 32557,
+      "sha256": "51232dadced7007d95daf5ec205be0e47b76ea4585e0c0e4f4ac668fa4ee1d13"
+    },
+    {
+      "path": "assets/art/routes/xp-hisui-mixed-grip.svg",
+      "bytes": 29668,
+      "sha256": "287ef69dedb13adffcbb13d6d2e56d8dada317ff6eeea5e110b0c9112c4e4363"
+    },
+    {
+      "path": "assets/art/routes/xp-hisui-relay.svg",
+      "bytes": 29599,
+      "sha256": "71b8014eb90f5e30bd4423aa186f671d25668ecb297274251e337ca0cd0f369d"
+    },
+    {
+      "path": "assets/art/routes/xp-hisui-switchback.svg",
+      "bytes": 32568,
+      "sha256": "4cab283883a4993f0b0d6bb46117005b804bf491f38f7d3b2a60e4f9b1121525"
+    },
+    {
+      "path": "assets/art/routes/xp-hoshiana-apex.svg",
+      "bytes": 30915,
+      "sha256": "4e4b63d26894756d1042e33e80009783d3846465e692c68163d3fb363ca85be4"
+    },
+    {
+      "path": "assets/art/routes/xp-hoshiana-brake.svg",
+      "bytes": 30873,
+      "sha256": "f119ef67f26846d9dc880d8727e97d2ae0ec13361ab9b95e17b4a557f036cc8c"
+    },
+    {
+      "path": "assets/art/routes/xp-hoshiana-crest.svg",
+      "bytes": 32557,
+      "sha256": "f483afe2838447fb1db63bfaf3e6251ccb59e2705407f317f5479da32ba575b7"
+    },
+    {
+      "path": "assets/art/routes/xp-hoshiana-esses.svg",
+      "bytes": 45297,
+      "sha256": "5ad19e93b270a664a51f8a3e2dc986423c5c3a929ccc33ef81a5c4428b33e95f"
+    },
+    {
+      "path": "assets/art/routes/xp-hoshiana-launch.svg",
+      "bytes": 30840,
+      "sha256": "ca72e4e22c2b8a3f0e9bd9f72d777f0dbc97f3d209da2ac57124bc35b5664d9a"
+    },
+    {
+      "path": "assets/art/routes/xp-hoshiana-master.svg",
+      "bytes": 29592,
+      "sha256": "db96e6c2ea02882c8fb9890b817ed79c2dca302f37f20a73c80147c21c2b82d1"
+    },
+    {
+      "path": "assets/art/routes/xp-hoshiana-mixed-grip.svg",
+      "bytes": 27639,
+      "sha256": "38c80c819a189cab9d81470cb9ce1d3e54b7f7cf9bdd8120b7173c935b48571f"
+    },
+    {
+      "path": "assets/art/routes/xp-hoshiana-relay.svg",
+      "bytes": 33846,
+      "sha256": "bc6550903c6728f003f678af9f0f84fb388adc4c81d08dfdcb3f6696d6f9f5c6"
+    },
+    {
+      "path": "assets/art/routes/xp-hoshiana-switchback.svg",
+      "bytes": 29648,
+      "sha256": "006f8a2530f853b99c4fde3a06bfac1489bdb6696813df2316e030f01dbf204a"
+    },
+    {
+      "path": "assets/art/routes/xp-kasumi-apex.svg",
+      "bytes": 30836,
+      "sha256": "87b3e108b7f87d10cdefca1fa5e033cdc3e7bf190120c9620ba6a9e94a18674f"
+    },
+    {
+      "path": "assets/art/routes/xp-kasumi-brake.svg",
+      "bytes": 33814,
+      "sha256": "6c465c9166bd1d1c85faf5911cb1117ede43362d1d1fb2ba555d88f49650d3db"
+    },
+    {
+      "path": "assets/art/routes/xp-kasumi-crest.svg",
+      "bytes": 30860,
+      "sha256": "e189c6c1745a087f36937a117bc842c5b39476bae6cba1befec93626b1e4102b"
+    },
+    {
+      "path": "assets/art/routes/xp-kasumi-cruise.svg",
+      "bytes": 45553,
+      "sha256": "0174dc57adfb7063243fc03d3f7a92bc4f319b8bdbdccb57fa57e216ddda5320"
+    },
+    {
+      "path": "assets/art/routes/xp-kasumi-esses.svg",
+      "bytes": 32524,
+      "sha256": "7de07cb5cc3bebdf9d5289e04d459b23ee53ca61b2c34a2f9034ba15c8f2c690"
+    },
+    {
+      "path": "assets/art/routes/xp-kasumi-launch.svg",
+      "bytes": 33764,
+      "sha256": "b86b01ba4357b63ed9ae4448213650c19d8110ffc530b69cee0eee4dc9a68ef2"
+    },
+    {
+      "path": "assets/art/routes/xp-kasumi-master.svg",
+      "bytes": 29557,
+      "sha256": "44223aa016ccb674e4bc77def1c7f9fa1390e185afbe1406cc92e4e8a6db3702"
+    },
+    {
+      "path": "assets/art/routes/xp-kasumi-mixed-grip.svg",
+      "bytes": 29673,
+      "sha256": "b59606029d3b9dc219fb64735dff131ca7627c99a7fb783180cc3018b68fa4df"
+    },
+    {
+      "path": "assets/art/routes/xp-kasumi-relay.svg",
+      "bytes": 29634,
+      "sha256": "3b91796799b3d9371b9172eb0c37827824f8bb43a565bb63db82f7bf3c603256"
+    },
+    {
+      "path": "assets/art/routes/xp-kasumi-switchback.svg",
+      "bytes": 27590,
+      "sha256": "82ca8c25fd007305da79e8da205ab27966652fbc4d9fc508d72452419a776c42"
+    },
+    {
+      "path": "assets/art/routes/xp-momijidani-apex.svg",
+      "bytes": 27665,
+      "sha256": "5cf51cc676c1b0606d0a166802de933e84088f6918ffa0ad3aca352d4172648c"
+    },
+    {
+      "path": "assets/art/routes/xp-momijidani-brake.svg",
+      "bytes": 30826,
+      "sha256": "ce30b6afc89c1163a117c292969b198d6b5c32cc72bfc949e62297c5c8af610c"
+    },
+    {
+      "path": "assets/art/routes/xp-momijidani-crest.svg",
+      "bytes": 29665,
+      "sha256": "9037cdef6d91039d97a0295f0ce00760d871db13412b96de966d250dc82f7fcf"
+    },
+    {
+      "path": "assets/art/routes/xp-momijidani-cruise.svg",
+      "bytes": 27634,
+      "sha256": "bf6cee24fa81d614ff91ec20fa319ac37df7360e9542644fe1b5060e04a5f645"
+    },
+    {
+      "path": "assets/art/routes/xp-momijidani-esses.svg",
+      "bytes": 30910,
+      "sha256": "89e35827ee21fc99b18adca974e8e2858f6b512f427d4604120d13b4c64c9350"
+    },
+    {
+      "path": "assets/art/routes/xp-momijidani-launch.svg",
+      "bytes": 27580,
+      "sha256": "1f472f9a722adad124028595fa55a753261352bb27c0f939fc2f6e6cddcae430"
+    },
+    {
+      "path": "assets/art/routes/xp-momijidani-master.svg",
+      "bytes": 50673,
+      "sha256": "958ca6351c0e9c4222cf74ea327e53e62bda2dd3029b092c23545f8abd511e9b"
+    },
+    {
+      "path": "assets/art/routes/xp-momijidani-mixed-grip.svg",
+      "bytes": 27639,
+      "sha256": "5c09b2f7b8b9ad444f49670e024e46e049100fef218f142dc6663b5b53ec2358"
+    },
+    {
+      "path": "assets/art/routes/xp-momijidani-relay.svg",
+      "bytes": 30824,
+      "sha256": "818a2ba53e8c25a0fd6ac7029ed46e24db4a4e5a0e0d75d3c37c74f4acb7d42d"
+    },
+    {
+      "path": "assets/art/routes/xp-momijidani-switchback.svg",
+      "bytes": 32606,
+      "sha256": "157823e2a93f7712e991ffaeb5254c09edefaf5c07b5557485f9f245663eab34"
+    },
+    {
+      "path": "assets/art/routes/xp-nadeshiko-apex.svg",
+      "bytes": 29653,
+      "sha256": "ce1f7c10851b03a69606278fdd74974a8f782065471f6b9132e12b310b83c8f4"
+    },
+    {
+      "path": "assets/art/routes/xp-nadeshiko-brake.svg",
+      "bytes": 27573,
+      "sha256": "c7e4db7892f02daa5d3bc77ebf18813afc1d8da95a323caf203408f3b22d4850"
+    },
+    {
+      "path": "assets/art/routes/xp-nadeshiko-crest.svg",
+      "bytes": 29658,
+      "sha256": "3bae4031be09dfe08e358e3a4438b05ff862ba1a05149e0e3250ef4e9b93df1b"
+    },
+    {
+      "path": "assets/art/routes/xp-nadeshiko-cruise.svg",
+      "bytes": 32613,
+      "sha256": "ffb92fe496c2ad163e0d240a4930bd7b37aa630231192d7946a9df848bf84c1b"
+    },
+    {
+      "path": "assets/art/routes/xp-nadeshiko-esses.svg",
+      "bytes": 49828,
+      "sha256": "a0ef5a746862624c40c6166949ab5b3f2b8105a395166b852ecf5716e82874fc"
+    },
+    {
+      "path": "assets/art/routes/xp-nadeshiko-launch.svg",
+      "bytes": 29646,
+      "sha256": "ea93ef21d443629f91f9678c78c3a80619df66a3ccd4ccdb91373e43d64cd9ca"
+    },
+    {
+      "path": "assets/art/routes/xp-nadeshiko-master.svg",
+      "bytes": 32536,
+      "sha256": "a2fd8cbf8ff0e7d35a8b61cfe1344c280a231a33a6b444eff523508fbb7124f0"
+    },
+    {
+      "path": "assets/art/routes/xp-nadeshiko-mixed-grip.svg",
+      "bytes": 49164,
+      "sha256": "b40efa89a3abb6907d0562fe50a6924047c54419aa86e8f03828408788062f99"
+    },
+    {
+      "path": "assets/art/routes/xp-nadeshiko-relay.svg",
+      "bytes": 46847,
+      "sha256": "5d4fe035d19dc6da84c5f75e35e96a258732248309ed4a291f2194a3a869b0e7"
+    },
+    {
+      "path": "assets/art/routes/xp-nadeshiko-switchback.svg",
+      "bytes": 29613,
+      "sha256": "f19290b3b20e89ac4a3da9ce034e9d68aa3ac4d189954ca2b59996b258dceeba"
+    },
+    {
+      "path": "assets/art/routes/xp-sazanami-apex.svg",
+      "bytes": 47892,
+      "sha256": "aec8ae35cbaa49f30042c705530a6c07d8961edeb3abd23a51f783a8276ba6e2"
+    },
+    {
+      "path": "assets/art/routes/xp-sazanami-brake.svg",
+      "bytes": 29569,
+      "sha256": "4c2fc44a09899d86b1668f93530be8bab74ae1d16065e2cb6c04042ac0ff9b94"
+    },
+    {
+      "path": "assets/art/routes/xp-sazanami-crest.svg",
+      "bytes": 30836,
+      "sha256": "790ecc3456a8ce81287f1591145fff020753067dd72844d1bc136250267b3ada"
+    },
+    {
+      "path": "assets/art/routes/xp-sazanami-cruise.svg",
+      "bytes": 29605,
+      "sha256": "53b74898687f9b3d72dbe63eab2e52e8bbb789904c3ce5e79cfa7bb836d9890b"
+    },
+    {
+      "path": "assets/art/routes/xp-sazanami-esses.svg",
+      "bytes": 45703,
+      "sha256": "d7e3bf610f2e2e14850d57530de0535741c682aa41963b5d2ddf283994cdbd17"
+    },
+    {
+      "path": "assets/art/routes/xp-sazanami-launch.svg",
+      "bytes": 29659,
+      "sha256": "32a15342e1b07c1a9f41a8740cbdd528259486c4d061778d7984c9b73ab042ca"
+    },
+    {
+      "path": "assets/art/routes/xp-sazanami-master.svg",
+      "bytes": 27652,
+      "sha256": "baa09e5ba71945edd32de577d1a3523e6d33545a31d272daf2b3a7bcf521f6bd"
+    },
+    {
+      "path": "assets/art/routes/xp-sazanami-mixed-grip.svg",
+      "bytes": 29630,
+      "sha256": "57918fd379e5f49b6482dd7f0bf237c59428fa741c98f4168b6fd709a067d6e5"
+    },
+    {
+      "path": "assets/art/routes/xp-sazanami-relay.svg",
+      "bytes": 45504,
+      "sha256": "ab70db8fc34de6ee030b28c604db54a30e4601f434ad0ee8ba91ca71aaf4c23b"
+    },
+    {
+      "path": "assets/art/routes/xp-sazanami-switchback.svg",
+      "bytes": 27573,
+      "sha256": "c2fc29ef94ec261547520a1deadea33b440791ad4e98ad4939adef26b7256315"
+    },
+    {
+      "path": "assets/art/routes/xp-shimobana-apex.svg",
+      "bytes": 30905,
+      "sha256": "c045688a782328599c52b69e6e9c4adcf42314ca4f124b0255ec6f5e159d5af7"
+    },
+    {
+      "path": "assets/art/routes/xp-shimobana-brake.svg",
+      "bytes": 30908,
+      "sha256": "b37d944e3a5a27c0ca4d3718806bd3193620f20d7c7e6f166be8588ff9ad8dd7"
+    },
+    {
+      "path": "assets/art/routes/xp-shimobana-crest.svg",
+      "bytes": 30866,
+      "sha256": "656a7add349f80df57fece0ebb4ee7532e7cabf2af3b6c4bbb58e993b196ef7f"
+    },
+    {
+      "path": "assets/art/routes/xp-shimobana-cruise.svg",
+      "bytes": 30861,
+      "sha256": "83b138d4fb88470089109f678b8957cd47074b30a7dad1070e1b76ea2e03bbbd"
+    },
+    {
+      "path": "assets/art/routes/xp-shimobana-esses.svg",
+      "bytes": 30818,
+      "sha256": "6cb3388efd7ea755eadacd1d25ea1be7f217906d2fbbbf6860152d015c234de4"
+    },
+    {
+      "path": "assets/art/routes/xp-shimobana-launch.svg",
+      "bytes": 30827,
+      "sha256": "73c551c415c17a97bc19be484d55c6977f94113bf39dd87ee7fe05690f82c74d"
+    },
+    {
+      "path": "assets/art/routes/xp-shimobana-master.svg",
+      "bytes": 30834,
+      "sha256": "2735f45acd390325c816acdf40e79f8f0bac5a45499ae9fb33b5ee83708beb58"
+    },
+    {
+      "path": "assets/art/routes/xp-shimobana-mixed-grip.svg",
+      "bytes": 30912,
+      "sha256": "85c5035467a4381b69e2a969a70997d79961d1b5aa6ffa647e73b9462aa65352"
+    },
+    {
+      "path": "assets/art/routes/xp-shimobana-relay.svg",
+      "bytes": 30864,
+      "sha256": "a1f1c87ff55cebbab64213b1531fef76dc2b6f05b157f51eb8793c83b588a81f"
+    },
+    {
+      "path": "assets/art/routes/xp-shimobana-switchback.svg",
+      "bytes": 30824,
+      "sha256": "8660ec64bf19981a4d860c87b17ece86f61f3bbecd9be8c225a9e2b50af3564d"
+    },
+    {
+      "path": "assets/art/routes/xp-tetsumine-apex.svg",
+      "bytes": 46619,
+      "sha256": "24f937175402d7d59f1f04d9bf658cd50a493403a872a9946f7e6529d1a9a613"
+    },
+    {
+      "path": "assets/art/routes/xp-tetsumine-brake.svg",
+      "bytes": 45223,
+      "sha256": "4b80df15f178485b4ebf54eeb2d60d2f603f6a203061bd776a368aa7e827c75a"
+    },
+    {
+      "path": "assets/art/routes/xp-tetsumine-crest.svg",
+      "bytes": 27654,
+      "sha256": "c9bcc87ea3bbc29e7316fc0f108e05a09de6137df21a193530e693a777615902"
+    },
+    {
+      "path": "assets/art/routes/xp-tetsumine-cruise.svg",
+      "bytes": 32547,
+      "sha256": "8b63be0a3be12b6de99621d1e93bf8fdca09a8f11f1773ef0e7cd7dc3a5e2bdb"
+    },
+    {
+      "path": "assets/art/routes/xp-tetsumine-esses.svg",
+      "bytes": 50347,
+      "sha256": "3071fde67e85578155785dcaec6e21838d001fb473309f2e6318f7b8d2022f4c"
+    },
+    {
+      "path": "assets/art/routes/xp-tetsumine-launch.svg",
+      "bytes": 30838,
+      "sha256": "ce1995919d30ee3dcf2517d3df0763e947bc3596c7efa60ee33747d71792c288"
+    },
+    {
+      "path": "assets/art/routes/xp-tetsumine-master.svg",
+      "bytes": 29680,
+      "sha256": "74d57456dc7eb3d3b71de388bec11522c3badc06abfe7752f4f6ee14dc6ba418"
+    },
+    {
+      "path": "assets/art/routes/xp-tetsumine-mixed-grip.svg",
+      "bytes": 29641,
+      "sha256": "f5cd520980b0bc1ec7d86dd5b3d38dd1989baff03be1a5f106aea056845edfd3"
+    },
+    {
+      "path": "assets/art/routes/xp-tetsumine-relay.svg",
+      "bytes": 29615,
+      "sha256": "7eb17276ca53a0b7753a3f22838754d126daea373c86b697decc8831b51f1c30"
+    },
+    {
+      "path": "assets/art/routes/xp-tetsumine-switchback.svg",
+      "bytes": 30870,
+      "sha256": "78a9c2111446408e69c269d3a94728471766422e89352991dc48b0c9a64f5d2c"
+    },
+    {
+      "path": "assets/art/routes/xp-tsukikage-apex.svg",
+      "bytes": 32607,
+      "sha256": "70abc3382e489a4dd73b2aa2956190f9b1979743494110631b066839f0f812b7"
+    },
+    {
+      "path": "assets/art/routes/xp-tsukikage-brake.svg",
+      "bytes": 32623,
+      "sha256": "6fd232d8377b2fcaaf6b7ea9051c0edf9eb039161df7f78658b22bbe75a9de4f"
+    },
+    {
+      "path": "assets/art/routes/xp-tsukikage-crest.svg",
+      "bytes": 32576,
+      "sha256": "fcd0e6aee49a7109b0a0b64bbd96445495c72d2a47511502da9ba9059fcd138e"
+    },
+    {
+      "path": "assets/art/routes/xp-tsukikage-cruise.svg",
+      "bytes": 32622,
+      "sha256": "e2481f9cd905bf41aedb013db3fe7d0d118f00c24c666a92823625e89f8d0f39"
+    },
+    {
+      "path": "assets/art/routes/xp-tsukikage-esses.svg",
+      "bytes": 32613,
+      "sha256": "fdd47065128d39666397023a9353b30cf3fdfc806df2a22f4d45a166f347c035"
+    },
+    {
+      "path": "assets/art/routes/xp-tsukikage-launch.svg",
+      "bytes": 32573,
+      "sha256": "c3cca5f8d109012cb1b598527d8c9d39b6ffb59e45032e0d506aa8f0f8fb8ecf"
+    },
+    {
+      "path": "assets/art/routes/xp-tsukikage-master.svg",
+      "bytes": 32602,
+      "sha256": "c1b8bb0ba17ff1d76c3d1bb1a99f003c4a8a8f400dd6d559d4f2c8b1be3b6fe0"
+    },
+    {
+      "path": "assets/art/routes/xp-tsukikage-mixed-grip.svg",
+      "bytes": 32541,
+      "sha256": "c395e1c6be663f4bf55b78c31c3c4feb9d138c32d105eb801b2638de356a8eac"
+    },
+    {
+      "path": "assets/art/routes/xp-tsukikage-relay.svg",
+      "bytes": 32604,
+      "sha256": "238fc3f60d384c22a31a520252b5af3fec134ceeb82a848cdd0a07b2d3ff23b7"
+    },
+    {
+      "path": "assets/art/routes/xp-tsukikage-switchback.svg",
+      "bytes": 32592,
+      "sha256": "d0ae16af6d02587b3a941966b73960df6a1e99a471346c68a646f4f5453574df"
+    },
+    {
+      "path": "assets/art/routes/yukishiro.svg",
+      "bytes": 33780,
+      "sha256": "7a7ea5b47fcc39457c8cef6ba53243f1d7c38af59d65f8889d7d4fe8d1a88453"
+    },
+    {
+      "path": "assets/art/routes/yuzuriha.svg",
+      "bytes": 30740,
+      "sha256": "6480d209cb6bcaf1602cb7546ea55d25ea0c1937448214cfb468823d4350daaf"
+    },
+    {
+      "path": "assets/art/routes.svg",
+      "bytes": 29630,
+      "sha256": "df2b6cea9bffac44a6bd4cbbe6bd608c9d4d686a091dfed419a92e37568c15e1"
+    },
+    {
+      "path": "assets/art/settings.svg",
+      "bytes": 58129,
+      "sha256": "28bfe3c704027672ebc30bfab20d156a04b344672bbaf4ee28bc0fe47df003b5"
+    },
+    {
+      "path": "assets/art/share.png",
+      "bytes": 266185,
+      "sha256": "3530454d906da8efa56b22a0a7460306b715be1b65f5846d745b2ae5d36da53f"
+    },
+    {
+      "path": "assets/art/shop.svg",
+      "bytes": 59559,
+      "sha256": "18e148573e82be79494ef6db51fa8da373f408a00bf860d5e2c1fe3c052a9518"
+    },
+    {
+      "path": "assets/art/sky-alpine.svg",
+      "bytes": 27723,
+      "sha256": "70665f0628f2126e1d9a4e73b88d5e5aa34221e53e52eb8dcb2914fec27f6a3a"
+    },
+    {
+      "path": "assets/art/sky-coast.svg",
+      "bytes": 24538,
+      "sha256": "e402f8debbc2c56a0bc3edd0b0a3ab88f0a0682af67074e76c20f2365e2eb4f5"
+    },
+    {
+      "path": "assets/art/sky-forest.svg",
+      "bytes": 26527,
+      "sha256": "a4a7cb56ba0eb8ff0e05b8cdf928e826d1a66fa2f3b6dbed17e305e8e3b21332"
+    },
+    {
+      "path": "assets/art/sky-port.svg",
+      "bytes": 46918,
+      "sha256": "959297abfab5714f2a73705cee99438a031a7b016deecace296ff5f3b15dc603"
+    },
+    {
+      "path": "assets/art/surface-forest.svg",
+      "bytes": 74855,
+      "sha256": "8acbe84368fa7af7686847b0bd42c0bc297df54774401ef01ac962361969881a"
+    },
+    {
+      "path": "assets/art/surface-rock.svg",
+      "bytes": 31785,
+      "sha256": "406f87276eb72455f0f9877f149d9d276890da7662ace6dd10fa59c094ebac73"
+    },
+    {
+      "path": "assets/art/technical.svg",
+      "bytes": 29642,
+      "sha256": "4425a3f3645bc850261337d42572a4b9c5354cc1e3cfac748bfc15e7047e9206"
+    },
+    {
+      "path": "assets/audio/original-score.json",
+      "bytes": 118862,
+      "sha256": "f407d16b3c5df642866d30a4629ab143b015076a684e718abaf66666971cc5b9"
+    },
+    {
+      "path": "assets/audio/parapara-000.mp3",
+      "bytes": 824018,
+      "sha256": "9c6bbe7e2ffaf56d146aab453930363cfc58db39ced9dbe3da1d3b68760d5a5c"
+    },
+    {
+      "path": "assets/audio/parapara-001.mp3",
+      "bytes": 632644,
+      "sha256": "b260e9cde297001b944041fcd466d5fc92ee724dbe00bbf522a627b90255a54b"
+    },
+    {
+      "path": "assets/audio/parapara-002.mp3",
+      "bytes": 624004,
+      "sha256": "497614f08f36fc2e918e06cf5e4f6723bc400aa8880cce4f536adfb0fdbb166d"
+    },
+    {
+      "path": "assets/audio/parapara-003.mp3",
+      "bytes": 615796,
+      "sha256": "4d971ef1716783c9010a8ab91e51160258245d3d201db4f794adc34c90371e52"
+    },
+    {
+      "path": "assets/audio/parapara-004.mp3",
+      "bytes": 607588,
+      "sha256": "3d9437a67a0bb7100329e9ae121fb74a6aa23b59ee1f63fdf1ed3010ba9a1d23"
+    },
+    {
+      "path": "assets/audio/parapara-005.mp3",
+      "bytes": 641284,
+      "sha256": "9417712e74f91f7a4921bca73ca6bf7f169b1f89a3e38bcf958b1a8c58fc8948"
+    },
+    {
+      "path": "assets/audio/parapara-006.mp3",
+      "bytes": 632644,
+      "sha256": "a987ab3b09f63cfbef1f3c598b3e9b9e0ddf17483be848769edbd7c4d46b9fa0"
+    },
+    {
+      "path": "assets/audio/parapara-007.mp3",
+      "bytes": 624004,
+      "sha256": "2dd5c9a8a0a99b8bdc87075fb6365dff7eb615ba35012114c575e3b174a0e7ce"
+    },
+    {
+      "path": "assets/audio/parapara-008.mp3",
+      "bytes": 615796,
+      "sha256": "ba2202929e978e22aee3730007bc7fa5659758935d1cdea6e754087e0f3d2190"
+    },
+    {
+      "path": "assets/audio/parapara-009.mp3",
+      "bytes": 607588,
+      "sha256": "25f207d56c2b2c3e2b9c2f4c1b4109f595b5084bc70b97f87f0aac5b2be14b03"
+    },
+    {
+      "path": "assets/audio/parapara-010.mp3",
+      "bytes": 641284,
+      "sha256": "e78907bb40643706c5d1d62ab7ab2bf610d01a6aa4b0da1e7f32197496f0c415"
+    },
+    {
+      "path": "assets/audio/parapara-011.mp3",
+      "bytes": 632644,
+      "sha256": "d7f77d88953900b3193344b142dbbd92552dde63cdb77fd4f0be8def19e77851"
+    },
+    {
+      "path": "assets/audio/parapara-012.mp3",
+      "bytes": 624004,
+      "sha256": "86f5777132090bcead00c96237ad63f92fce9085e960066a300a1f7fafd8674a"
+    },
+    {
+      "path": "assets/audio/parapara-013.mp3",
+      "bytes": 615796,
+      "sha256": "f5ab0bd4b9c7ce13d8b5b66a9863404b7143a3faba48d34b2357b07805acb04d"
+    },
+    {
+      "path": "assets/audio/parapara-014.mp3",
+      "bytes": 607588,
+      "sha256": "77811846a6eaa0b486faefca312f2b403c8ed085da3880de5cd47955b9dcbbb9"
+    },
+    {
+      "path": "assets/audio/parapara-015.mp3",
+      "bytes": 641284,
+      "sha256": "efac8e386255af49ff0647a298161bb7c1147fcae25426ea57f440a62c74ab79"
+    },
+    {
+      "path": "assets/audio/parapara-016.mp3",
+      "bytes": 668934,
+      "sha256": "38ca1252a56d50ca745b933c193abd3404635f7a41428dc3893e11f78e216ac1"
+    },
+    {
+      "path": "assets/audio/parapara-017.mp3",
+      "bytes": 659430,
+      "sha256": "fb873fdc78b39047216ac50c10bf1fbdcbc5f4551533024573b01df7a4b4e798"
+    },
+    {
+      "path": "assets/audio/parapara-018.mp3",
+      "bytes": 650358,
+      "sha256": "c57e63e2a75fd361915cf4d797b27b5674974dc5ada66e4e63669607d550cc82"
+    },
+    {
+      "path": "assets/audio/parapara-019.mp3",
+      "bytes": 641286,
+      "sha256": "2341d4589e32dd38df4b052f1b4d4f00a59fa4258d0e65f891ef71c36d011bd4"
+    },
+    {
+      "path": "assets/audio/parapara-020.mp3",
+      "bytes": 678870,
+      "sha256": "8aac9d5f3b9918306046e3ba4379c27e8f4371a794559f3101b383dc9264f23c"
+    },
+    {
+      "path": "assets/audio/parapara-021.mp3",
+      "bytes": 668934,
+      "sha256": "404f4ddb1209d82cb045fa1d7bf1b4fa650eefdf7f3e174cf4a0d53420ffcec8"
+    },
+    {
+      "path": "assets/audio/parapara-022.mp3",
+      "bytes": 659430,
+      "sha256": "3f02e1533a05cd6ba7df9a0717c8b612280c24891b21d422656ff468fcbbb3b3"
+    },
+    {
+      "path": "assets/audio/parapara-023.mp3",
+      "bytes": 650358,
+      "sha256": "68c3761f62398cd38310ec6077de4bcf682b9205e45b95a228ad17a2196451a5"
+    },
+    {
+      "path": "assets/audio/parapara-024.mp3",
+      "bytes": 641286,
+      "sha256": "0bf52c54bc56d2bc3664c38be117746636a1fe9ddea7a1273ce83cd4a8ebe442"
+    },
+    {
+      "path": "assets/audio/parapara-025.mp3",
+      "bytes": 678870,
+      "sha256": "017ae757470680ed586b482c33d3c28821d7e6497c182e1f464cff4a963fba25"
+    },
+    {
+      "path": "assets/audio/parapara-026.mp3",
+      "bytes": 668934,
+      "sha256": "c01995cbc663854a2ebd9bc9f7a1e62180faf49e9722dbac6ee5ad190cf96ce4"
+    },
+    {
+      "path": "assets/audio/parapara-027.mp3",
+      "bytes": 659430,
+      "sha256": "ac9937293f4c9639d2fc9197f3cb1fc569a5aaa34a66842f2bb77c868e2b4a05"
+    },
+    {
+      "path": "assets/audio/parapara-028.mp3",
+      "bytes": 650358,
+      "sha256": "e9112edecc9b7df2bafde05433a9e9a7e0fa532b83c516d63c7c814eba9fe949"
+    },
+    {
+      "path": "assets/audio/parapara-029.mp3",
+      "bytes": 641286,
+      "sha256": "b612b3cb7a5ad0a8a7c9f4f80583704da75b8e57b4493c0f446c88150c4750e3"
+    },
+    {
+      "path": "assets/audio/parapara-030.mp3",
+      "bytes": 678870,
+      "sha256": "e4b11eff833729621b42fff29891d1940a0277994b127823bf263e5de025c404"
+    },
+    {
+      "path": "assets/audio/parapara-031.mp3",
+      "bytes": 668934,
+      "sha256": "0e746954b4ec8e7e209d9bef1733075b6454a85979a51efa9dba639e37f7622d"
+    },
+    {
+      "path": "assets/audio/parapara-032.mp3",
+      "bytes": 599811,
+      "sha256": "1009aa8726f92b7b77207fa5971635e401cf229301efdb7468cbac0fcdbc55ad"
+    },
+    {
+      "path": "assets/audio/parapara-033.mp3",
+      "bytes": 592035,
+      "sha256": "2cd6a98dcb5f21b2bcc8d0c6065242277083d790b4a2e7062c6b149cd47b87b5"
+    },
+    {
+      "path": "assets/audio/parapara-034.mp3",
+      "bytes": 584691,
+      "sha256": "e808b260924782431ca6c1818f604cb5733a7ac445c67e36ef0433d31d527be1"
+    },
+    {
+      "path": "assets/audio/parapara-035.mp3",
+      "bytes": 615795,
+      "sha256": "c6d4402870d32595bfc90dc6e6b8104bf0abc4b2cfeee29b763d84f0fd49fa14"
+    },
+    {
+      "path": "assets/audio/parapara-036.mp3",
+      "bytes": 607587,
+      "sha256": "cc12117f47ea7474047706b989a1aa2f1b40997956da90e2fab4d7ecdfdab11a"
+    },
+    {
+      "path": "assets/audio/parapara-037.mp3",
+      "bytes": 599811,
+      "sha256": "874773d74974fee18276b494882267f5b224a32f3d3dc0a16dafb9f7e87283f2"
+    },
+    {
+      "path": "assets/audio/parapara-038.mp3",
+      "bytes": 592035,
+      "sha256": "65fb5cb7d11611378e62fd50f2cf6f04871763a1a4fd6ded9804f7c05e67aee0"
+    },
+    {
+      "path": "assets/audio/parapara-039.mp3",
+      "bytes": 584691,
+      "sha256": "bab46567a54014261594c64e7d19b56dff108d09c955c3e29993fd4f4a6b8a0d"
+    },
+    {
+      "path": "assets/audio/parapara-040.mp3",
+      "bytes": 615795,
+      "sha256": "8d072659a3648fcb6d2b7e7b765477d0f573d888aa90b7ef0e7ada5994256ec1"
+    },
+    {
+      "path": "assets/audio/parapara-041.mp3",
+      "bytes": 607587,
+      "sha256": "fcf02853d3497af9500d76d4411efd29e1f6913b377dbfc164b906548ab3ef6f"
+    },
+    {
+      "path": "assets/audio/parapara-042.mp3",
+      "bytes": 599811,
+      "sha256": "4358725030d1d6f9dee6d69f5315b9371792a445881040e351a2358894f58844"
+    },
+    {
+      "path": "assets/audio/parapara-043.mp3",
+      "bytes": 592035,
+      "sha256": "a3932d3f6747d97143c03493bfc37e2591fc3a14cb9b4411961e0349319fa761"
+    },
+    {
+      "path": "assets/audio/parapara-044.mp3",
+      "bytes": 584691,
+      "sha256": "736b8da44977ec482657d8bf2396089de214e89a0052d634958100505663cd64"
+    },
+    {
+      "path": "assets/audio/parapara-045.mp3",
+      "bytes": 615795,
+      "sha256": "291ec1e89186a99b6ce2c6b5662497677e0588de27475d4a1835f5c50f0c4e0f"
+    },
+    {
+      "path": "assets/audio/parapara-046.mp3",
+      "bytes": 607587,
+      "sha256": "3f9d400996ca59d4d5ecdce6d6cb83d77f0c87e8d32a2761c4fb889ff233273b"
+    },
+    {
+      "path": "assets/audio/parapara-047.mp3",
+      "bytes": 599811,
+      "sha256": "76744254e178e1005143cb2dc8fb89198d9bdaec13d8bd7a232024c5848dd913"
+    },
+    {
+      "path": "assets/audio/parapara-048.mp3",
+      "bytes": 689230,
+      "sha256": "44602bca28b805e84501977e8a2488d98ee15f9d3a0a36691bb1fd46f63cb18c"
+    },
+    {
+      "path": "assets/audio/parapara-049.mp3",
+      "bytes": 678862,
+      "sha256": "ee29c74b617ab5a6a045378b452e95882aa2b9d4fad3088fee0df5519708b5e4"
+    },
+    {
+      "path": "assets/audio/parapara-050.mp3",
+      "bytes": 721198,
+      "sha256": "b3584864826b957086eef33f57beec0926e67eda63985da325c5edd57ebc3c36"
+    },
+    {
+      "path": "assets/audio/parapara-051.mp3",
+      "bytes": 710398,
+      "sha256": "86851ccc86082fe1887ee55af6e7b5e1989f28ece7e6215a87dd452c3442fa81"
+    },
+    {
+      "path": "assets/audio/parapara-052.mp3",
+      "bytes": 699598,
+      "sha256": "2df0cfcfe55059dceea783260c2e5729af66145c679610d90ea98ab513505f61"
+    },
+    {
+      "path": "assets/audio/parapara-053.mp3",
+      "bytes": 689230,
+      "sha256": "ddadd5e65994716d2fc5eea08648e8e5bcae84c8e38311c93aa7e1281ebbaa9a"
+    },
+    {
+      "path": "assets/audio/parapara-054.mp3",
+      "bytes": 678862,
+      "sha256": "1b5794e00eb6fafc5b8fffab7d73db13350e0116436752957481857adbfb5838"
+    },
+    {
+      "path": "assets/audio/parapara-055.mp3",
+      "bytes": 721198,
+      "sha256": "e44f8f0820f6a0609f5e108ec11674184217eab19bcaee303c8b2129a4679bdc"
+    },
+    {
+      "path": "assets/audio/parapara-056.mp3",
+      "bytes": 710398,
+      "sha256": "c778afd5f317b4817afe68c4e04239274ee1b4ebe9357e28488d56f5866b2e4c"
+    },
+    {
+      "path": "assets/audio/parapara-057.mp3",
+      "bytes": 699598,
+      "sha256": "691d471ff886cc72bb4d545c3c6d2d49e3092095a1975343428c43dfbe5cb6c7"
+    },
+    {
+      "path": "assets/audio/parapara-058.mp3",
+      "bytes": 689230,
+      "sha256": "d0b056a84555f9f4783cedfebe1dc540067ac1138ab8e3a5e50219d298eae9b2"
+    },
+    {
+      "path": "assets/audio/parapara-059.mp3",
+      "bytes": 678862,
+      "sha256": "ecddad3ee3c27975f6ef46d5b55317ddb639cd1418ed466cd80c65a86d4e52c5"
+    },
+    {
+      "path": "assets/audio/parapara-060.mp3",
+      "bytes": 721198,
+      "sha256": "1590f43c1922d71d85fc668d88f9e06222a17abec9c3650a96b80befa00a22bd"
+    },
+    {
+      "path": "assets/audio/parapara-061.mp3",
+      "bytes": 710398,
+      "sha256": "64d9b332b7113c62ca1f05592327713748f357f3c7e4c5c082fd83e282d5939e"
+    },
+    {
+      "path": "assets/audio/parapara-062.mp3",
+      "bytes": 699598,
+      "sha256": "36de296b4338bb84c87a7814aa6540ed221ca2798e237cabb333ce0b4b11f7e2"
+    },
+    {
+      "path": "assets/audio/parapara-063.mp3",
+      "bytes": 689230,
+      "sha256": "85148fead82ce91ec8c047c647c0ffe9b731c16be4fae16ba891d198af3f4f43"
+    },
+    {
+      "path": "assets/audio/parapara-064.mp3",
+      "bytes": 650355,
+      "sha256": "9ed164b98322755523a0e71c980a5904bb3ead9a31fad1373311b96b29db5b6e"
+    },
+    {
+      "path": "assets/audio/parapara-065.mp3",
+      "bytes": 689235,
+      "sha256": "6900c75860af48709d98e19a6923f1a87ec54591bcd7b7efcf76799da9205cad"
+    },
+    {
+      "path": "assets/audio/parapara-066.mp3",
+      "bytes": 678867,
+      "sha256": "b707d361dbc79c22d3395c4ba78fb15d05485fcc21dcbc038d2b22df9f391299"
+    },
+    {
+      "path": "assets/audio/parapara-067.mp3",
+      "bytes": 668931,
+      "sha256": "abcbb11f8bf98284da77fd525ea4bf6939fa1d798de64c4efe3c395852dd5a5f"
+    },
+    {
+      "path": "assets/audio/parapara-068.mp3",
+      "bytes": 659427,
+      "sha256": "5b5d442090e39b1ceb17681057f1cd1e669adfafc12d3c00e40c57f58b7782c7"
+    },
+    {
+      "path": "assets/audio/parapara-069.mp3",
+      "bytes": 650355,
+      "sha256": "4094922b1711f1973d4a9359076a3571a48814534e581b69c501c114a7d3dad0"
+    },
+    {
+      "path": "assets/audio/parapara-070.mp3",
+      "bytes": 689235,
+      "sha256": "78144aa23b964ce33c83c60370fbb49033e7c933e2874392b862b0c0866c8093"
+    },
+    {
+      "path": "assets/audio/parapara-071.mp3",
+      "bytes": 678867,
+      "sha256": "5938a1b4ddfbc0a4b5a6136aca7c9c5fc547e08f4f58f3b6a74ed569f452ccdf"
+    },
+    {
+      "path": "assets/audio/parapara-072.mp3",
+      "bytes": 668931,
+      "sha256": "be9d89c143b243b9ad89e73335e64294784fe8977ebebf046178c92d41e02de2"
+    },
+    {
+      "path": "assets/audio/parapara-073.mp3",
+      "bytes": 659427,
+      "sha256": "fbcf20194d82e20665e7b539fc66fbc7f10e3c36fcf366efee83813f78f56de8"
+    },
+    {
+      "path": "assets/audio/parapara-074.mp3",
+      "bytes": 650355,
+      "sha256": "7bcbfa6664b199008d412a69681ba6f120ca7b668431dd73bd0570d49ed8276e"
+    },
+    {
+      "path": "assets/audio/parapara-075.mp3",
+      "bytes": 689235,
+      "sha256": "4bdc1d6807c6ad168d366564c27e60386c428b3d8008124185a6541cd919a23e"
+    },
+    {
+      "path": "assets/audio/parapara-076.mp3",
+      "bytes": 678867,
+      "sha256": "956ffe2ce6a00e051903ce25e733d51a0f96a505898ae22cf8668eb3112a4bbd"
+    },
+    {
+      "path": "assets/audio/parapara-077.mp3",
+      "bytes": 668931,
+      "sha256": "37839221feb51dfc5c3b625ebc688cf7975e95e9631999d4c848e94cbaa9c702"
+    },
+    {
+      "path": "assets/audio/parapara-078.mp3",
+      "bytes": 659427,
+      "sha256": "a72f31fb4c5bd37d5bd6cefc8e20be1145166357721a252e9d55606c9fa7794e"
+    },
+    {
+      "path": "assets/audio/parapara-079.mp3",
+      "bytes": 650355,
+      "sha256": "4cfc451f1ce120d1799fd33e5471ce9240ccf29b0df9d4308b13018f0fbfa0e7"
+    },
+    {
+      "path": "assets/audio/parapara-080.mp3",
+      "bytes": 632643,
+      "sha256": "8e9a7cd9b9e3efc8a96561b70303183a71c0f52f46c9464d66110e6f707d8d8b"
+    },
+    {
+      "path": "assets/audio/parapara-081.mp3",
+      "bytes": 624003,
+      "sha256": "391bef413b2e496f94b0c3df307a4be89c6a1f38c99e569fe8040e5dcd738f2b"
+    },
+    {
+      "path": "assets/audio/parapara-082.mp3",
+      "bytes": 615795,
+      "sha256": "74d129bb6143cbd9d8d1273b52941d8f5e15cc5497a837c1513dc18b2a7f01f4"
+    },
+    {
+      "path": "assets/audio/parapara-083.mp3",
+      "bytes": 607587,
+      "sha256": "d025be4969e4c0012f5a15bc602dc21f64d1a20bd801c6a9586750ab0ffebead"
+    },
+    {
+      "path": "assets/audio/parapara-084.mp3",
+      "bytes": 599811,
+      "sha256": "3fb76897c899c11869708debc3d3879034dbdcc9de04b217390ec97e986c1a69"
+    },
+    {
+      "path": "assets/audio/parapara-085.mp3",
+      "bytes": 632643,
+      "sha256": "7f7906c707a17927a57466004e93bca1853263c8f436062d16f586cf1c3db49e"
+    },
+    {
+      "path": "assets/audio/parapara-086.mp3",
+      "bytes": 624003,
+      "sha256": "0b45522c423d793ecf4db88533dfa6aa89856433de2ddec360e84b0598941b94"
+    },
+    {
+      "path": "assets/audio/parapara-087.mp3",
+      "bytes": 615795,
+      "sha256": "1e3c0bcc4f813376e756e163b98a4e4c56458f16eb2a5bbdec4da900a213f838"
+    },
+    {
+      "path": "assets/audio/parapara-088.mp3",
+      "bytes": 607587,
+      "sha256": "e119ae4ca23ce5ab9873d58f49f418805918eaf62422e748846cba14f7ad29c3"
+    },
+    {
+      "path": "assets/audio/parapara-089.mp3",
+      "bytes": 599811,
+      "sha256": "ee38087700e2f0c98b42d30085bc571b8bea1e529b5ca6282f23cc658138405b"
+    },
+    {
+      "path": "assets/audio/parapara-090.mp3",
+      "bytes": 632643,
+      "sha256": "87c30af1e805c7687ba71b40e3eaaf511987c1ab8577b464cd3fcd67a6c5d49c"
+    },
+    {
+      "path": "assets/audio/parapara-091.mp3",
+      "bytes": 624003,
+      "sha256": "c0181d51c8864c40b2148f55b3a7b8c23b80e082f4ac86e754d318a8c03b76df"
+    },
+    {
+      "path": "assets/audio/parapara-092.mp3",
+      "bytes": 615795,
+      "sha256": "339a5977508d25ca1ac5cdd0388d204ac82413574758cdcc8a4d3b31db5e5ace"
+    },
+    {
+      "path": "assets/audio/parapara-093.mp3",
+      "bytes": 607587,
+      "sha256": "2bf03b2ca036284ace5bfc2d817d68b6e924be9829ecfd2e5ffa08a176fb8009"
+    },
+    {
+      "path": "assets/audio/parapara-094.mp3",
+      "bytes": 599811,
+      "sha256": "77ccb8b08f42ba59e6c53bef629543e3d4caabf0f6bc981d279b4f84564aea99"
+    },
+    {
+      "path": "assets/audio/parapara-095.mp3",
+      "bytes": 632643,
+      "sha256": "a3a23ab58264cfb196589b76206636f54968b65bf29ee9d1d0a3061db6b8535c"
+    },
+    {
+      "path": "assets/audio/parapara-096.mp3",
+      "bytes": 632644,
+      "sha256": "9debde8ce580b6c8c7b199dbfd9be55d38e1147e5de2779580f60ca641418dc6"
+    },
+    {
+      "path": "assets/audio/parapara-097.mp3",
+      "bytes": 624004,
+      "sha256": "33d8b680da338465efd7be09d26290de175e6d4225978eaea7a0106398dee37e"
+    },
+    {
+      "path": "assets/audio/parapara-098.mp3",
+      "bytes": 615796,
+      "sha256": "8df534670e37d4b1219d8de38208e74d9698e23e5685d1cfd0ef4aea6c897635"
+    },
+    {
+      "path": "assets/audio/parapara-099.mp3",
+      "bytes": 607588,
+      "sha256": "e7fe94934fc084161eb5e9b53922fbdb56caf46fe86525abc30b1d4c4e860b42"
+    },
+    {
+      "path": "assets/audio/parapara-100.mp3",
+      "bytes": 641284,
+      "sha256": "fca2d0d6d7f71c58324959f3835c1333839b225149bb335ae85ccbdcdb227af4"
+    },
+    {
+      "path": "assets/audio/parapara-101.mp3",
+      "bytes": 632644,
+      "sha256": "53ec9e8793420a9028532a65859269fa81164cd57ef9a2586492ce9391c999c1"
+    },
+    {
+      "path": "assets/audio/parapara-102.mp3",
+      "bytes": 624004,
+      "sha256": "5f02e44b918d9e3e780bfa8843886138a6a48367ef942205541efd873b89e6f5"
+    },
+    {
+      "path": "assets/audio/parapara-103.mp3",
+      "bytes": 615796,
+      "sha256": "d65b4e6c83c16d35a947d7ac5110b239793c337193d09f2d2ed98da548471696"
+    },
+    {
+      "path": "assets/audio/parapara-104.mp3",
+      "bytes": 607588,
+      "sha256": "54a800240499c6929cde49a4923e82958381dc043e6c5958feb1a462ca19bc59"
+    },
+    {
+      "path": "assets/audio/parapara-105.mp3",
+      "bytes": 641284,
+      "sha256": "f712d86982e1a0f54de5632cfcb3b69928a9fba52f03539c383b2edd56e3748f"
+    },
+    {
+      "path": "assets/audio/parapara-106.mp3",
+      "bytes": 632644,
+      "sha256": "39b89a79e0cb620587af6896ba9814d31c1a6238ce63e92d10d5faf46f5cace2"
+    },
+    {
+      "path": "assets/audio/parapara-107.mp3",
+      "bytes": 624004,
+      "sha256": "3188d2d42b978f48563de332d8fb6302ca365ec63322a5d9bb39a31da6fb8dbd"
+    },
+    {
+      "path": "assets/audio/parapara-108.mp3",
+      "bytes": 615796,
+      "sha256": "44680223d15ef0eb6b6335b7af8b7b997cbf70c5e279e3816d152edba0a6ba97"
+    },
+    {
+      "path": "assets/audio/parapara-109.mp3",
+      "bytes": 607588,
+      "sha256": "56249116fc9e3e12b5051bcff20c2bcca0df8060358b5fbdfe6e547148f7fbf6"
+    },
+    {
+      "path": "assets/audio/parapara-110.mp3",
+      "bytes": 641284,
+      "sha256": "f9aa2e2685fc9891a58ac6d82b8eda06105bc0fbc8437eb5fcc8fc9729c1e927"
+    },
+    {
+      "path": "assets/audio/parapara-111.mp3",
+      "bytes": 632644,
+      "sha256": "8ba371b1eb376255f0bcbedf8d52e2dcfe18b9e95ad693002c98e25307558131"
+    },
+    {
+      "path": "assets/audio/parapara-112.mp3",
+      "bytes": 641282,
+      "sha256": "b278756008c447889b726e49572968caabbe78cca62a9a938132d84141c1817d"
+    },
+    {
+      "path": "assets/audio/parapara-113.mp3",
+      "bytes": 632642,
+      "sha256": "5484bbc71b47f42001c927895ec38ea102ae29ec5cea2af4fd9f47377832ae0e"
+    },
+    {
+      "path": "assets/audio/parapara-114.mp3",
+      "bytes": 624002,
+      "sha256": "1e6e1665332ffd3c4af0d9bd2a537b0d701d492cabd6d4e815d9a9c1a6b7ee6b"
+    },
+    {
+      "path": "assets/audio/parapara-115.mp3",
+      "bytes": 659426,
+      "sha256": "ad2931b44719693de4b36649e43f8fe8ed5fdf113577844a3d745fc3b74bf956"
+    },
+    {
+      "path": "assets/audio/parapara-116.mp3",
+      "bytes": 650354,
+      "sha256": "fabd1dccf2ab01bf0aa7d26e76d06b5fd9f82be846b3d99c5ebd37efa02b9458"
+    },
+    {
+      "path": "assets/audio/parapara-117.mp3",
+      "bytes": 641282,
+      "sha256": "a401070786893e3345c91f9c90658f2e7bd38dd8260ad6d1b94e87bbe2647622"
+    },
+    {
+      "path": "assets/audio/parapara-118.mp3",
+      "bytes": 632642,
+      "sha256": "1b8f2dc13f8d0fe8ad226276620be6536057c2826ce5a1c8fbffb975af1a27c9"
+    },
+    {
+      "path": "assets/audio/parapara-119.mp3",
+      "bytes": 624002,
+      "sha256": "c14efd9ad5c091aaf6765ffdb4c30adff338769f2108726b549b26710f9c2ce3"
+    },
+    {
+      "path": "assets/audio/parapara-120.mp3",
+      "bytes": 659426,
+      "sha256": "799aabf5938a89aef743647b9b2589203a1ab79aa26cc6a3d1c56d579f717717"
+    },
+    {
+      "path": "assets/audio/parapara-121.mp3",
+      "bytes": 650354,
+      "sha256": "84a0147ce4a98585cd1cd856ddb324f259baa6ffba8d6a79c1056ea73accbe36"
+    },
+    {
+      "path": "assets/audio/parapara-122.mp3",
+      "bytes": 641282,
+      "sha256": "f6147ca965be1623fc63b6a70de12b622a713247898446bc195f38fd98b4862e"
+    },
+    {
+      "path": "assets/audio/parapara-123.mp3",
+      "bytes": 632642,
+      "sha256": "00ab97a59c7269fe27b1260ebf0b6025620e19ad0861a79632b2c2895c243ea4"
+    },
+    {
+      "path": "assets/audio/parapara-124.mp3",
+      "bytes": 624002,
+      "sha256": "b7cc3d17ae8742627875a65d29c62533199144c938c9c48a936c2740e50fecb1"
+    },
+    {
+      "path": "assets/audio/parapara-125.mp3",
+      "bytes": 659426,
+      "sha256": "74ccd1f8838af14dc41b8ff8deac10c887f2a1bf40ccd7c5adfcb7fa98f30cef"
+    },
+    {
+      "path": "assets/audio/parapara-126.mp3",
+      "bytes": 650354,
+      "sha256": "2836d8398cf300697f3fcc65b67dd951190948fcc15ad10af0b12da7cf33e744"
+    },
+    {
+      "path": "assets/audio/parapara-127.mp3",
+      "bytes": 641282,
+      "sha256": "dd2d99c9310c5ef65ed2b8e32c1c3a8cdeb07f52f0e2a612a8110cb1f267f57e"
+    },
+    {
+      "path": "assets/catalog.css",
+      "bytes": 5477,
+      "sha256": "33b90754321ec8cbbacbb55bdb27c26cd1e7c6514d4c5f654ef4e80a6ef15e7d"
+    },
+    {
+      "path": "assets/catalog.js",
+      "bytes": 13085,
+      "sha256": "564e16ad30b0f880d5458b5590ea810a5a4f0f7a58012a906bcb1a9cb8a62b32"
+    },
+    {
+      "path": "assets/course-labels.js",
+      "bytes": 68901,
+      "sha256": "59e21228eea23114a2d20681b51e1077712f0723723ad6c1dd688b22bccab4fa"
+    },
+    {
+      "path": "assets/fonts/OFL.txt",
+      "bytes": 6167,
+      "sha256": "046ee27d8bddc6b6ee08eee53c96dbf3ec1f6df561644e018507dd8ffcb11d31"
+    },
+    {
+      "path": "assets/fonts/barlow-condensed-latin-500-normal.woff2",
+      "bytes": 21424,
+      "sha256": "460f141ec8f6c9a1516bfd2bd9fe71656246d7a9d04a0955faf53158d8970c4c"
+    },
+    {
+      "path": "assets/fonts/barlow-condensed-latin-700-normal.woff2",
+      "bytes": 22444,
+      "sha256": "3787a5a419171630e6890cfa47c4da067474d005cd0ff8dc11ec090fdc3ee2b8"
+    },
+    {
+      "path": "assets/fonts/barlow-condensed-latin-800-italic.woff2",
+      "bytes": 23780,
+      "sha256": "59b48100622b2dea5b10bbf9e98d02eecf20ea8ae000821877f2d470ec16ee55"
+    },
+    {
+      "path": "assets/game.css",
+      "bytes": 193602,
+      "sha256": "1eed63bef6b1c6973ae895809f6cce95183ec70e8797afafb53b507df6dbd965"
+    },
+    {
+      "path": "assets/game.js",
+      "bytes": 1256934,
+      "sha256": "f52c7ac9f3e6e7c9b763a23db21dd63de67c156f73f2ffdbbead82bca8340ea9"
+    },
+    {
+      "path": "assets/grid.css",
+      "bytes": 11720,
+      "sha256": "dd4c3d9de099d1c411f581b01a5d3fde08441e0349be6e3d7528411a98688638"
+    },
+    {
+      "path": "assets/licenses/inventory.json",
+      "bytes": 9416,
+      "sha256": "c793e1f4e83a42e77b99877a69b16dbe0e00c00911bf2e833354a5aa99aaf3ea"
+    },
+    {
+      "path": "assets/licenses/peerjs-dependencies.txt",
+      "bytes": 9892,
+      "sha256": "48577b964b1d910636855fa131246112ab09108a41fafbb8ebfa8ee71932e1cd"
+    },
+    {
+      "path": "assets/official.css",
+      "bytes": 7455,
+      "sha256": "ec22dd47b8313404773a1064687391bc39948a002b9fcbb2109d4015043930eb"
+    },
+    {
+      "path": "assets/peerjs-1.5.5.min.js",
+      "bytes": 86948,
+      "sha256": "7604d8c31bec4f134b0d15c2d80b1d095ea18af005354f439f14291fcd7b4168"
+    },
+    {
+      "path": "assets/peerjs-LICENSE.txt",
+      "bytes": 1108,
+      "sha256": "9407807dba7f47a79bfb3ac55759d63d77c9371ebd0616d5a093e97d3e810397"
+    },
+    {
+      "path": "assets/pit.css",
+      "bytes": 24275,
+      "sha256": "907f3b0c3ab2125189416ef5d44bbc40774d6b8e48330ca004bb1ea6ef28f9a2"
+    },
+    {
+      "path": "assets/refinement-ui.js",
+      "bytes": 5365,
+      "sha256": "8099ff896a53307c4a5496f6b7285d99810d5cf0de5e8d3f1a26ac6019cd0ea6"
+    },
+    {
+      "path": "assets/refinement.css",
+      "bytes": 12231,
+      "sha256": "06c2167e6459e8087d4781ea295ca6352a4b5583089960eb645d240f94fed2d6"
+    },
+    {
+      "path": "assets/soundtrack.js",
+      "bytes": 16085,
+      "sha256": "ee8771e134b35be29d4be71a549d2577ca7366ab6ab99d16de8283665af5d8e1"
+    },
+    {
+      "path": "assets/theme-catalog.css",
+      "bytes": 25354,
+      "sha256": "a2e029973235d6c044ab53c418cdba50bb3052eb0bf797df01033c275272d176"
+    },
+    {
+      "path": "assets/ui-icons.provenance.json",
+      "bytes": 1407,
+      "sha256": "a696d367727c3eda0e1f10d5667cae27370d7bd7d13ca766448169e24905723c"
+    },
+    {
+      "path": "assets/ui-icons.svg",
+      "bytes": 19084,
+      "sha256": "0fbd4e63cb5a1b9418c980d0b4f7e4bfda9cf46dcef26075b1333441b5795efe"
+    },
+    {
+      "path": "assets/vehicle-design.js",
+      "bytes": 5220,
+      "sha256": "51d847eaf7f0bbf37abb4fc3aee23d35e3a7388a063a8f2cc669e663c3d5cb8a"
+    },
+    {
+      "path": "assets/vehicles.js",
+      "bytes": 930985,
+      "sha256": "35aaed55b994e0ccb08f533f3c31fb4fdf0f73cb14e2b3d09d3861fef33ec24f"
+    }
+  ]
+}

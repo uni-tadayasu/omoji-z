@@ -1,0 +1,37 @@
+name: Download full and changed-files ZIPs
+
+on:
+  workflow_dispatch:
+    inputs:
+      base_ref:
+        description: 'Commit SHA, tag, or branch of the version currently installed'
+        required: true
+        default: 'd56dadaef293b97f88d9f017d8e65701be98e721'
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  package:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out source and history
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Create full and changed-files ZIPs
+        env:
+          BASE_REF: ${{ inputs.base_ref }}
+          RELEASE_DIR: ${{ runner.temp }}/omoji-release
+        run: python3 tools/package-release.py --base-ref "$BASE_REF" --out "$RELEASE_DIR"
+      - name: Downloadable release files
+        uses: actions/upload-artifact@v4
+        with:
+          name: omoji-z-release-${{ github.run_number }}
+          path: |
+            ${{ runner.temp }}/omoji-release/omoji-z-full.zip
+            ${{ runner.temp }}/omoji-release/omoji-z-update.zip
+            ${{ runner.temp }}/omoji-release/release-summary.json
+          if-no-files-found: error
+          retention-days: 14

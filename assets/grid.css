@@ -90,9 +90,9 @@
 .theme-pit #paint-shop { --grid-accent: var(--grid-violet); --grid-glow: #9767bc6c; }
 .theme-pit #community,[data-grid-accent=mint] { --grid-accent: var(--grid-mint); --grid-glow: #559e8b62; }
 .theme-pit #preferences { --grid-accent: #b4d7f6; --grid-glow: #759dbb56; }
-.theme-pit #garage { --section-art: url("./grid-workshop.webp"); }
-.theme-pit #shop { --section-art: url("./crown-omoji.webp"); }
-.theme-pit #paint-shop { --section-art: url("./grid-workshop.webp"); }
+.theme-pit #garage { --section-art: url("./art/garage.svg"); }
+.theme-pit #shop { --section-art: url("./art/operator-c.svg"); }
+.theme-pit #paint-shop { --section-art: url("./art/garage.svg"); }
 .theme-pit .content > [data-menu-view]:not(#setup) > .section-heading {
   min-block-size: clamp(160px,17vw,235px);
   border-color: var(--grid-glow);

@@ -484,12 +484,12 @@ h3 { font-size: clamp(1.09rem, 1.55vw, 1.35rem); }
   border-radius: 12px 12px 0 0;
   background: linear-gradient(90deg, #12202c 0%, #12202ce8 42%, #12202c55), var(--section-art) center 59%/cover;
 }
-#first { --section-art: url('./reel-hero.webp'); }
-#controls { --section-art: url('./reel-technical.webp'); }
-#modes { --section-art: url('./reel-routes.webp'); }
-#grand-prix-help { --section-art: url('./enkan-circuit.webp'); }
-#garage-help { --section-art: url('./reel-garage.webp'); }
-#online-help { --section-art: url('./shiosaki.webp'); }
+#first { --section-art: url('./art/hero.svg'); }
+#controls { --section-art: url('./art/technical.svg'); }
+#modes { --section-art: url('./art/routes.svg'); }
+#grand-prix-help { --section-art: url('./art/routes/enkan-circuit.svg'); }
+#garage-help { --section-art: url('./art/garage.svg'); }
+#online-help { --section-art: url('./art/routes/shiosaki.svg'); }
 .chips { display: grid; gap: 7px; margin: .58rem 0 .84rem; padding: 0; list-style: none; }
 .chips li { display: block; padding: .58rem .68rem; border-inline-start: 2px solid #43757a; border-radius: 0 6px 6px 0; background: #142430; }
 .chips strong { color: #acefde; }
