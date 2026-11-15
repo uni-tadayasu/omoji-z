@@ -20,12 +20,12 @@ jobs:
         with:
           node-version: '22'
       - name: Verify geometry, compatibility, assets and references
-        run: node tools/verify.mjs
+        run: npm test
       - name: Verify public file staging
         run: python3 tools/build-site.py --out "$RUNNER_TEMP/omoji-public"
       - name: Create full and changed-files ZIPs
         env:
-          BASE_REF: ${{ github.event.pull_request.base.sha || 'd56dadaef293b97f88d9f017d8e65701be98e721' }}
+          BASE_REF: ${{ github.event.pull_request.base.sha || '93733a076aa15f437793452d6aa270f39a01b48e' }}
         run: python3 tools/package-release.py --base-ref "$BASE_REF" --out "$RUNNER_TEMP/omoji-release"
       - name: Prepare separate full and changed-files downloads
         run: |

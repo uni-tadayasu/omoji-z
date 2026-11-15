@@ -1,69 +1,67 @@
-# 尾文字Z / OMOJI Z — Original Design Edition
+# 尾文字Z / OMOJI Z — Driving Studio v3
 
-PC・スマートフォン用の静的ブラウザレースです。公開車512台・運営車3台・256ステージ・新規合成BGM128曲。プレイと公開にはサーバー実装、データベース、有料APIキー、npm installは不要です。
+PC・スマートフォン向けの静的ブラウザレースです。公開512車＋運営3車、256コースを維持し、操作・報酬・強化・デザイン・音楽・検索用ページを再設計しました。プレイとGitHub Pages公開にサーバー・DB・APIキー・npm installは不要です。
 
-## 改良内容
+## v3の主な変更
 
-- 全車を独自シリーズ名・型式・車体へ再設計。旧ID・所有車・強化・基礎性能・主要セーブキーを維持。
-- 出所を確認できない旧実車モデル3点、旧画像・旧音源を現行配布ファイルから除去。新規の車体・景観画・ロゴ・71アイコン・BGMへ置換。
-- 車体の曲面・反射・ガラス・灯火・荷重移動、路面の質感、通常コースの曲線を改良。軽量Canvas描画も維持。
-- 320px幅、縦横画面、セーフエリア、タッチ領域、キーボードフォーカス、動きを減らす設定への対応を追加。
-- 図鑑に詳細フィルタ、検索条件のURL保存、最大3件比較を追加。
-- GitHub Pages公開、完全版/差分ZIP作成、ハッシュ検証付き差分適用ツールを追加。
+- 無彩色と赤橙を基調に画面を統一。走行開始、コース選択、操作プリセット、操作練習を先に見せます。320px、縦横画面、セーフエリア、スマホのキーボード、44pxタップ目標に対応。
+- ビギナー／バランス／スポーツの3操作プリセット、速度に応じた操舵、先読み減速、スライド式ハンドル、発進・減速・旋回を学ぶ実走練習。運転補助が勝手に進路を選ぶ自動操舵は撤去。
+- 全車のstock・価格・PPを共通ルールへ。新規は3台・3000Zから開始。通常最高速375km/h、ニトロ中385km/hを実際の走行処理で制限。CPUの隠れた出力・タイヤ・ギヤ強化も撤去。
+- 固定巨額ボーナス・レベルによる報酬乗算を廃止し、距離・実走時間・順位・難度で算定。短い試験コースを繰り返しても報酬/経験値が膨らまないよう上限化。
+- 強化は9系統×3段階と、タイヤ・足回り・ギヤ・LSD・空力の調整へ。購入前見積、未課金プレビュー、PPクラス、3枠保存を追加。タイヤの雨/ドライ、加速/最高速、接地/抵抗のトレードオフを実際の性能へ反映。
+- 車体の曲面・ガラス・内装・リム、路面・植生・遠景を改善。景観用の4原画は新規生成した架空の自然環境で、道路の形と判定は実ゲームのコースデータです。
+- 音楽は手作曲の9テーマ、33実音源（menu1＋race8テーマ×4mix）へ。旧128選曲IDは互換エイリアスとして残し、「128別曲」とは表示しません。音源容量は約30MiB。
+- 車512件・コース256件の静的詳細ページを追加。車体図と道路/標高図はゲームの実データから生成。固有メタ、JSON-LD、内部リンク、sitemapを同期。
 
-メイン画像は新規生成したコンセプトアートで、実際のゲーム画面とは異なります。景観カードの小地図も概念図です。実車・実在コースの完全複製や写真と同一の描画ではありません。
+## セーブとレギュレーション
 
-## GitHubだけで公開する
+既存の所持Z、所有車、旧無料車の暗黙所有、強化履歴を保持します。旧強化による極端な速度加算は穏やかな補正に変換しています。新旧の速度条件が異なるため、v3の自己ベスト・試験結果・リンク順位は別に管理し、古い記録は「旧レギュレーション」として保存・表示します。旧対戦リンクはコースを選ぶために使えますが、旧タイムをv3と比較しません。
 
-1. 完全版ZIPを展開し、中身をGitHubへアップロードします。`index.html` をリポジトリ直下へ置いてください。ZIPをそのまま置くだけでは公開できません。
-2. **Settings → Pages → Deploy from a branch → main → /(root)** を保存します。ビルドは不要です。
-3. 表示されたPages URLを開きます。`/リポジトリ名/` 配下でも相対パスで動きます。
+開発の第2段階は12走かつ36km、第3段階は30走かつ90kmのマスタリーで解放。2km以上・50秒以上の完走だけが進行対象です。新たな通貨は増やしていません。詳しい式は `tools/BALANCE_V3.md` を参照してください。
 
-GitHubのWeb画面は1回100ファイルまでです。audioとart/routesは100ファイル以下に分けてアップロードしてください。GitHub Desktopではフォルダー全体を一度にコミットできます。
+同じブラウザー・同じドメインなら従来のセーブを読み込みます。更新前にゲーム内のバックアップを書き出してください。別ドメインやブラウザーへ移る場合は取り込みが必要です。旧IDにブランド由来の文字列が残るのは保存互換用で、公開名と詳細ページURLは独自の型式です。
 
-既存の `CNAME` とcanonicalは `omoji-z.com` を維持しています。独自ドメインを使わない場合は `CNAME` を削除し、HTMLのcanonical/OG URLとsitemap.xml・robots.txtを自分のPages URLへ変更してください。
+## GitHubだけで配置・更新する
 
-Actionsで公開する場合はPagesのSourceを **GitHub Actions** に変更します。同梱の `pages.yml` が公開用ファイルだけを配置します。ブランチ公開とActions公開はどちらか一方を設定してください。
+完全版ZIPの中身をリポジトリ直下へ配置し、`index.html` を公開ルートにします。`assets/`、`cars/`、`courses/` も一緒に配置してください。ZIPをそのまま置くだけではサイトになりません。
 
-## 今回の更新ファイルだけを適用する
+GitHub Pagesは **Settings → Pages → GitHub Actions** を選ぶと、同梱 `pages.yml` が公開に必要なファイルだけを配置します。従来のブランチ公開を続ける場合は **main / (root)** を指定します。既存 `CNAME` は `omoji-z.com` を維持しています。独自ドメインを使わない場合はCNAMEとcanonical/OG/sitemapのURLを自分の公開先へ合わせてください。
 
-差分元は `d56dadaef293b97f88d9f017d8e65701be98e721` です。添付ZIPそのものとの比較ではありません。
+GitHub Webのアップロードは1回100ファイルまでなので、大きいフォルダーは分割するかGitHub Desktopを使います。各単体ファイルはGitHubのサイズ制限内です。
 
-更新ZIPには変更・追加ファイルと `_update/manifest.json` が入っています。`deleted` は削除が必要な旧モデル・旧画像・未使用音源です。**上書きだけでは旧素材の削除は完了しません。** 完全版を既存リポジトリに追加する場合も同様です。
+### 更新ファイルだけ欲しい場合
 
-安全に適用するには、完全版または更新ZIPを旧リポジトリとは別の場所へ展開し、その中の適用ツールを使ってください。更新ファイルを先に旧リポジトリへ展開すると、競合として停止します。Python 3.10以降のみで動きます。
+PR/Actionsの **Verify game and download ZIPs** が成功すると、Artifactsから次を個別取得できます。
 
-```sh
-python3 /path/to/extracted/tools/apply-update.py /path/to/omoji-z-update.zip --target /path/to/old-repository
-python3 /path/to/extracted/tools/apply-update.py /path/to/omoji-z-update.zip --target /path/to/old-repository --apply
-```
+- `omoji-z-full`：完全版。展開すると直接サイトファイルが入ります。
+- `omoji-z-update`：基準コミットからの追加・変更ファイルと削除一覧だけ。
 
-最初は検査だけです。`--apply` 時は全変更前ハッシュを確認し、自動バックアップ後に書込・削除します。未反映の編集があれば停止します。完了したフォルダーの変更と削除をGitHubへコミットしてください。
+差分元は `_update/manifest.json` の `baseCommit` を確認してください。PRで生成した更新版は、そのPRのbaseコミットが基準です。以前のv2作業ブランチから更新したい場合は、手動Actions **Download full and changed-files ZIPs** の `base_ref` に `93733a076aa15f437793452d6aa270f39a01b48e` を指定できます。
 
-Web画面だけで更新する場合は、変更ファイルを同じパスへアップロードし、`deleted` の各パスをGitHubから削除します。`_update` はアップロード不要です。過去のGit履歴まで除去したい場合は、新しいリポジトリへ完全版を配置する方法もあります。この更新は既存履歴を書き換えません。
-
-## 次回から差分だけをダウンロードする
-
-今回のドラフトPRでは **Checks → Verify game and download ZIPs** の実行完了後、実行ページのArtifactsから、完全版は `omoji-z-full`、変更ファイルだけなら `omoji-z-update` をそれぞれ個別に取得できます。ダウンロードしたZIPを開くと直接ファイルが入っています。mainへのマージや公開は不要です。
-
-**Actions → Download full and changed-files ZIPs → Run workflow** で、更新前のコミットSHAまたはタグを `base_ref` に指定します。実行のArtifactsから `omoji-z-full` または `omoji-z-update` を個別にダウンロードできます。ワークフローはリポジトリへ書き込みません。
-
-ローカルでも生成できます。
+**上書きだけでは削除対象が残ります。** 更新ZIPを旧サイトとは別の場所へ展開し、その中のツールで元フォルダーを検査してから適用してください。
 
 ```sh
-python3 tools/package-release.py --base-ref <更新前のコミットSHA> --out /path/to/releases
+python3 /path/to/extracted/tools/apply-update.py /path/to/omoji-z-update.zip --target /path/to/current-site
+python3 /path/to/extracted/tools/apply-update.py /path/to/omoji-z-update.zip --target /path/to/current-site --apply
 ```
 
-## セーブと版の違い
+最初は検査のみ。適用時は全変更前ハッシュを確認し、バックアップ後に変更と削除を反映します。未反映の編集があれば停止します。GitHub Webで手動更新する場合も、manifestの `deleted` を削除してください。`_update` 自体はサイトへアップロード不要です。
 
-セーブは同じブラウザー・同じオリジンに保持します。更新前にゲーム内でセーブを書き出してください。ドメインやブラウザーを変える場合は取り込みが必要です。旧IDのブランド由来文字列は互換用の内部識別子として残しています。
+Artifactsの保管期間は14日です。期限後は検証/配布ワークフローを再実行して取得できます。過去のGitコミットは消していないため、古い素材の履歴まで除去する場合は新規リポジトリ配置や履歴整理を別途行ってください。
 
-コース線形と車体寸法が変わったため、旧タイムと新タイムは同じ条件ではありません。既存記録は消していません。対戦相手とは同じ版を使ってください。
+## 検証・制作
 
-音声は最初のタップ・クリック後に再生します。短い部屋コードは従来のPeerJS CloudとWebRTCを使用します。ソロプレイには外部の対戦サービスは不要です。
+Node.js 20以降で `npm test`。npm installは不要で、報酬/進行、保存・購入、運転/CPU/ニトロ、対戦リンク、音源、SEO、幾何をまとめて検査します。
 
-## 検証・生成元
+```sh
+npm test
+python3 tools/generate-pages.py
+python3 tools/build-site.py --out /path/to/public-stage
+python3 tools/package-release.py --base-ref <更新前SHA> --out /path/to/releases
+```
 
-Node.js 20以降で `node tools/verify.mjs` を実行できます。テスト用npm installも不要です。音源生成は `tools/compose-audio.py`、アートは `tools/generate-art.py`、アイコンは `tools/generate-icons.py`。再生成の任意ツールは通常のプレイ・公開には不要です。
+音楽を再制作する場合だけPython 3・NumPy 2.3.5・ffmpegが必要です。`python tools/compose-audio.py --jobs 2` で33音源とメタデータを生成します。`tools/render-preview.mjs` によるゲーム描画の再出力は任意の開発依存 `@napi-rs/canvas` が必要ですが、ブラウザーでのプレイには不要です。
 
-検証範囲は `VERIFICATION.txt`、素材の扱いは `RIGHTS.txt`、第三者ライセンスは `THIRD_PARTY_NOTICES.txt` を参照してください。
+ブラウザーは最初のタップ/クリック後に音を再生します。オンライン短コードは従来のPeerJS Cloud/WebRTCを使います。対戦者同士は同じ版を利用してください。
+
+素材来歴・第三者ライセンスはRIGHTS.txtとTHIRD_PARTY_NOTICES.txt、検証範囲はVERIFICATION.txtを参照してください。実ブラウザー/GPU/実機の最終視覚・通信確認と、検索順位の保証は行っていません。

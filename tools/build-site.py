@@ -16,22 +16,26 @@ ROOT_FILES = {
     'manifest.webmanifest', 'RIGHTS.txt', 'THIRD_PARTY_NOTICES.txt',
     'LICENSE', 'LICENSE.txt', 'favicon.ico', 'sw.js', 'service-worker.js',
 }
+PUBLIC_DIRECTORIES = ('assets', 'cars', 'courses')
 
 def public_files(root: Path):
     files = []
     for path in sorted(root.iterdir()):
         if path.is_symlink():
-            if path.name in ROOT_FILES or path.suffix in {'.html', '.webmanifest'} or path.name == 'assets':
+            if path.name in ROOT_FILES or path.suffix in {'.html', '.webmanifest'} or path.name in PUBLIC_DIRECTORIES:
                 raise ValueError(f'Symlink is not allowed in public files: {path.name}')
             continue
         if path.is_file() and (path.name in ROOT_FILES or path.suffix in {'.html', '.webmanifest'}):
             files.append(path)
-    assets = root / 'assets'
-    if assets.is_dir():
-        for path in sorted(assets.rglob('*')):
+    for name in PUBLIC_DIRECTORIES:
+        directory = root / name
+        if not directory.is_dir():
+            continue
+        for path in sorted(directory.rglob('*')):
             if path.is_symlink():
                 raise ValueError(f'Symlink is not allowed: {path.relative_to(root)}')
-            if path.is_file() and not any(part.startswith('.') or part == '__pycache__' for part in path.relative_to(assets).parts):
+            allowed = name == 'assets' or path.suffix == '.html'
+            if allowed and path.is_file() and not any(part.startswith('.') or part == '__pycache__' for part in path.relative_to(directory).parts):
                 files.append(path)
     if not (root / 'index.html').is_file():
         raise ValueError('The source must contain index.html.')
@@ -47,7 +51,7 @@ def main():
     if args.out.is_symlink():
         raise ValueError('The staging directory must not be a symlink.')
     out = args.out.resolve()
-    protected = [root / name for name in ('assets', 'tools', '.github', '.git', '.openai')]
+    protected = [root / name for name in (*PUBLIC_DIRECTORIES, 'tools', '.github', '.git', '.openai')]
     if out == root or out in root.parents or any(out == path or path in out.parents for path in protected):
         raise ValueError('The staging directory must not overwrite source, assets, tools, or repository metadata.')
     files = public_files(root)

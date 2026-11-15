@@ -1,4 +1,8 @@
 User-agent: *
 Allow: /
+Disallow: /tools/
+Disallow: /.github/
+Disallow: /_update/
+Disallow: /.omoji-backups/
 
 Sitemap: https://omoji-z.com/sitemap.xml

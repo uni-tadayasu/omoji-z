@@ -1,0 +1,15 @@
+{
+  "track": "shiramine",
+  "distance": 700,
+  "width": 1600,
+  "height": 900,
+  "carCode": "OZ-323",
+  "panorama": "snow",
+  "panoramaReady": true,
+  "mode": "actual game software renderer",
+  "composition": "Left crop of a 2400 px game viewport; car on the right half",
+  "source": "assets/game.js + assets/vehicles.js",
+  "externalReferences": false,
+  "originalGeneratedBackdrop": "assets/art/sky-v3-snow.webp",
+  "originalGeneratedFoliage": "assets/art/foliage-v3.webp"
+}

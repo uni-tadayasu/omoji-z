@@ -30,7 +30,7 @@ HASH = re.compile(r'^[0-9a-f]{64}$')
 MANIFEST = '_update/manifest.json'
 
 
-def safe_path(value, *, metadata=False) -> str:
+def safe_path(value, *, metadata=False, directory=False) -> str:
     if not isinstance(value, str) or not value or len(value) > 4096 or '\\' in value or '\x00' in value or ':' in value:
         raise ValueError(f'Unsafe archive path: {value!r}')
     path = PurePosixPath(value)
@@ -42,7 +42,7 @@ def safe_path(value, *, metadata=False) -> str:
         raise ValueError(f'Nonportable Windows path is not allowed: {value!r}')
     if any(part.casefold() in {'.git', '.omoji-backups'} for part in parts):
         raise ValueError(f'Protected path is not allowed: {value!r}')
-    if parts[0] == '_update' and not (metadata and value == MANIFEST):
+    if parts[0] == '_update' and not (metadata and (value == MANIFEST or directory and value == '_update')):
         raise ValueError(f'Unexpected update metadata path: {value!r}')
     return value
 
@@ -86,7 +86,7 @@ def read_manifest(archive: zipfile.ZipFile):
     folded = set()
     for info in entries:
         name = info.filename[:-1] if info.is_dir() else info.filename
-        safe_path(name, metadata=True)
+        safe_path(name, metadata=True, directory=info.is_dir())
         folded_name = name.casefold()
         if name in index or folded_name in folded:
             raise ValueError(f'Duplicate/case-colliding archive path: {name}')
