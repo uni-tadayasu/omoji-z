@@ -34,18 +34,19 @@
 <link rel="stylesheet" href="./assets/game.css?v=pit-20261115">
 <link rel="stylesheet" href="./assets/pit.css?v=maybach-20261115">
 <link rel="stylesheet" href="./assets/grid.css?v=20261115">
-<script type="module" src="./assets/game.js?v=grid-20261115"></script>
+<link rel="stylesheet" href="./assets/official.css?v=20261115">
+<script type="module" src="./assets/game.js?v=official-20261115"></script>
 </head>
 <body class="simple-menu theme-midnight theme-reel theme-pit">
 <a class="skip" href="#setup">レース設定へ</a>
 <header class="site-header">
   <div class="header-inner">
     <a class="brand" href="#top" aria-label="尾文字Z トップ"><img src="./assets/omoji-mark.svg" alt="" width="38" height="38" draggable="false"><span>尾文字<span class="brand-z">Z</span><small>OMOJI Z</small></span></a>
-    <nav class="simple-nav" aria-label="メインナビゲーション"><a href="#setup" data-ui-icon="flag">レース</a><a href="#grand-prix" data-ui-icon="trophy" aria-label="グランプリ"><span class="nav-full">グランプリ</span><span class="nav-short" aria-hidden="true">GP</span></a><a href="#garage" data-ui-icon="garage">ガレージ</a><a href="#shop" data-ui-icon="shop">ショップ</a><a href="#paint-shop" data-ui-icon="paint">塗装屋</a><a href="#community" data-ui-icon="records" aria-label="記録・対戦"><span class="nav-full">記録・対戦</span><span class="nav-short" aria-hidden="true">対戦<span class="nav-narrow-hide">・記録</span></span></a><a href="#preferences" data-ui-icon="settings">設定</a></nav>
+    <nav class="simple-nav" aria-label="メインナビゲーション"><a href="#setup" data-ui-icon="flag">レース</a><a href="#official" data-ui-icon="medals">公式戦</a><a href="#grand-prix" data-ui-icon="trophy" aria-label="グランプリ"><span class="nav-full">グランプリ</span><span class="nav-short" aria-hidden="true">GP</span></a><a href="#garage" data-ui-icon="garage">ガレージ</a><a href="#shop" data-ui-icon="shop">ショップ</a><a href="#paint-shop" data-ui-icon="paint">塗装屋</a><a href="#community" data-ui-icon="records" aria-label="記録・対戦"><span class="nav-full">記録・対戦</span><span class="nav-short" aria-hidden="true">対戦<span class="nav-narrow-hide">・記録</span></span></a><a href="#preferences" data-ui-icon="settings">設定</a></nav>
     <div class="header-actions"><span class="gp-header-title" id="gp-header-title" data-ui-icon="trophy" hidden><bdi id="gp-header-driver"></bdi><bdi id="gp-header-title-text"></bdi></span><div class="wallet-badge"><span data-ui-icon="wallet">所持Z</span><strong data-wallet-total>— Z</strong></div></div>
   </div>
   <aside id="announcements" class="announcements" aria-label="お知らせ">
-    <div class="header-inner announcement-inner"><strong data-ui-icon="radio">お知らせ</strong><div class="announcement-window"><p id="announcement-copy">峠バトルでCPUを最大7台まで選択できます。設定で追従カメラの距離を調整できます。</p></div><button type="button" id="announcement-toggle" class="quiet" hidden><span data-announcement-toggle-label>停止</span></button></div>
+    <div class="header-inner announcement-inner"><strong data-ui-icon="radio">お知らせ</strong><div class="announcement-window"><p id="announcement-copy">公式戦を追加しました。4台で競い、結果に応じた報酬と級・段位を獲得できます。</p></div><button type="button" id="announcement-toggle" class="quiet" hidden><span data-announcement-toggle-label>停止</span></button></div>
   </aside>
 </header>
 <main id="top">
@@ -70,6 +71,11 @@
       </div>
       <div class="apex-hero-counts"><a href="./cars.html"><span class="grid-count-icon" data-ui-icon="car" data-ui-replace aria-hidden="true"></span><strong id="car-count">514</strong><span>車両</span></a><a href="./courses.html"><span class="grid-count-icon" data-ui-icon="road" data-ui-replace aria-hidden="true"></span><strong id="track-count">256</strong><span>コース</span></a><a href="#audio"><span class="grid-count-icon" data-ui-icon="music" data-ui-replace aria-hidden="true"></span><strong id="music-count">128</strong><span>BGM</span></a></div>
       <nav class="reel-shortcuts" aria-label="プレイメニュー">
+        <a class="reel-tile official-shortcut" href="#official">
+          <img src="./assets/official-grid.webp" alt="" width="1440" height="540" loading="lazy" decoding="async" draggable="false">
+          <span class="reel-tile-text"><strong data-ui-icon="medals">公式戦</strong><small>4台で競い、段位を目指す</small></span>
+          <span class="reel-arrow" aria-hidden="true"><svg class="ui-icon" width="24" height="24"><use href="./assets/ui-icons.svg?v=grid-20261115#i-arrow-right"></use></svg></span>
+        </a>
         <a class="reel-tile gp-quick-link" href="#grand-prix" data-grid-accent="rose">
           <img src="./assets/reel-routes.webp" alt="" width="960" height="540" loading="lazy" decoding="async" draggable="false">
           <span class="reel-tile-text"><strong data-ui-icon="trophy">グランプリ</strong><small>16大会・8戦連続</small></span>
@@ -160,6 +166,54 @@
       </div>
       </details>
       <details class="simple-panel" id="mission-panel"><summary data-ui-icon="stage">日替わり・週替わりミッション</summary><div id="race-missions"></div></details>
+    </section>
+
+    <section id="official" class="content-section" data-menu-view hidden aria-labelledby="official-heading">
+      <div class="section-heading">
+        <div>
+          <h2 id="official-heading" data-ui-icon="medals">公式戦</h2>
+          <p class="theme-intro">4台で競う級・段位戦。コースは毎レース自動抽選。</p>
+        </div>
+        <a class="quiet" href="./guide.html#official-help" data-ui-icon="book">公式戦のルール</a>
+      </div>
+      <div class="official-grid">
+        <section class="official-entry" aria-labelledby="official-entry-heading">
+          <h3 id="official-entry-heading" data-ui-icon="flag">出走</h3>
+          <div class="official-entry-options">
+            <div class="official-entry-card">
+              <h4 data-ui-icon="controller">ソロ</h4>
+              <p>愛車とCPU3台で出走します。</p>
+              <button type="button" class="primary" id="official-solo-start" data-ui-icon="play">ソロで出走する</button>
+            </div>
+            <div class="official-entry-card">
+              <h4 data-ui-icon="people">マルチ</h4>
+              <p>部屋コードで集まり、空き枠をCPUで埋めます。</p>
+              <div class="official-multi-actions">
+                <button type="button" class="primary" id="official-multi-start" data-official-room data-ui-icon="people">部屋を作る</button>
+                <a class="quiet" href="#online-play" data-ui-icon="link">コードで参加</a>
+              </div>
+            </div>
+          </div>
+          <p class="official-rule" data-ui-icon="lock">運営車両の「性能MAX」は公式戦に適用されません。</p>
+          <p id="official-status" class="panel-note" role="status"></p>
+        </section>
+        <div class="official-progress-column">
+          <section class="official-license" aria-labelledby="official-license-heading">
+            <h3 id="official-license-heading" data-ui-icon="medals">現在の級・段位</h3>
+            <p class="official-grade-line"><strong id="official-grade">10級</strong><span id="official-points">0 pt</span></p>
+            <p id="official-next-grade" class="panel-note"></p>
+          </section>
+          <section class="official-awards" aria-labelledby="official-awards-heading">
+            <h3 id="official-awards-heading" data-ui-icon="wallet">順位報酬</h3>
+            <dl>
+              <div><dt>1位</dt><dd>25,000 Z <small>＋30 pt</small></dd></div>
+              <div><dt>2位</dt><dd>15,000 Z <small>＋18 pt</small></dd></div>
+              <div><dt>3位</dt><dd>7,000 Z <small>＋8 pt</small></dd></div>
+              <div><dt>4位</dt><dd>0 Z <small>0 pt</small></dd></div>
+            </dl>
+          </section>
+        </div>
+      </div>
     </section>
 
     <section id="grand-prix" class="content-section" data-menu-view hidden aria-labelledby="gp-heading">
@@ -482,10 +536,12 @@
 </div>
 <div id="race" class="race" aria-label="3Dレース" data-overlay role="dialog" aria-modal="true" tabindex="-1" hidden>
   <canvas id="race-canvas" aria-label="3Dレース画面"></canvas>
+  <div id="race-labels" class="race-labels" role="list" aria-label="ドライバー表示"></div>
   <div class="race-top">
     <div class="race-timing">
       <div class="wallet-badge race-wallet"><span data-ui-icon="wallet">所持Z</span><strong data-wallet-total>— Z</strong></div>
       <p class="gp-race-status" id="gp-race-round" hidden></p>
+      <p class="official-race-label" id="official-race-label" hidden>公式戦</p>
       <span class="race-track-label"><i data-ui-icon="road" data-ui-replace aria-hidden="true"></i><span id="race-track-name">峠</span></span>
       <strong id="race-time">00:00.000</strong>
       <small id="race-best"></small>
@@ -571,6 +627,7 @@
       <div id="tuning-bench-result" hidden></div>
       <p id="result-note" class="panel-note" hidden></p>
       <div id="gp-result" hidden></div>
+      <div id="official-result" class="official-result" hidden></div>
       <div class="race-panel-actions">
         <button type="button" class="primary" id="gp-result-action" data-ui-icon="play" hidden>次のレース</button>
         <button type="button" class="primary" id="retry-race" data-ui-icon="reset">もう一度走る</button>
