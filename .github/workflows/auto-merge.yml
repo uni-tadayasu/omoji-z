@@ -1,0 +1,110 @@
+name: Verify branch and merge into main
+
+on:
+  push:
+    branches-ignore: [main, gh-pages]
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: 'Same-repository branch to verify and merge into main'
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: auto-merge-${{ inputs.branch || github.ref_name }}
+  cancel-in-progress: false
+
+jobs:
+  verify:
+    if: github.event_name == 'workflow_dispatch' || github.event.deleted == false
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    outputs:
+      branch: ${{ steps.candidate.outputs.branch }}
+      head: ${{ steps.candidate.outputs.head }}
+      base: ${{ steps.candidate.outputs.base }}
+      changed: ${{ steps.candidate.outputs.changed }}
+      bootstrap: ${{ steps.candidate.outputs.bootstrap }}
+    steps:
+      - name: Check out proposed branch without stored credentials
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.branch || github.ref }}
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Prepare the actual merge candidate
+        id: candidate
+        env:
+          PROPOSED_BRANCH: ${{ inputs.branch || github.ref_name }}
+          PUSH_SHA: ${{ github.event_name == 'push' && github.sha || '' }}
+        run: |
+          set -euo pipefail
+          git check-ref-format --branch "$PROPOSED_BRANCH"
+          test "$PROPOSED_BRANCH" != main
+          test "$PROPOSED_BRANCH" != gh-pages
+          HEAD_SHA=$(git rev-parse HEAD)
+          BASE_SHA=$(git rev-parse refs/remotes/origin/main)
+          if git cat-file -e "$BASE_SHA:tools/auto-merge.mjs" 2>/dev/null; then
+            printf 'bootstrap=false\n' >> "$GITHUB_OUTPUT"
+          else
+            printf 'bootstrap=true\n' >> "$GITHUB_OUTPUT"
+          fi
+          if [ -n "$PUSH_SHA" ]; then test "$HEAD_SHA" = "$PUSH_SHA"; fi
+          printf 'branch=%s\nhead=%s\nbase=%s\n' "$PROPOSED_BRANCH" "$HEAD_SHA" "$BASE_SHA" >> "$GITHUB_OUTPUT"
+          if git merge-base --is-ancestor "$HEAD_SHA" "$BASE_SHA"; then
+            printf 'changed=false\n' >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          printf 'changed=true\n' >> "$GITHUB_OUTPUT"
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git merge --no-commit --no-ff "$BASE_SHA"
+      - name: Use Node.js 22
+        if: steps.candidate.outputs.changed == 'true'
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install locked test dependencies
+        if: steps.candidate.outputs.changed == 'true'
+        run: npm ci --ignore-scripts
+      - name: Test combined branch and main
+        if: steps.candidate.outputs.changed == 'true'
+        run: npm test
+      - name: Verify public files can be built
+        if: steps.candidate.outputs.changed == 'true'
+        run: python3 tools/build-site.py --out "$RUNNER_TEMP/omoji-public"
+      - name: Report first-time installation
+        if: steps.candidate.outputs.bootstrap == 'true'
+        run: |
+          printf '%s\n' 'Verification passed. This is the first installation of automatic integration. The owner must merge its first PR normally; later branch pushes will integrate automatically using the trusted helper on main.' >> "$GITHUB_STEP_SUMMARY"
+
+  merge:
+    needs: verify
+    if: needs.verify.outputs.changed == 'true' && needs.verify.outputs.bootstrap != 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: write
+      pull-requests: write
+      actions: write
+    steps:
+      - name: Load automation from the verified main revision
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ needs.verify.outputs.base }}
+          fetch-depth: 0
+          persist-credentials: true
+      - name: Use Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Integrate verified revision and trigger Pages
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PROPOSED_BRANCH: ${{ needs.verify.outputs.branch }}
+          VERIFIED_HEAD_SHA: ${{ needs.verify.outputs.head }}
+          VERIFIED_BASE_SHA: ${{ needs.verify.outputs.base }}
+        run: node tools/auto-merge.mjs
