@@ -1,0 +1,395 @@
+{
+  "schemaVersion": 1,
+  "vehicleId": "rolls-royce-operator",
+  "sourceSha256": "730254e6e74205c927bb2da14abe97419406df5ea09bc4e284eabec71e3743cd",
+  "sourceFile": "grand-saloon.glb",
+  "sourcePreserved": true,
+  "renderer": "Blender 4.3 Cycles CPU / AgX",
+  "dimensions": [
+    5.419,
+    2.10542631149292,
+    1.6061025857925415
+  ],
+  "cellWidth": 512,
+  "cellHeight": 384,
+  "columns": 4,
+  "rows": 6,
+  "frames": [
+    {
+      "index": 0,
+      "angle": 0.0,
+      "x": 0,
+      "y": 0,
+      "width": 512,
+      "height": 384,
+      "bounds": [
+        164,
+        166,
+        349,
+        326
+      ],
+      "contactY": 326
+    },
+    {
+      "index": 1,
+      "angle": 0.2617993877991494,
+      "x": 512,
+      "y": 0,
+      "width": 512,
+      "height": 384,
+      "bounds": [
+        114,
+        166,
+        347,
+        330
+      ],
+      "contactY": 330
+    },
+    {
+      "index": 2,
+      "angle": 0.5235987755982988,
+      "x": 1024,
+      "y": 0,
+      "width": 512,
+      "height": 384,
+      "bounds": [
+        78,
+        166,
+        378,
+        331
+      ],
+      "contactY": 331
+    },
+    {
+      "index": 3,
+      "angle": 0.7853981633974483,
+      "x": 1536,
+      "y": 0,
+      "width": 512,
+      "height": 384,
+      "bounds": [
+        59,
+        167,
+        410,
+        328
+      ],
+      "contactY": 328
+    },
+    {
+      "index": 4,
+      "angle": 1.0471975511965976,
+      "x": 0,
+      "y": 384,
+      "width": 512,
+      "height": 384,
+      "bounds": [
+        51,
+        168,
+        436,
+        321
+      ],
+      "contactY": 321
+    },
+    {
+      "index": 5,
+      "angle": 1.3089969389957472,
+      "x": 512,
+      "y": 384,
+      "width": 512,
+      "height": 384,
+      "bounds": [
+        50,
+        168,
+        454,
+        314
+      ],
+      "contactY": 314
+    },
+    {
+      "index": 6,
+      "angle": 1.5707963267948966,
+      "x": 1024,
+      "y": 384,
+      "width": 512,
+      "height": 384,
+      "bounds": [
+        51,
+        170,
+        463,
+        305
+      ],
+      "contactY": 305
+    },
+    {
+      "index": 7,
+      "angle": 1.832595714594046,
+      "x": 1536,
+      "y": 384,
+      "width": 512,
+      "height": 384,
+      "bounds": [
+        58,
+        170,
+        462,
+        311
+      ],
+      "contactY": 311
+    },
+    {
+      "index": 8,
+      "angle": 2.0943951023931953,
+      "x": 0,
+      "y": 768,
+      "width": 512,
+      "height": 384,
+      "bounds": [
+        73,
+        170,
+        463,
+        317
+      ],
+      "contactY": 317
+    },
+    {
+      "index": 9,
+      "angle": 2.356194490192345,
+      "x": 512,
+      "y": 768,
+      "width": 512,
+      "height": 384,
+      "bounds": [
+        97,
+        170,
+        453,
+        321
+      ],
+      "contactY": 321
+    },
+    {
+      "index": 10,
+      "angle": 2.6179938779914944,
+      "x": 1024,
+      "y": 768,
+      "width": 512,
+      "height": 384,
+      "bounds": [
+        128,
+        171,
+        429,
+        322
+      ],
+      "contactY": 322
+    },
+    {
+      "index": 11,
+      "angle": 2.8797932657906435,
+      "x": 1536,
+      "y": 768,
+      "width": 512,
+      "height": 384,
+      "bounds": [
+        161,
+        171,
+        389,
+        321
+      ],
+      "contactY": 321
+    },
+    {
+      "index": 12,
+      "angle": 3.141592653589793,
+      "x": 0,
+      "y": 1152,
+      "width": 512,
+      "height": 384,
+      "bounds": [
+        168,
+        171,
+        343,
+        318
+      ],
+      "contactY": 318
+    },
+    {
+      "index": 13,
+      "angle": 3.4033920413889427,
+      "x": 512,
+      "y": 1152,
+      "width": 512,
+      "height": 384,
+      "bounds": [
+        121,
+        171,
+        350,
+        321
+      ],
+      "contactY": 321
+    },
+    {
+      "index": 14,
+      "angle": 3.665191429188092,
+      "x": 1024,
+      "y": 1152,
+      "width": 512,
+      "height": 384,
+      "bounds": [
+        82,
+        171,
+        384,
+        323
+      ],
+      "contactY": 323
+    },
+    {
+      "index": 15,
+      "angle": 3.926990816987241,
+      "x": 1536,
+      "y": 1152,
+      "width": 512,
+      "height": 384,
+      "bounds": [
+        58,
+        171,
+        414,
+        321
+      ],
+      "contactY": 321
+    },
+    {
+      "index": 16,
+      "angle": 4.1887902047863905,
+      "x": 0,
+      "y": 1536,
+      "width": 512,
+      "height": 384,
+      "bounds": [
+        49,
+        171,
+        438,
+        317
+      ],
+      "contactY": 317
+    },
+    {
+      "index": 17,
+      "angle": 4.4505895925855405,
+      "x": 512,
+      "y": 1536,
+      "width": 512,
+      "height": 384,
+      "bounds": [
+        50,
+        170,
+        453,
+        311
+      ],
+      "contactY": 311
+    },
+    {
+      "index": 18,
+      "angle": 4.71238898038469,
+      "x": 1024,
+      "y": 1536,
+      "width": 512,
+      "height": 384,
+      "bounds": [
+        50,
+        170,
+        461,
+        304
+      ],
+      "contactY": 304
+    },
+    {
+      "index": 19,
+      "angle": 4.974188368183839,
+      "x": 1536,
+      "y": 1536,
+      "width": 512,
+      "height": 384,
+      "bounds": [
+        59,
+        169,
+        462,
+        313
+      ],
+      "contactY": 313
+    },
+    {
+      "index": 20,
+      "angle": 5.235987755982989,
+      "x": 0,
+      "y": 1920,
+      "width": 512,
+      "height": 384,
+      "bounds": [
+        77,
+        168,
+        461,
+        321
+      ],
+      "contactY": 321
+    },
+    {
+      "index": 21,
+      "angle": 5.497787143782138,
+      "x": 512,
+      "y": 1920,
+      "width": 512,
+      "height": 384,
+      "bounds": [
+        103,
+        167,
+        454,
+        327
+      ],
+      "contactY": 327
+    },
+    {
+      "index": 22,
+      "angle": 5.759586531581287,
+      "x": 1024,
+      "y": 1920,
+      "width": 512,
+      "height": 384,
+      "bounds": [
+        135,
+        166,
+        435,
+        331
+      ],
+      "contactY": 331
+    },
+    {
+      "index": 23,
+      "angle": 6.021385919380436,
+      "x": 1536,
+      "y": 1920,
+      "width": 512,
+      "height": 384,
+      "bounds": [
+        166,
+        166,
+        399,
+        330
+      ],
+      "contactY": 330
+    }
+  ],
+  "frameCount": 24,
+  "xOrigin": 256.0,
+  "yOrigin": 288.0000057220459,
+  "nativeWidth": 140.832,
+  "physicsWidth": 1.956,
+  "pixelsPerMetre": 72,
+  "elevation": 0.21,
+  "cameraDistance": 10,
+  "angleConvention": "camera=(sin(angle)*cos(elevation), sin(elevation), cos(angle)*cos(elevation)); 0=front+Z; pi=rear-Z",
+  "usesOriginalMaterials": true,
+  "geometryReduction": false,
+  "image": "saloon-sprites.webp",
+  "imageWidth": 2048,
+  "imageHeight": 2304,
+  "imageBytes": 322934,
+  "imageSha256": "b3d2233e4ce1cae8a07a9ba5326ab36154eff6b813d2453bf870d9585081c0fa"
+}

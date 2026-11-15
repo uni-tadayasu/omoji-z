@@ -42,3 +42,9 @@ REBORN 4.0 runtime additions
   Full license: assets/remake/vendor/THREE-LICENSE.txt
 - jsdom 26.1.0 and transitive packages are development-only test dependencies;
   their licenses are distributed by npm and are not shipped in the public game.
+
+User-supplied Grand Saloon model (4.3)
+  assets/models/grand-saloon.glb, supplied by the user as luxury_car_under_25MB.glb.
+  Original binary and embedded PBR textures are preserved. Model-specific license text was not provided.
+  Exact provenance: assets/models/grand-saloon-provenance.json.
+  Derived views: assets/models/saloon-sprites.webp and assets/art/grand-saloon.webp.

@@ -1,0 +1,69 @@
+{
+  "version": 1,
+  "baseCommit": "45f245c6d7051b589e03710dfcdc47d8ec83817c",
+  "files": [
+    {
+      "path": "assets/models/grand-saloon.glb",
+      "bytes": 24970372,
+      "sha256": "730254e6e74205c927bb2da14abe97419406df5ea09bc4e284eabec71e3743cd",
+      "encoding": "base64",
+      "parts": [
+        ".saloon-transfer/part-000.txt",
+        ".saloon-transfer/part-001.txt",
+        ".saloon-transfer/part-002.txt",
+        ".saloon-transfer/part-003.txt",
+        ".saloon-transfer/part-004.txt",
+        ".saloon-transfer/part-005.txt",
+        ".saloon-transfer/part-006.txt",
+        ".saloon-transfer/part-007.txt",
+        ".saloon-transfer/part-008.txt",
+        ".saloon-transfer/part-009.txt",
+        ".saloon-transfer/part-010.txt",
+        ".saloon-transfer/part-011.txt",
+        ".saloon-transfer/part-012.txt",
+        ".saloon-transfer/part-013.txt",
+        ".saloon-transfer/part-014.txt",
+        ".saloon-transfer/part-015.txt",
+        ".saloon-transfer/part-016.txt",
+        ".saloon-transfer/part-017.txt",
+        ".saloon-transfer/part-018.txt",
+        ".saloon-transfer/part-019.txt",
+        ".saloon-transfer/part-020.txt",
+        ".saloon-transfer/part-021.txt",
+        ".saloon-transfer/part-022.txt",
+        ".saloon-transfer/part-023.txt",
+        ".saloon-transfer/part-024.txt",
+        ".saloon-transfer/part-025.txt",
+        ".saloon-transfer/part-026.txt",
+        ".saloon-transfer/part-027.txt",
+        ".saloon-transfer/part-028.txt",
+        ".saloon-transfer/part-029.txt",
+        ".saloon-transfer/part-030.txt",
+        ".saloon-transfer/part-031.txt",
+        ".saloon-transfer/part-032.txt",
+        ".saloon-transfer/part-033.txt",
+        ".saloon-transfer/part-034.txt",
+        ".saloon-transfer/part-035.txt",
+        ".saloon-transfer/part-036.txt"
+      ]
+    },
+    {
+      "path": "assets/models/saloon-sprites.webp",
+      "bytes": 322934,
+      "sha256": "b3d2233e4ce1cae8a07a9ba5326ab36154eff6b813d2453bf870d9585081c0fa",
+      "encoding": "base64",
+      "parts": [
+        ".saloon-transfer/part-037.txt"
+      ]
+    },
+    {
+      "path": "assets/art/grand-saloon.webp",
+      "bytes": 50474,
+      "sha256": "75c59b9f1543cc297b194b0de47c574fbaf5dcd5db6705c1fc9cfbd090fc54c5",
+      "encoding": "base64",
+      "parts": [
+        ".saloon-transfer/part-038.txt"
+      ]
+    }
+  ]
+}

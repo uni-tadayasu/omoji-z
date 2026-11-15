@@ -35,8 +35,9 @@
 <link rel="stylesheet" href="./assets/workshop.css?v=motorsport-v3">
 <link rel="stylesheet" href="./assets/driving.css?v=motorsport-v3">
 <link rel="stylesheet" href="./assets/startup.css?v=4.2">
+<link rel="stylesheet" href="./assets/model-status.css?v=saloon-1">
 <script type="module" src="./assets/startup.js?v=4.2"></script>
-<script id="game-module" type="module" src="./assets/game.js?v=classic-remaster-v4.2"></script>
+<script id="game-module" type="module" src="./assets/game.js?v=saloon-4.3"></script>
 <script type="module" src="./assets/refinement-ui.js?v=motorsport-v3"></script>
 <link rel="stylesheet" href="./assets/classic-remaster.css?v=4.2">
 <script type="module" src="./assets/classic-remaster-ui.js?v=4.2"></script>
@@ -353,7 +354,7 @@
             <figcaption><strong>宵層 リムジン</strong></figcaption>
           </figure>
           <figure class="operator-studio">
-            <img src="./assets/art/operator-b.svg" alt="運営車両 珀樹 グランドサルーンのイメージ" width="1240" height="698" loading="lazy" decoding="async" draggable="false">
+            <img src="./assets/art/grand-saloon.webp" alt="提供モデルを描画した珀樹 グランドサルーン" width="1200" height="800" loading="lazy" decoding="async" draggable="false">
             <figcaption><strong>珀樹 グランドサルーン</strong></figcaption>
           </figure>
         </div>
@@ -585,6 +586,7 @@
       <p id="race-loading-car"></p>
       <progress id="race-loading-bar" class="race-load-bar" max="1" aria-label="レースの読み込み"></progress>
       <p id="race-loading-state" role="status" aria-live="polite"></p>
+      <button type="button" id="saloon-loading-cancel" class="quiet" hidden>読み込みを中止して戻る</button>
     </div>
   </div>
   <div class="race-overlay race-local-overlay" id="pause-layer" hidden>

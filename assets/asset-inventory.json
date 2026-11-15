@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "edition": "classic-remaster-4.2",
-  "baseCommit": "0c30dafde41abdab8a6243f104036b6be1543c6d",
+  "edition": "classic-remaster-saloon-4.3",
+  "baseCommit": "45f245c6d7051b589e03710dfcdc47d8ec83817c",
   "files": [
     {
       "path": "assets/THREE-LICENSE.txt",
@@ -27,6 +27,11 @@
       "path": "assets/art/garage.svg",
       "bytes": 59525,
       "sha256": "be62cb73c0d4c34440c3680287ebe8b05a7a111e0f15b754688960a5a02476b4"
+    },
+    {
+      "path": "assets/art/grand-saloon.webp",
+      "bytes": 50474,
+      "sha256": "75c59b9f1543cc297b194b0de47c574fbaf5dcd5db6705c1fc9cfbd090fc54c5"
     },
     {
       "path": "assets/art/hero-photo.webp",
@@ -1705,8 +1710,8 @@
     },
     {
       "path": "assets/game.js",
-      "bytes": 1261670,
-      "sha256": "e94da69030b4e64076123996af60d51ade46463882734b4d90bd1fcc37053913"
+      "bytes": 1267301,
+      "sha256": "5b1251f9c998020df33a02fc14b48864c46b2784880e68b7076d59e558cd097f"
     },
     {
       "path": "assets/legacy-records.js",
@@ -1722,6 +1727,36 @@
       "path": "assets/licenses/peerjs-dependencies.txt",
       "bytes": 9892,
       "sha256": "48577b964b1d910636855fa131246112ab09108a41fafbb8ebfa8ee71932e1cd"
+    },
+    {
+      "path": "assets/model-status.css",
+      "bytes": 1965,
+      "sha256": "700e5cb59d3f3c8a799436f1575c2bdf58ccde61fd0784bc97a08cb5f42e567b"
+    },
+    {
+      "path": "assets/model-status.js",
+      "bytes": 6907,
+      "sha256": "5fedfdcbd08cc7b0abec0ddab6b798f2a47318265349147e1ee7bb2e0a637f2e"
+    },
+    {
+      "path": "assets/models/grand-saloon-provenance.json",
+      "bytes": 943,
+      "sha256": "10bb5c5d99a311445125a8be8a76c88bfdca7c48dad0d346ad542742a7fd79c0"
+    },
+    {
+      "path": "assets/models/grand-saloon.glb",
+      "bytes": 24970372,
+      "sha256": "730254e6e74205c927bb2da14abe97419406df5ea09bc4e284eabec71e3743cd"
+    },
+    {
+      "path": "assets/models/saloon-sprites.json",
+      "bytes": 6705,
+      "sha256": "c0a3f6a6d7db099611a8266a6c40362bfd23a50f103d0d502068e30dc9ba1feb"
+    },
+    {
+      "path": "assets/models/saloon-sprites.webp",
+      "bytes": 322934,
+      "sha256": "b3d2233e4ce1cae8a07a9ba5326ab36154eff6b813d2453bf870d9585081c0fa"
     },
     {
       "path": "assets/peerjs-1.5.5.min.js",
@@ -1792,6 +1827,16 @@
       "path": "assets/remake/vendor/three.module.min.js",
       "bytes": 338908,
       "sha256": "e2b5ee6bccd38fd6d8a2428546b83c5f2426d84b152ef82be8055556e3b40eb6"
+    },
+    {
+      "path": "assets/saloon-model.js",
+      "bytes": 14913,
+      "sha256": "07293e1e614a619c5318480e1682334a2ca25c2defdbfa37441b5d6bb1992743"
+    },
+    {
+      "path": "assets/saloon-sprites.js",
+      "bytes": 5041,
+      "sha256": "0a11a618be27264110d03e02a308cd12ff2ef9ccb3559ea2dec6e710e2df8fe4"
     },
     {
       "path": "assets/site.css",

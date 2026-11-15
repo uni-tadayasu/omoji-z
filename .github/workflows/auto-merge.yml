@@ -54,6 +54,11 @@ jobs:
           fi
           if [ -n "$PUSH_SHA" ]; then test "$HEAD_SHA" = "$PUSH_SHA"; fi
           printf 'branch=%s\nhead=%s\nbase=%s\n' "$PROPOSED_BRANCH" "$HEAD_SHA" "$BASE_SHA" >> "$GITHUB_OUTPUT"
+          if [ -f .saloon-transfer/manifest.json ]; then
+            printf 'changed=false\n' >> "$GITHUB_OUTPUT"
+            printf '%s\n' 'Waiting for the supplied model transfer to be restored and verified. The asset workflow dispatches a fresh check after completion.' >> "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
           if git merge-base --is-ancestor "$HEAD_SHA" "$BASE_SHA"; then
             printf 'changed=false\n' >> "$GITHUB_OUTPUT"
             exit 0
